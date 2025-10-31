@@ -1,0 +1,949 @@
+<!doctype html>
+<html lang="id">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Yaasin — Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script>
+        // Jalankan secepat mungkin sebelum render
+        (() => {
+            try {
+                const theme = localStorage.getItem('theme');
+                if (theme === 'dark') {
+                    document.write('<body class="dark">');
+                } else {
+                    document.write('<body>');
+                }
+            } catch (e) {
+                document.write('<body>');
+            }
+        })();
+    </script>
+    <style>
+         :root {
+            --bg-light: #f8fafc;
+            --text-light: #0a2240;
+            --bg-dark: #090c1b;
+            --text-dark: #f8fafc;
+            --primary: #8ab4ff;
+            --accent: #ff4d6d;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-light);
+            color: var(--text-light);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            transition: background 0.3s, color 0.3s;
+        }
+        
+        body.dark {
+            background: var(--bg-dark);
+            color: var(--text-dark);
+        }
+        /* NAVBAR */
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 60px;
+            background: #0b0e1a;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: background 0.3s ease, color 0.3s ease;
+            /* Tambahan penting biar full lebar */
+            width: 100%;
+            left: 0;
+            right: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        
+        body:not(.dark) nav {
+            background: #ffffff;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .logo {
+            font-size: clamp(18px, 2.2vw, 26px);
+            /* auto menyesuaikan layar */
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 0.5px;
+            flex: 1;
+            white-space: nowrap;
+            /* biar gak kepecah di layar kecil */
+        }
+        
+        body:not(.dark) .logo {
+            color: #000;
+        }
+        
+        .logo span {
+            color: var(--primary);
+        }
+        
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            justify-content: flex-end;
+            flex: 2;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            color: #ccc;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        nav ul li a:hover,
+        nav ul li a.active {
+            color: #fff;
+        }
+        
+        body:not(.dark) nav ul li a {
+            color: #555;
+        }
+        
+        body:not(.dark) nav ul li a:hover,
+        body:not(.dark) nav ul li a.active {
+            color: #000;
+        }
+        
+        .divider {
+            width: 1px;
+            height: 24px;
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        body:not(.dark) .divider {
+            background: rgba(0, 0, 0, 0.2);
+        }
+        
+        .controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        select {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            color: #ccc;
+            padding: 6px 10px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        body:not(.dark) select {
+            color: #333;
+            border: 1px solid rgba(0, 0, 0, 0.2);
+        }
+        
+        button.theme-toggle {
+            background: transparent;
+            border: none;
+            color: #ccc;
+            font-size: 18px;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        button.theme-toggle:hover {
+            color: var(--primary);
+        }
+        
+        body:not(.dark) button.theme-toggle {
+            color: #333;
+        }
+        
+        .cv-btn {
+            background: var(--primary);
+            color: #fff;
+            padding: 8px 18px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .cv-btn:hover {
+            background: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
+        }
+        
+        body.dark .cv-btn {
+            background: #fff;
+            color: #0a0f25;
+            box-shadow: 0 3px 10px rgba(255, 255, 255, 0.05);
+        }
+        
+        body.dark .cv-btn:hover {
+            background: var(--primary);
+            color: #fff;
+        }
+        
+        .menu-toggle {
+            display: none;
+            font-size: 26px;
+            cursor: pointer;
+            color: #fff;
+        }
+        
+        body:not(.dark) .menu-toggle {
+            color: #000;
+        }
+        
+        @media (max-width: 900px) {
+            nav {
+                padding: 14px 30px;
+            }
+            .nav-right {
+                gap: 20px;
+            }
+            nav ul {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                right: 30px;
+                top: 70px;
+                background: #0b0e1a;
+                padding: 20px;
+                border-radius: 12px;
+                width: 75vw;
+                max-height: 75vh;
+                /* batas tinggi menu */
+                overflow-y: auto;
+                /* scroll kalau kepanjangan */
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+                scrollbar-width: thin;
+                /* Firefox */
+                scrollbar-color: #555 #0b0e1a;
+                /* Firefox */
+            }
+            /* Scrollbar untuk Chrome & lain-lain */
+            nav ul::-webkit-scrollbar {
+                width: 6px;
+            }
+            nav ul::-webkit-scrollbar-track {
+                background: #0b0e1a;
+                border-radius: 10px;
+            }
+            nav ul::-webkit-scrollbar-thumb {
+                background: #555;
+                border-radius: 10px;
+            }
+            nav ul.active {
+                display: flex;
+            }
+            body:not(.dark) nav ul {
+                background: #fff;
+                scrollbar-color: #bbb #fff;
+            }
+            .divider {
+                display: none;
+            }
+            .menu-toggle {
+                display: block;
+            }
+            /* === Controls di dalam menu === */
+            nav ul.active .controls {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                margin-top: 15px;
+                gap: 10px;
+            }
+            /* Baris atas sejajar: theme + lang */
+            nav ul.active .controls .top-controls {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 10px;
+            }
+            nav ul.active .controls .top-controls button,
+            nav ul.active .controls .top-controls select {
+                flex: 1;
+                font-size: 14px;
+                padding: 6px 10px;
+                border-radius: 6px;
+            }
+            /* Tombol CV di bawah */
+            nav ul.active .controls .cv-btn {
+                width: 100%;
+                font-size: 14px;
+                padding: 8px 0;
+                text-align: center;
+                border-radius: 8px;
+                box-shadow: none;
+            }
+            /* Sembunyikan controls luar menu */
+            .nav-right>.controls {
+                display: none;
+            }
+        }
+        /* EXPERIENCE */
+        
+        .experience {
+            background: #181e37;
+            padding: 100px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100vw;
+            position: relative;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+        
+        body:not(.dark) .experience {
+            background: #f8fafc;
+            color: #0a2240;
+        }
+        
+        .experience-container {
+            max-width: 1100px;
+            width: 100%;
+        }
+        
+        .experience-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .experience-header .section-tag {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.1);
+            color: #cdd3e0;
+            padding: 6px 18px;
+            border-radius: 50px;
+            font-size: 20px;
+            font-weight: 600;
+        }
+        
+        body:not(.dark) .experience-header .section-tag {
+            background: rgba(0, 0, 0, 0.08);
+            color: #0a2240;
+        }
+        
+        .experience-title {
+            font-size: 22px;
+            font-weight: 500;
+            margin-top: 20px;
+            color: #e0e6f0;
+        }
+        
+        body:not(.dark) .experience-title {
+            color: #0a2240;
+        }
+        
+        .experience-card {
+            background: #111730;
+            border-radius: 12px;
+            padding: 30px;
+            display: flex;
+            align-items: flex-start;
+            gap: 25px;
+            color: #cdd3e0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+        }
+        
+        body:not(.dark) .experience-card {
+            background: #fff;
+            color: #0a2240;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .exp-logo img {
+            width: 70px;
+            height: 70px;
+            object-fit: contain;
+            background: #fff;
+            border-radius: 8px;
+            padding: 6px;
+        }
+        
+        .exp-content {
+            flex: 1;
+        }
+        
+        .exp-header h3 {
+            font-size: 20px;
+            font-weight: 600;
+        }
+        
+        .exp-company {
+            font-size: 15px;
+            opacity: 0.8;
+            margin-bottom: 10px;
+        }
+        
+        .exp-details {
+            margin: 10px 0 20px;
+            padding-left: 20px;
+            line-height: 1.6;
+        }
+        
+        .exp-footer {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            opacity: 0.8;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .experience-card {
+                flex-direction: column;
+                text-align: left;
+            }
+            .exp-logo img {
+                width: 60px;
+                height: 60px;
+            }
+        }
+        /* SKILLS SECTION */
+        
+        .skills {
+            background: #090c1b;
+            padding: 100px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100vw;
+            position: relative;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+        
+        body:not(.dark) .skills {
+            background: #f1f3f6;
+            color: #0a2240;
+        }
+        
+        .skills-container {
+            max-width: 1100px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .skills-header .section-tag {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.1);
+            color: #cdd3e0;
+            padding: 6px 18px;
+            border-radius: 50px;
+            font-size: 20px;
+            font-weight: 600;
+        }
+        
+        body:not(.dark) .skills-header .section-tag {
+            background: rgba(0, 0, 0, 0.08);
+            color: #0a2240;
+        }
+        
+        .skills-title {
+            font-size: 22px;
+            font-weight: 500;
+            margin-top: 20px;
+            color: #e0e6f0;
+        }
+        
+        body:not(.dark) .skills-title {
+            color: #0a2240;
+        }
+        
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+            justify-items: center;
+        }
+        
+        .skill-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #cdd3e0;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+        
+        body:not(.dark) .skill-item {
+            color: #0a2240;
+        }
+        
+        .skill-item img {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            margin-bottom: 10px;
+            transition: transform 0.3s ease;
+        }
+        
+        .skill-item:hover img {
+            transform: scale(1.15);
+        }
+        
+        .skill-item:hover p {
+            color: var(--primary);
+        }
+        
+        .skill-item p {
+            font-weight: 500;
+            font-size: 15px;
+        }
+        /* FOOTER */
+        
+        footer {
+            background: #0a0f25;
+            color: #e6f0ff;
+            text-align: center;
+            padding: 16px 10px;
+            font-size: 15px;
+            margin-top: auto;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+        
+        body:not(.dark) footer {
+            background: #ffffff;
+            color: #000;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+    </style>
+
+</head>
+
+<body>
+    <nav>
+        <div class="logo">&lt;/<span>yasinisme.id</span> /&gt;</div>
+        <div class="nav-right">
+            <ul id="menu">
+                <li><a href="index.html" data-id="home">Home</a></li>
+                <li><a href="experience.html" class="active" data-id="experience">Experience</a></li>
+                <li><a href="projects.html" data-id="projects">Projects</a></li>
+                <li><a href="contact.html" data-id="contact">Contact</a></li>
+            </ul>
+
+            <div class="divider"></div>
+            <div class="controls">
+                <div class="top-controls">
+                    <button class="theme-toggle" id="theme-toggle">🌙</button>
+                    <select id="lang-switch">
+                        <option value="en">🇺🇸 EN</option>
+                        <option value="id">🇮🇩 ID</option>
+                    </select>
+                </div>
+                <a href="https://drive.google.com/drive/folders/1qD1MSs_e6KTrl34RY7e4E9DL1CkG4P8S?usp=sharing" class="cv-btn">Download CV</a>
+            </div>
+        </div>
+        <div class="menu-toggle" id="menu-toggle">☰</div>
+    </nav>
+
+    <main>
+
+        <!-- EXPERIENCE -->
+        <section class="experience" id="experience">
+            <div class="experience-container">
+                <div class="experience-header">
+                    <span class="section-tag" data-key="experienceTag">Experience</span>
+                    <h2 class="experience-title" data-key="experienceTitle">Here is a quick summary of my most recent experiences:</h2>
+                </div>
+
+                <div class="experience-card">
+                    <div class="exp-logo">
+                        <img src="img/Pengalaman/gks.png" alt="Company Logo">
+                    </div>
+
+                    <div class="exp-content">
+                        <div class="exp-header">
+                            <h3>IT Team</h3>
+                            <p class="exp-company">CV. Garuda Karya Solution</p>
+                        </div>
+
+                        <ul class="exp-details">
+                            <li data-key="gksexperience1">Developed and maintained internal company applications according to operational needs.</li>
+                            <li data-key="gksexperience2">Installed and configured systems, software, and network devices to support daily operations.</li>
+                            <li data-key="gksexperience3">Created a digital asset and inventory management system to streamline asset tracking processes.</li>
+                        </ul>
+
+                        <div class="exp-footer">
+                            <span class="exp-date" data-key="gksdate">January 2023 – November 2025</span>
+                            <span class="exp-location">Semarang, Indonesia</span>
+                        </div>
+                    </div>
+                </div>
+
+                <br><br>
+                <div class="experience-card">
+                    <div class="exp-logo">
+                        <img src="img/Pengalaman/KopkarPLNLumintu.png" alt="Company Logo">
+                    </div>
+
+                    <div class="exp-content">
+                        <div class="exp-header">
+                            <h3>Web Developer Intern</h3>
+                            <p class="exp-company">Koperasi Karyawan PLN Lumintu</p>
+                        </div>
+
+                        <ul class="exp-details">
+                            <li data-key="kopkar1">Developed and maintained a web-based financial management system using Laravel to improve efficiency and data accuracy.</li>
+                            <li data-key="kopkar2">Managed databases and verified financial transactions to ensure system reliability and support transparent administration.</li>
+                        </ul>
+
+                        <div class="exp-footer">
+                            <span class="exp-date" data-key="datekopkar">August 2024 – September 2024</span>
+                            <span class="exp-location">Semarang, Indonesia</span>
+                        </div>
+                    </div>
+                </div>
+
+                <br><br>
+                <div class="experience-card">
+                    <div class="exp-logo">
+                        <img src="img/Pengalaman/Gamelab.png" alt="Company Logo">
+                    </div>
+
+                    <div class="exp-content">
+                        <div class="exp-header">
+                            <h3 data-key="desgl">MSIB Batch 6 Participant – Web Fullstack Developer</h3>
+                            <p class="exp-company">PT Educa Sisfomedia Indonesia (Gamelab Indonesia)</p>
+                        </div>
+
+                        <ul class="exp-details">
+                            <li data-key="gl1">Participated in the Certified Independent Study and Internship Program (MSIB) specializing in Web Fullstack Development.</li>
+                            <li data-key="gl2">Developed integrated web projects using front-end and back-end technologies with the Laravel framework.</li>
+                            <li data-key="gl3">Learned modern software development practices and industry methodologies.</li>
+                            <li data-key="gl4">Collaborated in a team to design and implement web-based application features focusing on efficiency and user experience.</li>
+                        </ul>
+
+                        <div class="exp-footer">
+                            <span class="exp-date" data-key="dategl">February 16 - June 30 2024</span>
+                            <span class="exp-location">Semarang, Indonesia</span>
+                        </div>
+                    </div>
+                </div>
+
+                <br><br>
+                <div class="experience-card">
+                    <div class="exp-logo">
+                        <img src="img/Pengalaman/sadewa.png" alt="Company Logo">
+                    </div>
+
+                    <div class="exp-content">
+                        <div class="exp-header">
+                            <h3>Event Team</h3>
+                            <p class="exp-company">Sadewa Event Organizer (SEO.id)</p>
+                        </div>
+
+                        <ul class="exp-details">
+                            <li data-key="seo1">Responsible for planning, coordinating, and overseeing various events to ensure successful execution according to client expectations.</li>
+                            <li data-key="seo2">Provided consultation and creative solutions for event concepts, technical requirements, and implementation strategies.</li>
+                            <li data-key="seo3">Ensured excellent service for guests and stakeholders to deliver a professional and memorable event experience.</li>
+                            <li data-key="seo4">Actively maintained clear communication among team members, vendors, and clients to ensure smooth event operations.</li>
+                        </ul>
+
+                        <div class="exp-footer">
+                            <span class="exp-date" data-key="dateseo">January 2023 – Present</span>
+                            <span class="exp-location">Semarang, Indonesia</span>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </section>
+
+        <!-- SKILLS -->
+        <section class="skills" id="skills">
+            <div class="skills-container">
+                <div class="skills-header">
+                    <span class="section-tag" data-key="skillsTag">Skills</span>
+                    <h2 class="skills-title" data-key="skillsTitle">
+                        The skills, tools and technologies I am really good at:
+                    </h2>
+                </div>
+
+                <div class="skills-grid">
+                    <div class="skill-item">
+                        <img src="img/skill/html.svg" alt="HTML" />
+                        <p>HTML</p>
+                    </div>
+                    <div class="skill-item">
+                        <img src="img/skill/css.svg" alt="CSS" />
+                        <p>CSS</p>
+                    </div>
+                    <div class="skill-item">
+                        <img src="img/skill/java.svg" alt="Java" />
+                        <p>Java</p>
+                    </div>
+                    <div class="skill-item">
+                        <img src="img/skill/javascript.svg" alt="JavaScript" />
+                        <p>JavaScript</p>
+                    </div>
+                    <div class="skill-item">
+                        <img src="img/skill/php.svg" alt="PHP" />
+                        <p>PHP</p>
+                    </div>
+                    <div class="skill-item">
+                        <img src="img/skill/laravel.svg" alt="Laravel" />
+                        <p>Laravel</p>
+                    </div>
+                    <div class="skill-item">
+                        <img src="img/skill/react-native.svg" alt="ReactNative" />
+                        <p>React Native</p>
+                    </div>
+                    <div class="skill-item">
+                        <img src="img/skill/laragon.svg" alt="Laragon" />
+                        <p>Laragon</p>
+                    </div>
+                    <div class="skill-item">
+                        <img src="img/skill/mysql.svg" alt="MySQL" />
+                        <p>MySQL</p>
+                    </div>
+                    <div class="skill-item">
+                        <img src="img/skill/github.svg" alt="GitHub" />
+                        <p>GitHub</p>
+                    </div>
+                    <div class="skill-item">
+                        <img src="img/skill/c.svg" alt="C Language" />
+                        <p>C++</p>
+                    </div>
+
+                    <div class="skill-item">
+                        <img src="img/skill/coreldraw.svg" alt="CorelDRAW" />
+                        <p>CorelDRAW</p>
+                    </div>
+
+                    <div class="skill-item">
+                        <img src="img/skill/figma.svg" alt="Figma" />
+                        <p>Figma</p>
+                    </div>
+                    <div class="skill-item">
+                        <img src="img/skill/canva.svg" alt="Canva" />
+                        <p>Canva</p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p data-key="footer">© 2025 | Designed and coded by Ahmad Yasin Fadhilah</p>
+    </footer>
+
+    <script>
+        // Menu toggle
+        const toggle = document.getElementById('menu-toggle');
+        const menu = document.getElementById('menu');
+        toggle.addEventListener('click', () => menu.classList.toggle('active'));
+
+        const controls = document.querySelector('.controls');
+
+        function handleResponsiveMenu() {
+            if (window.innerWidth <= 900) {
+                if (!menu.contains(controls)) menu.appendChild(controls);
+            } else {
+                const navRight = document.querySelector('.nav-right');
+                if (!navRight.contains(controls)) navRight.appendChild(controls);
+            }
+        }
+        handleResponsiveMenu();
+        window.addEventListener('resize', handleResponsiveMenu);
+
+        // === THEME TOGGLE (PERSISTENT) ===
+        const themeToggle = document.getElementById('theme-toggle');
+
+        // Cek preferensi yang tersimpan di localStorage
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            document.body.classList.add('dark');
+            themeToggle.textContent = '☀️';
+        } else {
+            document.body.classList.remove('dark');
+            themeToggle.textContent = '🌙';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark');
+            const isDark = document.body.classList.contains('dark');
+            themeToggle.textContent = isDark ? '☀️' : '🌙';
+            // Simpan ke localStorage
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        });
+
+
+
+        // Language switch
+        const langSwitch = document.getElementById('lang-switch');
+
+        const langData = {
+            en: {
+                home: "Home",
+                experience: "Experience",
+                projects: "Projects",
+                contact: "Contact",
+
+
+                experienceTag: "Experience",
+                experienceTitle: "Here is a quick summary of my most recent experiences:",
+
+                /*GKS*/
+                gksexperience1: "Developed and maintained internal company applications according to operational needs.",
+                gksexperience2: "Installed and configured systems, software, and network devices to support daily operations.",
+                gksexperience3: "Created a digital asset and inventory management system to streamline asset tracking processes.",
+                gksdate: "January 2023 – November 2025",
+
+
+                /*KOPKAR*/
+                kopkar1: "Developed and maintained a web-based financial management system using Laravel to improve efficiency and data accuracy.",
+                kopkar2: "Managed databases and verified financial transactions to ensure system reliability and support transparent administration.",
+                datekopkar: "August 2024 – September 2024",
+
+                /*GL*/
+                desgl: "MSIB Batch 6 Participant – Web Fullstack Developer",
+                gl1: "Participated in the Certified Independent Study and Internship Program (MSIB) specializing in Web Fullstack Development.",
+                gl2: "Developed integrated web projects using front-end and back-end technologies with the Laravel framework.",
+                gl3: "Learned modern software development practices and industry methodologies.",
+                gl4: "Collaborated in a team to design and implement web-based application features focusing on efficiency and user experience.",
+                dategl: "February 16 - June 30 2024",
+
+
+                /*SEO*/
+                seo1: "Responsible for planning, coordinating, and overseeing various events to ensure successful execution according to client expectations.",
+                seo2: "Provided consultation and creative solutions for event concepts, technical requirements, and implementation strategies.",
+                seo3: "Ensured excellent service for guests and stakeholders to deliver a professional and memorable event experience.",
+                seo4: "Actively maintained clear communication among team members, vendors, and clients to ensure smooth event operations.",
+                dateseo: "January 2023 – Present",
+
+
+
+                skillsTag: "Skills",
+                contactTitle: "The skills, tools and technologies I am really good at:",
+
+
+                footer: "© 2025 | Designed and coded by Ahmad Yasin Fadhilah"
+            },
+
+            id: {
+                home: "Beranda",
+                experience: "Pengalaman",
+                projects: "Proyek",
+                contact: "Kontak",
+
+                experienceTag: "Pengalaman",
+                experienceTitle: "Berikut ringkasan singkat dari pengalaman terbaru saya:",
+
+                /*GKS*/
+                gksexperience1: "Mengembangkan dan melakukan pemeliharaan aplikasi internal perusahaan sesuai kebutuhan operasional.</strong>.",
+                gksexperience2: "Melakukan instalasi dan konfigurasi sistem, software, serta perangkat jaringan untuk mendukung aktivitas kerja.",
+                gksexperience3: "Membuat sistem pendataan barang berbasis digital untuk memudahkan proses inventaris dan pelacakan aset perusahaan.",
+                gksdate: "Januari 2023 – November 2025",
+
+
+                /*KOPKAR*/
+                kopkar1: "Mengembangkan dan memelihara aplikasi keuangan berbasis web menggunakan framework Laravel untuk meningkatkan efisiensi dan akurasi pengelolaan data koperasi.",
+                kopkar2: "Mengelola basis data dan melakukan verifikasi transaksi keuangan guna memastikan keandalan sistem informasi serta mendukung transparansi administrasi koperasi.",
+                datekopkar: "Agustus 2024 – September 2024",
+
+                /*GL*/
+                desgl: "Peserta MSIB Batch 6 – Web Fullstack Developer",
+                gl1: "Mengikuti program Magang dan Studi Independen Bersertifikat (MSIB) di bidang Web Fullstack Development.",
+                gl2: "Mengembangkan proyek web menggunakan teknologi front-end dan back-end secara terintegrasi dengan framework Laravel.",
+                gl3: "Mempelajari praktik industri dan metodologi pengembangan perangkat lunak modern.",
+                gl4: "Berkolaborasi dalam tim untuk merancang dan mengimplementasikan fitur aplikasi berbasis web dengan fokus pada efisiensi dan pengalaman pengguna.",
+                dategl: "16 Februari - 30 Juni 2024",
+
+
+                /*SEO*/
+                seo1: "Bertanggung jawab dalam merencanakan, mengoordinasikan, dan mengawasi jalannya berbagai jenis acara agar berjalan sukses dan sesuai ekspektasi klien.",
+                seo2: "Memberikan konsultasi dan solusi kreatif kepada klien dalam perencanaan konsep acara, kebutuhan teknis, serta strategi pelaksanaan.",
+                seo3: "Memastikan pelayanan terbaik untuk tamu dan seluruh pihak terkait demi menciptakan pengalaman acara yang profesional dan berkesan.",
+                seo4: "Berperan aktif dalam menjaga komunikasi yang baik antara tim, vendor, dan klien untuk memastikan setiap detail acara terlaksana dengan lancar.",
+                dateseo: "Januari 2023 – Present",
+
+                skillsTag: "Kemampuan",
+                skillsTitle: "Keahlian, alat, dan teknologi yang saya kuasai dengan baik:",
+
+                footer: "© 2025 | Dirancang dan dikode oleh Ahmad Yasin Fadhilah"
+            }
+        };
+
+
+        // Event listener language switch
+        langSwitch.addEventListener('change', () => {
+            const lang = langSwitch.value;
+            document.querySelectorAll("[data-key]").forEach(el => {
+                const key = el.getAttribute("data-key");
+                if (langData[lang][key]) el.innerHTML = langData[lang][key];
+            });
+            document.querySelectorAll('#menu a').forEach(link => {
+                const id = link.getAttribute('data-id');
+                link.textContent = langData[lang][id];
+            });
+            // Simpan pilihan bahasa ke localStorage
+            localStorage.setItem('lang', lang);
+        });
+
+        // Saat load halaman, ambil bahasa dari localStorage
+        const savedLang = localStorage.getItem('lang') || 'en';
+        langSwitch.value = savedLang;
+        langSwitch.dispatchEvent(new Event('change'));
+
+        // Typing effect
+        const roles = ["Web Developer", "UI/UX Designer", "Event Enthusiast"];
+        const typedElement = document.getElementById("typed");
+        let roleIndex = 0,
+            charIndex = 0,
+            isDeleting = false;
+
+        function typeEffect() {
+            const current = roles[roleIndex];
+            typedElement.textContent = current.substring(0, charIndex);
+            if (!isDeleting && charIndex < current.length) {
+                charIndex++;
+                setTimeout(typeEffect, 120);
+            } else if (isDeleting && charIndex > 0) {
+                charIndex--;
+                setTimeout(typeEffect, 60);
+            } else {
+                isDeleting = !isDeleting;
+                if (!isDeleting) roleIndex = (roleIndex + 1) % roles.length;
+                setTimeout(typeEffect, isDeleting ? 1000 : 300);
+            }
+        }
+        document.addEventListener("DOMContentLoaded", typeEffect);
+    </script>
+</body>
+
+</html>
