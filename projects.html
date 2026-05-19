@@ -4,34 +4,47 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Yaasin — Portfolio</title>
+    <title>Yaasin — Projects</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <!-- Script Cegah Kedip Tema -->
     <script>
-        // Jalankan secepat mungkin sebelum render
-        (() => {
+        (function() {
             try {
-                const theme = localStorage.getItem('theme');
-                if (theme === 'dark') {
-                    document.write('<body class="dark">');
-                } else {
-                    document.write('<body>');
+                if (localStorage.getItem('theme') === 'dark') {
+                    document.documentElement.classList.add('dark');
+                    document.documentElement.style.background = '#090c1b'; 
                 }
-            } catch (e) {
-                document.write('<body>');
-            }
+            } catch (e) {}
         })();
     </script>
+    
     <style>
-         :root {
+        /* ================= VARIABLES ================= */
+        :root {
             --bg-light: #f8fafc;
+            --bg-light-sec: #f1f5f9;
             --text-light: #0a2240;
+            --nav-light: rgba(255, 255, 255, 0.9);
+            --nav-mobile-light: #ffffff;
+            --border-light: rgba(0, 0, 0, 0.08);
+            
             --bg-dark: #090c1b;
+            --bg-dark-sec: #111730;
             --text-dark: #f8fafc;
+            --nav-dark: rgba(11, 14, 26, 0.9);
+            --nav-mobile-dark: #0b0e1a;
+            --border-dark: rgba(255, 255, 255, 0.08);
+
             --primary: #8ab4ff;
             --accent: #ff4d6d;
+            --shadow-sm: 0 4px 15px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 10px 25px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
         }
-        
+
+        /* ================= RESET & BASE ================= */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -46,101 +59,120 @@
             flex-direction: column;
             min-height: 100vh;
             transition: background 0.3s, color 0.3s;
+            overflow-x: hidden;
         }
         
-        body.dark {
+        html.dark body {
             background: var(--bg-dark);
             color: var(--text-dark);
         }
-        /* NAVBAR */
-        
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* ================= NAVBAR (MODERNIZED) ================= */
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 16px 60px;
-            background: #0b0e1a;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 15px 5%;
+            background: var(--nav-light);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-light);
             position: sticky;
             top: 0;
-            z-index: 100;
-            transition: background 0.3s ease, color 0.3s ease;
-            /* Tambahan penting biar full lebar */
-            width: 100%;
-            left: 0;
-            right: 0;
-            margin: 0;
-            box-sizing: border-box;
+            z-index: 1000;
+            transition: background 0.3s, border-color 0.3s;
         }
         
-        body:not(.dark) nav {
-            background: #ffffff;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        html.dark nav {
+            background: var(--nav-dark);
+            border-bottom: 1px solid var(--border-dark);
         }
         
         .logo {
-            font-size: clamp(18px, 2.2vw, 26px);
-            /* auto menyesuaikan layar */
+            font-size: clamp(20px, 2.5vw, 24px);
             font-weight: 700;
-            color: #fff;
+            color: var(--text-light);
             letter-spacing: 0.5px;
-            flex: 1;
-            white-space: nowrap;
-            /* biar gak kepecah di layar kecil */
+            z-index: 1001;
+            transition: var(--transition);
         }
         
-        body:not(.dark) .logo {
-            color: #000;
+        html.dark .logo {
+            color: var(--text-dark);
         }
         
         .logo span {
             color: var(--primary);
         }
         
-        .nav-right {
-            display: flex;
-            align-items: center;
-            gap: 40px;
-            justify-content: flex-end;
-            flex: 2;
+        .logo:hover {
+            opacity: 0.8;
         }
         
-        nav ul {
+        .nav-container {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+        
+        .nav-links {
             list-style: none;
             display: flex;
             align-items: center;
-            gap: 40px;
+            gap: 30px;
         }
         
-        nav ul li a {
-            text-decoration: none;
-            color: #ccc;
+        .nav-links a {
+            color: #64748b;
             font-weight: 500;
-            transition: color 0.3s ease;
+            transition: var(--transition);
+            font-size: 15px;
+            position: relative;
         }
         
-        nav ul li a:hover,
-        nav ul li a.active {
-            color: #fff;
+        html.dark .nav-links a {
+            color: #94a3b8;
         }
         
-        body:not(.dark) nav ul li a {
-            color: #555;
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--text-light);
+            font-weight: 600;
         }
         
-        body:not(.dark) nav ul li a:hover,
-        body:not(.dark) nav ul li a.active {
-            color: #000;
+        html.dark .nav-links a:hover, html.dark .nav-links a.active {
+            color: var(--text-dark);
+        }
+
+        @media (min-width: 901px) {
+            .nav-links a::after {
+                content: '';
+                position: absolute;
+                bottom: -5px;
+                left: 0;
+                width: 0;
+                height: 2px;
+                background: var(--primary);
+                transition: var(--transition);
+                border-radius: 2px;
+            }
+            .nav-links a:hover::after, .nav-links a.active::after {
+                width: 100%;
+            }
         }
         
         .divider {
             width: 1px;
             height: 24px;
-            background: rgba(255, 255, 255, 0.3);
+            background: var(--border-light);
         }
         
-        body:not(.dark) .divider {
-            background: rgba(0, 0, 0, 0.2);
+        html.dark .divider {
+            background: var(--border-dark);
         }
         
         .controls {
@@ -149,505 +181,647 @@
             gap: 15px;
         }
         
+        /* Container khusus untuk tombol tema dan switch bahasa agar sejajar rapi */
+        .controls-top {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
         select {
             background: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid var(--border-light);
             border-radius: 6px;
-            color: #ccc;
+            color: var(--text-light);
             padding: 6px 10px;
             font-size: 13px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: var(--transition);
+            outline: none;
+            font-family: inherit;
         }
         
-        body:not(.dark) select {
-            color: #333;
-            border: 1px solid rgba(0, 0, 0, 0.2);
+        html.dark select {
+            border-color: var(--border-dark);
+            color: var(--text-dark);
+        }
+        
+        select:focus {
+            border-color: var(--primary);
         }
         
         button.theme-toggle {
             background: transparent;
             border: none;
-            color: #ccc;
+            color: var(--text-light);
             font-size: 18px;
             cursor: pointer;
-            transition: color 0.3s;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+        }
+        
+        html.dark button.theme-toggle {
+            color: var(--text-dark);
         }
         
         button.theme-toggle:hover {
-            color: var(--primary);
+            background: var(--border-light);
+            transform: translateY(-1px);
         }
         
-        body:not(.dark) button.theme-toggle {
-            color: #333;
+        html.dark button.theme-toggle:hover {
+            background: var(--border-dark);
         }
         
         .cv-btn {
             background: var(--primary);
             color: #fff;
-            padding: 8px 18px;
+            padding: 8px 22px;
             border-radius: 50px;
-            text-decoration: none;
             font-weight: 600;
-            transition: all 0.3s ease;
-            border: none;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            font-size: 14px;
+            transition: var(--transition);
+            box-shadow: 0 4px 10px rgba(138, 180, 255, 0.3);
+            text-align: center;
         }
         
         .cv-btn:hover {
             background: var(--accent);
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
-        }
-        
-        body.dark .cv-btn {
-            background: #fff;
-            color: #0a0f25;
-            box-shadow: 0 3px 10px rgba(255, 255, 255, 0.05);
-        }
-        
-        body.dark .cv-btn:hover {
-            background: var(--primary);
+            box-shadow: 0 6px 15px rgba(255, 77, 109, 0.4);
             color: #fff;
         }
         
         .menu-toggle {
             display: none;
-            font-size: 26px;
+            font-size: 22px;
             cursor: pointer;
-            color: #fff;
+            color: var(--text-light);
+            z-index: 1001;
+            transition: var(--transition);
+            padding: 5px;
         }
         
-        body:not(.dark) .menu-toggle {
-            color: #000;
+        html.dark .menu-toggle {
+            color: var(--text-dark);
         }
-        
-        @media (max-width: 900px) {
-            nav {
-                padding: 14px 30px;
-            }
-            .nav-right {
-                gap: 20px;
-            }
-            nav ul {
-                display: none;
-                flex-direction: column;
-                position: absolute;
-                right: 30px;
-                top: 70px;
-                background: #0b0e1a;
-                padding: 20px;
-                border-radius: 12px;
-                width: 75vw;
-                max-height: 75vh;
-                /* batas tinggi menu */
-                overflow-y: auto;
-                /* scroll kalau kepanjangan */
-                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-                scrollbar-width: thin;
-                /* Firefox */
-                scrollbar-color: #555 #0b0e1a;
-                /* Firefox */
-            }
-            /* Scrollbar untuk Chrome & lain-lain */
-            nav ul::-webkit-scrollbar {
-                width: 6px;
-            }
-            nav ul::-webkit-scrollbar-track {
-                background: #0b0e1a;
-                border-radius: 10px;
-            }
-            nav ul::-webkit-scrollbar-thumb {
-                background: #555;
-                border-radius: 10px;
-            }
-            nav ul.active {
-                display: flex;
-            }
-            body:not(.dark) nav ul {
-                background: #fff;
-                scrollbar-color: #bbb #fff;
-            }
-            .divider {
-                display: none;
-            }
-            .menu-toggle {
-                display: block;
-            }
-            /* === Controls di dalam menu === */
-            nav ul.active .controls {
-                display: flex;
-                flex-direction: column;
-                width: 100%;
-                margin-top: 15px;
-                gap: 10px;
-            }
-            /* Baris atas sejajar: theme + lang */
-            nav ul.active .controls .top-controls {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                gap: 10px;
-            }
-            nav ul.active .controls .top-controls button,
-            nav ul.active .controls .top-controls select {
-                flex: 1;
-                font-size: 14px;
-                padding: 6px 10px;
-                border-radius: 6px;
-            }
-            /* Tombol CV di bawah */
-            nav ul.active .controls .cv-btn {
-                width: 100%;
-                font-size: 14px;
-                padding: 8px 0;
-                text-align: center;
-                border-radius: 8px;
-                box-shadow: none;
-            }
-            /* Sembunyikan controls luar menu */
-            .nav-right>.controls {
-                display: none;
-            }
+
+        /* ================= SECTIONS & HEADERS ================= */
+        section {
+            padding: 80px 5%;
         }
-        /* PROJECT*/
-        
-        .projects {
-            background: #f5f7fa;
-            padding: 100px 20px;
+
+        .section-header {
             text-align: center;
+            margin-bottom: 50px;
         }
-        
-        body.dark .projects {
-            background: #0b0e1a;
-        }
-        
-        .projects-header .section-tag {
+
+        .section-tag {
             display: inline-block;
-            background: rgba(0, 0, 0, 0.08);
-            color: #0a2240;
-            padding: 6px 18px;
+            background: var(--border-light);
+            color: var(--text-light);
+            padding: 6px 20px;
             border-radius: 50px;
             font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 15px;
+            transition: var(--transition);
         }
         
-        body.dark .projects-header .section-tag {
-            background: rgba(255, 255, 255, 0.1);
-            color: #fff;
+        html.dark .section-tag {
+            background: var(--border-dark);
+            color: var(--text-dark);
         }
         
-        .projects-title {
-            font-size: 24px;
-            margin-top: 20px;
-            font-weight: 500;
+        .section-title {
+            font-size: clamp(22px, 3vw, 32px);
+            font-weight: 600;
+        }
+
+        /* ================= PROJECTS GRID (CENTERED) ================= */
+        .projects {
+            background: var(--bg-light-sec);
+        }
+        
+        html.dark .projects {
+            background: var(--bg-dark);
         }
         
         .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
-            margin-top: 60px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
         }
         
         .project-card {
-            background: #fff;
+            width: clamp(280px, 100%, 360px); 
+            background: var(--nav-mobile-light); 
             border-radius: 16px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--shadow-sm);
             overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            border: 1px solid transparent;
         }
         
-        body.dark .project-card {
-            background: #111730;
-            color: #fff;
-            box-shadow: 0 5px 20px rgba(255, 255, 255, 0.05);
+        html.dark .project-card {
+            background: var(--bg-dark-sec);
+            border: 1px solid var(--border-dark);
         }
         
         .project-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-md);
+            border-color: rgba(138, 180, 255, 0.3);
         }
         
         .project-thumb {
             width: 100%;
-            height: 180px;
+            height: 220px;
             object-fit: cover;
+            border-bottom: 1px solid var(--border-light);
+        }
+        
+        html.dark .project-thumb {
+            border-bottom-color: var(--border-dark);
         }
         
         .project-content {
-            padding: 20px;
+            padding: 25px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            flex-grow: 1;
         }
         
         .project-title {
             font-size: 18px;
             font-weight: 600;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
+            line-height: 1.3;
         }
         
         .project-desc {
             font-size: 14px;
-            opacity: 0.8;
-            margin-bottom: 20px;
+            color: #64748b;
+            margin-bottom: 25px;
+            flex-grow: 1;
+            line-height: 1.6;
+        }
+        
+        html.dark .project-desc {
+            color: #94a3b8;
         }
         
         .project-btn {
-            background: #0a2240;
+            background: var(--text-light);
             color: #fff;
-            padding: 8px 14px;
+            padding: 10px 18px;
             border-radius: 8px;
-            text-decoration: none;
+            font-size: 14px;
             font-weight: 500;
-            transition: background 0.3s ease;
+            transition: var(--transition);
             align-self: center;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         
-        .project-btn i {
-            margin-right: 6px;
+        html.dark .project-btn {
+            background: #2a3454;
         }
         
         .project-btn:hover {
-            background: #ff4d6d;
+            background: var(--primary);
+            color: #090c1b;
         }
-        /* SKILLS SECTION */
-        
+
+        /* ================= ACHIEVEMENTS ================= */
         .achievements {
-            background: #f8fafc;
-            padding: 100px 20px;
-            text-align: center;
+            background: var(--bg-light);
             overflow: hidden;
         }
         
-        body.dark .achievements {
-            background: #0b0e1a;
-        }
-        
-        .achievements-header .section-tag {
-            display: inline-block;
-            background: rgba(0, 0, 0, 0.08);
-            color: #0a2240;
-            padding: 6px 18px;
-            border-radius: 50px;
-            font-weight: 600;
-        }
-        
-        body.dark .achievements-header .section-tag {
-            background: rgba(255, 255, 255, 0.1);
-            color: #fff;
-        }
-        
-        .achievements-title {
-            font-size: 24px;
-            margin-top: 20px;
-            font-weight: 500;
-            color: #111;
-        }
-        
-        body.dark .achievements-title {
-            color: #fff;
+        html.dark .achievements {
+            background: var(--bg-dark-sec);
         }
         
         .achievements-scroll {
             display: flex;
-            gap: 30px;
+            gap: 25px;
             overflow-x: auto;
             scroll-snap-type: x mandatory;
-            margin-top: 60px;
-            padding-bottom: 10px;
+            padding: 10px 5% 30px 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+            scroll-behavior: smooth;
         }
         
         .achievements-scroll::-webkit-scrollbar {
-            height: 8px;
+            height: 6px;
         }
         
         .achievements-scroll::-webkit-scrollbar-thumb {
-            background: #ccc;
+            background: #cbd5e1;
             border-radius: 10px;
         }
         
-        body.dark .achievements-scroll::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.3);
+        html.dark .achievements-scroll::-webkit-scrollbar-thumb {
+            background: #334155;
         }
         
         .certificate-card {
             flex: 0 0 auto;
-            width: 380px;
-            background: #fff;
+            width: clamp(280px, 85vw, 360px); 
+            background: var(--nav-mobile-light);
             border-radius: 16px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-            scroll-snap-align: start;
-            transition: transform 0.3s ease;
+            box-shadow: var(--shadow-sm);
+            scroll-snap-align: center;
+            transition: var(--transition);
             overflow: hidden;
+            border: 1px solid transparent;
         }
         
-        body.dark .certificate-card {
-            background: #111730;
-            color: #fff;
-            box-shadow: 0 4px 20px rgba(255, 255, 255, 0.05);
-        }
-        
-        .certificate-card img {
-            width: 100%;
-            height: 220px;
-            object-fit: cover;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-        }
-        
-        .certificate-card h3 {
-            font-size: 16px;
-            font-weight: 600;
-            margin: 15px 0 5px;
-        }
-        
-        .certificate-card p {
-            font-size: 14px;
-            opacity: 0.8;
-            margin-bottom: 20px;
+        html.dark .certificate-card {
+            background: var(--bg-dark);
+            border-color: var(--border-dark);
         }
         
         .certificate-card:hover {
             transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
         }
-        /* FOOTER */
         
-        footer {
-            background: #0a0f25;
-            color: #e6f0ff;
+        .certificate-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 1px solid var(--border-light);
+        }
+        
+        html.dark .certificate-card img {
+            border-bottom-color: var(--border-dark);
+        }
+        
+        .certificate-info {
+            padding: 20px;
             text-align: center;
-            padding: 16px 10px;
-            font-size: 15px;
-            margin-top: auto;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            transition: background 0.3s ease, color 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         
-        body:not(.dark) footer {
-            background: #ffffff;
-            color: #000;
-            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        .certificate-card h3 {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+        
+        .certificate-card p {
+            font-size: 13px;
+            color: #64748b;
+        }
+        
+        html.dark .certificate-card p {
+            color: #94a3b8;
+        }
+
+        /* ================= FOOTER ================= */
+        footer {
+            background: var(--nav-mobile-light);
+            color: var(--text-light);
+            text-align: center;
+            padding: 25px 20px;
+            font-size: 14px;
+            margin-top: auto;
+            border-top: 1px solid var(--border-light);
+            transition: var(--transition);
+        }
+        
+        html.dark footer {
+            background: #050711;
+            color: var(--text-dark);
+            border-top-color: var(--border-dark);
+        }
+
+        /* ================= RESPONSIVE / MOBILE NAVBAR ================= */
+        @media (max-width: 900px) {
+            .menu-toggle {
+                display: block;
+            }
+            
+            .nav-container {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--nav-mobile-light); 
+                flex-direction: column;
+                align-items: stretch;
+                padding: 10px 0 25px 0;
+                gap: 0;
+                box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+                border-bottom: 1px solid var(--border-light);
+                
+                opacity: 0;
+                visibility: hidden;
+                transform: translateY(-10px);
+                transition: all 0.3s ease;
+                z-index: 999;
+            }
+            
+            html.dark .nav-container {
+                background: var(--nav-mobile-dark);
+                border-bottom: 1px solid var(--border-dark);
+                box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+            }
+            
+            .nav-container.active {
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(0);
+            }
+            
+            .nav-links {
+                flex-direction: column;
+                width: 100%;
+                gap: 0;
+            }
+            
+            .nav-links li {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .nav-links a {
+                display: block;
+                padding: 16px 20px;
+                border-bottom: 1px solid var(--border-light);
+            }
+            
+            html.dark .nav-links a {
+                border-bottom-color: var(--border-dark);
+            }
+            
+            .divider {
+                display: none;
+            }
+            
+            .controls {
+                flex-direction: column;
+                padding: 20px 5%;
+                gap: 15px;
+            }
+            
+            .controls-top {
+                justify-content: center;
+                width: 100%;
+            }
+            
+            .cv-btn {
+                width: 100%;
+                max-width: 280px;
+                margin: 5px auto 0 auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            section {
+                padding: 60px 5%;
+            }
+            .projects-grid {
+                gap: 25px;
+            }
+            .project-thumb {
+                height: 200px;
+            }
+            .achievements-scroll {
+                padding-left: 5%;
+                padding-right: 5%;
+                gap: 15px;
+            }
         }
     </style>
-
 </head>
 
 <body>
     <nav>
         <div class="logo">&lt;/<span>yasinisme.id</span> /&gt;</div>
-        <div class="nav-right">
-            <ul id="menu">
-                <li><a href="index.html" data-id="home">Home</a></li>
-                <li><a href="experience.html" data-id="experience">Experience</a></li>
-                <li><a href="projects.html" class="active" data-id="projects">Projects</a></li>
-                <li><a href="contact.html" data-id="contact">Contact</a></li>
+        
+        <div class="menu-toggle" id="menu-toggle">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+
+        <div class="nav-container" id="nav-container">
+            <ul class="nav-links">
+                <li><a href="index.html" data-key="home">Home</a></li>
+                <li><a href="experience.html" data-key="experience">Experience</a></li>
+                <li><a href="projects.html" class="active" data-key="projects">Projects</a></li>
+                <li><a href="contact.html" data-key="contact">Contact</a></li>
             </ul>
             <div class="divider"></div>
             <div class="controls">
-                <div class="top-controls">
-                    <button class="theme-toggle" id="theme-toggle">🌙</button>
-                    <select id="lang-switch">
+                <div class="controls-top">
+                    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle Theme">🌙</button>
+                    <select id="lang-switch" aria-label="Language Switch">
                         <option value="en">🇺🇸 EN</option>
                         <option value="id">🇮🇩 ID</option>
                     </select>
                 </div>
-                <a href="https://drive.google.com/drive/folders/1qD1MSs_e6KTrl34RY7e4E9DL1CkG4P8S?usp=sharing" class="cv-btn">Download CV</a>
+                <a href="https://drive.google.com/drive/folders/1qD1MSs_e6KTrl34RY7e4E9DL1CkG4P8S?usp=sharing" class="cv-btn" target="_blank" data-key="downloadCV">Download CV</a>
             </div>
         </div>
-        <div class="menu-toggle" id="menu-toggle">☰</div>
     </nav>
 
     <main>
-
-        <!-- EXPERIENCE -->
+        <!-- PROJECTS SECTION -->
         <section class="projects" id="projects">
-            <div class="projects-container">
-                <div class="projects-header">
-                    <span class="section-tag" data-key="projectTag">Projects</span>
-                    <h2 class="projects-title" data-key="projectTitle">Some of my highlighted works:</h2>
-                </div>
+            <div class="section-header">
+                <span class="section-tag" data-key="projectTag">Projects</span>
+                <h2 class="section-title" data-key="projectTitle">Some of my highlighted works:</h2>
+            </div>
 
-                <div class="projects-grid">
-                    <!-- Project Card 1 -->
-                    <div class="project-card">
-                        <img src="img/Project/Website Koperasi Karyawan.png" alt="E-Vote Project" class="project-thumb" />
-                        <div class="project-content">
-                            <h3 class="project-title">Website Koperasi Karyawan</h3>
-                            <p class="project-desc" data-key="projectdesc1">
-                                Koperasi Karyawan web system with savings and loan features and member management. (Laravel, MySQL, Bootstrap).
-                            </p>
-                            <a href="https://github.com/yaasin36/ManajemenKoperasi" class="project-btn"><i class="fa-brands fa-github"></i> Lihat Github</a>
-                        </div>
-                    </div>
-
-                    <!-- Project Card 2 -->
-                    <div class="project-card">
-                        <img src="img/Project/Web Management Keuangan.png" alt="Sistem Antrian Pencucian" class="project-thumb" />
-                        <div class="project-content">
-                            <h3 class="project-title">Website Manajemen Keuangan</h3>
-                            <p class="project-desc" data-key="projectdesc2">
-                                Financial management application for recording income, expenses, and financial reports. (Laravel, MySQL, Bootstrap).</p>
-                            <a href="https://github.com/yaasin36/PencatatanKeuangan" class="project-btn"><i class="fa-brands fa-github"></i> Lihat Github</a>
-                        </div>
-                    </div>
-
-                    <!-- Project Card 3 -->
-                    <div class="project-card">
-                        <img src="img/Project/Website Sejuk.png" alt="GW Travel" class="project-thumb" />
-                        <div class="project-content">
-                            <h3 class="project-title">Website Sejuk</h3>
-                            <p class="project-desc" data-key="projectdesc3">
-                                Modern café website selling milkshakes and smoothies with a fresh and interactive UI design. (Html,Css,Js, MySQL). </p>
-                            <a href="https://github.com/yaasin36/WebsiteCafeSejuk" class="project-btn"><i class="fa-brands fa-github"></i> Lihat Github</a>
-                        </div>
+            <div class="projects-grid">
+                <!-- Project Card 1 -->
+                <div class="project-card">
+                    <img src="img/Project/Website Koperasi Karyawan.png" alt="Website Koperasi Karyawan" class="project-thumb" loading="lazy" />
+                    <div class="project-content">
+                        <h3 class="project-title">Website Koperasi Karyawan</h3>
+                        <p class="project-desc" data-key="projectdesc1">
+                            Koperasi Karyawan web system with savings and loan features and member management. (Laravel, MySQL, Bootstrap).
+                        </p>
+                        <a href="https://github.com/yaasin36/ManajemenKoperasi" target="_blank" class="project-btn">
+                            <i class="fa-brands fa-github"></i> <span data-key="viewGithub">View Github</span>
+                        </a>
                     </div>
                 </div>
+
+                <!-- Project Card 2 -->
+                <div class="project-card">
+                    <img src="img/Project/Web Management Keuangan.png" alt="Website Manajemen Keuangan" class="project-thumb" loading="lazy" />
+                    <div class="project-content">
+                        <h3 class="project-title">Website Manajemen Keuangan</h3>
+                        <p class="project-desc" data-key="projectdesc2">
+                            Financial management application for recording income, expenses, and financial reports. (Laravel, MySQL, Bootstrap).
+                        </p>
+                        <a href="https://github.com/yaasin36/PencatatanKeuangan" target="_blank" class="project-btn">
+                            <i class="fa-brands fa-github"></i> <span data-key="viewGithub">View Github</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project Card 3 -->
+                <div class="project-card">
+                    <img src="img/Project/Website Sejuk.png" alt="Website Sejuk" class="project-thumb" loading="lazy" />
+                    <div class="project-content">
+                        <h3 class="project-title">Website Sejuk</h3>
+                        <p class="project-desc" data-key="projectdesc3">
+                            Modern café website selling milkshakes and smoothies with a fresh and interactive UI design. (Html,Css,Js, MySQL).
+                        </p>
+                        <a href="https://github.com/yaasin36/WebsiteCafeSejuk" target="_blank" class="project-btn">
+                            <i class="fa-brands fa-github"></i> <span data-key="viewGithub">View Github</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project Card 4 (Wedding Announcement) -->
+                <div class="project-card">
+                    <img src="img/Project/Weeding Annoucement.png" alt="Wedding Announcement" class="project-thumb" loading="lazy" />
+                    <div class="project-content">
+                        <h3 class="project-title">Wedding Announcement</h3>
+                        <p class="project-desc" data-key="projectdesc8">
+                            An elegant digital wedding invitation and announcement website with RSVP features and event details.
+                        </p>
+                        <a href="https://github.com/yaasin36/WeddingAnnouncement/" target="_blank" class="project-btn">
+                            <i class="fa-brands fa-github"></i> <span data-key="viewGithub">View Github</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project Card 5 (PELITA) -->
+                <div class="project-card">
+                    <img src="img/Project/Pangkalan Data Sertifikat Pelatihan Terpadu (PELITA).png" alt="Database Sertifikat PELITA" class="project-thumb" loading="lazy" />
+                    <div class="project-content">
+                        <h3 class="project-title">Sistem Pangkalan Data PELITA</h3>
+                        <p class="project-desc" data-key="projectdesc5">
+                            An integrated training certificate database system (PELITA) for centralized and efficient certificate management.
+                        </p>
+                        <a href="https://sites.google.com/view/pelita-bbpvpsemarang/pelita" target="_blank" class="project-btn">
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i> <span data-key="openApp">Open App</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project Card 6 (Sistem Izin Asrama) -->
+                <div class="project-card">
+                    <img src="img/Project/IZIN ASRAMA.png" alt="Sistem Izin Asrama" class="project-thumb" loading="lazy" />
+                    <div class="project-content">
+                        <h3 class="project-title">Sistem Izin Asrama</h3>
+                        <p class="project-desc" data-key="projectdesc4">
+                            A web-based dormitory permission system to easily manage and track student leave requests.
+                        </p>
+                        <a href="#" class="project-btn">
+                            <i class="fa-solid fa-eye"></i> <span data-key="viewInterface">View Interface</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project Card 7 (Metodologi dan PBL) -->
+                <div class="project-card">
+                    <img src="img/Project/PENDATAAN PESERTA PBL DAN METODOLOGI.png" alt="Metodologi dan PBL" class="project-thumb" loading="lazy" />
+                    <div class="project-content">
+                        <h3 class="project-title">Metodologi dan PBL</h3>
+                        <p class="project-desc" data-key="projectdesc6">
+                            Data collection system for PBL (Project Based Learning) participants and methodology tracking.
+                        </p>
+                        <a href="#" class="project-btn">
+                            <i class="fa-solid fa-eye"></i> <span data-key="viewInterface">View Interface</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project Card 8 (Portal BBPVP) -->
+                <div class="project-card">
+                    <img src="img/Project/Portal BBPVP.png" alt="Portal BBPVP" class="project-thumb" loading="lazy" />
+                    <div class="project-content">
+                        <h3 class="project-title">Portal BBPVP</h3>
+                        <p class="project-desc" data-key="projectdesc7">
+                            An integrated portal information system for BBPVP providing various training services and institutional information.
+                        </p>
+                        <a href="#" class="project-btn">
+                            <i class="fa-solid fa-eye"></i> <span data-key="viewInterface">View Interface</span>
+                        </a>
+                    </div>
+                </div>
+
             </div>
         </section>
 
+        <!-- ACHIEVEMENTS SECTION -->
         <section class="achievements" id="achievements">
-            <div class="achievements-container">
-                <div class="achievements-header">
-                    <span class="section-tag" data-key="achiTag">Achievements</span>
-                    <h2 class="achievements-title" data-key="achiTitle">Certificates & Achievement Awards</h2>
+            <div class="section-header">
+                <span class="section-tag" data-key="achiTag">Achievements</span>
+                <h2 class="section-title" data-key="achiTitle">Certificates & Achievement Awards</h2>
+            </div>
+
+            <div class="achievements-scroll" id="achievements-scroll">
+                <!-- Sertifikat 1 -->
+                <div class="certificate-card">
+                    <img src="img/Sertifikat/gamelab.png" alt="MSIB Participant" loading="lazy" />
+                    <div class="certificate-info">
+                        <h3 data-key="card1">MSIB Batch 6 Participant – Web Fullstack Developer</h3>
+                        <p data-key="pcard1">Gamelab Indonesia — 2024</p>
+                    </div>
                 </div>
 
-                <div class="achievements-scroll">
-                    <!-- Sertifikat 1 -->
-                    <div class="certificate-card">a
-                        <img src="img/Sertifikat/gamelab.png" alt="MSIB" />
-                        <h3 href="" data-key="card1">MSIB Batch 6 Participant – Web Fullstack Developer</h3>
-                        <p>Gamelab Indonesia — 2024</p>
+                <!-- Sertifikat 2 -->
+                <div class="certificate-card">
+                    <img src="img/Sertifikat/VideoContentCreator.png" alt="Video Content Creator" loading="lazy" />
+                    <div class="certificate-info">
+                        <h3 data-key="card2">Video Content Creator in Higher Education</h3>
+                        <p data-key="pcard2">Digitalent — 2023</p>
                     </div>
+                </div>
 
-                    <!-- Sertifikat 2 -->
-                    <div class="certificate-card">
-                        <img src="img/Sertifikat/VideoContentCreator.png" alt="VCC" />
-                        <h3 data-key="card2">Video Content Creator pada Sektor Pendidikan Tinggi</h3>
-                        <p>Digitalent — 2023</p>
+                <!-- Sertifikat 3 -->
+                <div class="certificate-card">
+                    <img src="img/Sertifikat/Ethical-Hacker.png" alt="Ethical Hacker" loading="lazy" />
+                    <div class="certificate-info">
+                        <h3 data-key="card3">Ethical Hacker</h3>
+                        <p data-key="pcard3">Digitalent - 2025</p>
                     </div>
+                </div>
 
-                    <!-- Sertifikat 3 -->
-                    <div class="certificate-card">
-                        <img src="img/Sertifikat/Ethical-Hacker.png" alt="Ethical-Hacker" />
-                        <h3>Ethical Hacker</h3>
-                        <p>Digitalent - 2025</p>
+                <!-- Sertifikat 4 -->
+                <div class="certificate-card">
+                    <img src="img/Sertifikat/TOEFL_AHMAD YASIN FADHILAH (2)-1.png" alt="English Proficiency" loading="lazy" />
+                    <div class="certificate-info">
+                        <h3 data-key="card4">English Proficiency Assessment</h3>
+                        <p data-key="pcard4">CFLT Universitas Dian Nuswantoro - 2025</p>
                     </div>
+                </div>
 
-                    <!-- Sertifikat 4 -->
-                    <div class="certificate-card">
-                        <img src="img/Sertifikat/TOEFL_AHMAD YASIN FADHILAH (2)-1.png" alt="AWS Training" />
-                        <h3 data-key="card4">Engish Proficiency Assessment</h3>
-                        <p>CFLT Universitas Dian Nuswantoro - 2025</p>
-                    </div>
-
-                    <!-- Sertifikat 5 -->
-                    <div class="certificate-card">
-                        <img src="img/Sertifikat/SERTIFIKAT PENGURUS DPM KM.png" alt="AWS Training" />
+                <!-- Sertifikat 5 -->
+                <div class="certificate-card">
+                    <img src="img/Sertifikat/SERTIFIKAT PENGURUS DPM KM.png" alt="General Chairman DPM" loading="lazy" />
+                    <div class="certificate-info">
                         <h3 data-key="card5">General Chairman</h3>
                         <p data-key="pcard5">Student Representative Council Universitas Dian Nuswantoro - 2023</p>
                     </div>
                 </div>
             </div>
         </section>
-
     </main>
 
     <footer>
@@ -655,169 +829,163 @@
     </footer>
 
     <script>
-        // Menu toggle
+        // === NAVBAR MOBILE TOGGLE ===
         const toggle = document.getElementById('menu-toggle');
-        const menu = document.getElementById('menu');
-        toggle.addEventListener('click', () => menu.classList.toggle('active'));
+        const navContainer = document.getElementById('nav-container');
+        const icon = toggle.querySelector('i');
 
-        const controls = document.querySelector('.controls');
-
-        function handleResponsiveMenu() {
-            if (window.innerWidth <= 900) {
-                if (!menu.contains(controls)) menu.appendChild(controls);
+        toggle.addEventListener('click', () => {
+            navContainer.classList.toggle('active');
+            if(navContainer.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-xmark');
             } else {
-                const navRight = document.querySelector('.nav-right');
-                if (!navRight.contains(controls)) navRight.appendChild(controls);
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars');
             }
-        }
-        handleResponsiveMenu();
-        window.addEventListener('resize', handleResponsiveMenu);
+        });
 
-        // === THEME TOGGLE (PERSISTENT) ===
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!navContainer.contains(e.target) && !toggle.contains(e.target) && navContainer.classList.contains('active')) {
+                navContainer.classList.remove('active');
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars');
+            }
+        });
+
+        // === THEME TOGGLE ===
         const themeToggle = document.getElementById('theme-toggle');
 
-        // Cek preferensi yang tersimpan di localStorage
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'dark') {
-            document.body.classList.add('dark');
-            themeToggle.textContent = '☀️';
+        function updateThemeIcon() {
+            const isDark = document.documentElement.classList.contains('dark');
+            themeToggle.textContent = isDark ? '☀️' : '🌙';
+        }
+        
+        // Initial setup
+        if (!document.documentElement.style.background && localStorage.getItem('theme') !== 'dark') {
+            updateThemeIcon();
         } else {
-            document.body.classList.remove('dark');
-            themeToggle.textContent = '🌙';
+            document.documentElement.style.background = '';
+            updateThemeIcon();
         }
 
         themeToggle.addEventListener('click', () => {
-            document.body.classList.toggle('dark');
-            const isDark = document.body.classList.contains('dark');
-            themeToggle.textContent = isDark ? '☀️' : '🌙';
-            // Simpan ke localStorage
+            document.documentElement.classList.toggle('dark');
+            const isDark = document.documentElement.classList.contains('dark');
             localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            updateThemeIcon();
         });
 
-
-
-        // Language switch
+        // === LANGUAGE SWITCH ===
         const langSwitch = document.getElementById('lang-switch');
 
         const langData = {
             en: {
-                home: "Home",
-                experience: "Experience",
-                projects: "Projects",
-                contact: "Contact",
-
-
-                projectTag: "Project",
-                projectTitle: "Some of my highlighted works:",
-
+                home: "Home", experience: "Experience", projects: "Projects", contact: "Contact",
+                downloadCV: "Download CV",
+                
+                projectTag: "Projects", projectTitle: "Some of my highlighted works:",
+                
+                viewGithub: "View Github",
+                viewInterface: "View Interface",
+                openApp: "Open App",
+                
                 projectdesc1: "Koperasi Karyawan web system with savings and loan features and member management. (Laravel, MySQL, Bootstrap).",
                 projectdesc2: "Financial management application for recording income, expenses, and financial reports. (Laravel, MySQL, Bootstrap).",
                 projectdesc3: "Modern café website selling milkshakes and smoothies with a fresh and interactive UI design. (Html,Css,Js, MySQL).",
+                projectdesc4: "A web-based dormitory permission system to easily manage and track student leave requests.",
+                projectdesc5: "An integrated training certificate database system (PELITA) for centralized and efficient certificate management.",
+                projectdesc6: "Data collection system for PBL (Project Based Learning) participants and methodology tracking.",
+                projectdesc7: "An integrated portal information system for BBPVP providing various training services and institutional information.",
+                projectdesc8: "An elegant digital wedding invitation and announcement website with RSVP features and event details.",
 
-                achiTag: "Achievements",
-                achiTitle: "Certificates & Achievement Awards",
+                achiTag: "Achievements", achiTitle: "Certificates & Achievement Awards",
 
-                card1: "MSIB Batch 6 Participant – Web Fullstack Developer",
-                card2: "Video Content Creator in the Higher Education Sector",
-                card5: "General Chairman",
-                pcard5: "Student Representative Council Universitas Dian Nuswantoro",
+                card1: "MSIB Batch 6 Participant – Web Fullstack Developer", pcard1: "Gamelab Indonesia — 2024",
+                card2: "Video Content Creator in the Higher Education Sector", pcard2: "Digitalent — 2023",
+                card3: "Ethical Hacker", pcard3: "Digitalent - 2025",
+                card4: "English Proficiency Assessment", pcard4: "CFLT Universitas Dian Nuswantoro - 2025",
+                card5: "General Chairman", pcard5: "Student Representative Council Universitas Dian Nuswantoro - 2023",
 
                 footer: "© 2025 | Designed and coded by Ahmad Yasin Fadhilah"
             },
-
             id: {
-                home: "Beranda",
-                experience: "Pengalaman",
-                projects: "Proyek",
-                contact: "Kontak",
-
-                projectTag: "Proyek",
-                projectTitle: "Beberapa karya unggulan saya:",
+                home: "Beranda", experience: "Pengalaman", projects: "Proyek", contact: "Kontak",
+                downloadCV: "Unduh CV",
+                
+                projectTag: "Proyek", projectTitle: "Beberapa karya unggulan saya:",
+                
+                viewGithub: "Lihat Github",
+                viewInterface: "Lihat Tampilan",
+                openApp: "Buka Aplikasi",
 
                 projectdesc1: "Sistem koperasi karyawan berbasis web dengan fitur simpan pinjam dan manajemen anggota. (Laravel, MySQL, Bootstrap).",
                 projectdesc2: "Aplikasi manajemen keuangan untuk mencatat pemasukan, pengeluaran, dan laporan keuangan. (Laravel, MySQL, Bootstrap).",
-                projectdesc3: " Website cafe modern yang menjual milkshake dan smoothies dengan desain UI segar dan interaktif. (Html,Css,Js, MySQL).",
+                projectdesc3: "Website cafe modern yang menjual milkshake dan smoothies dengan desain UI segar dan interaktif. (Html,Css,Js, MySQL).",
+                projectdesc4: "Sistem perizinan asrama berbasis web untuk mengelola dan melacak permintaan izin siswa dengan mudah.",
+                projectdesc5: "Sistem pangkalan data sertifikat pelatihan terpadu (PELITA) untuk manajemen sertifikat yang terpusat dan efisien.",
+                projectdesc6: "Sistem pendataan untuk peserta PBL (Project Based Learning) dan pelacakan metodologi pembelajaran.",
+                projectdesc7: "Sistem informasi portal terpadu BBPVP yang menyediakan berbagai layanan pelatihan dan informasi kelembagaan.",
+                projectdesc8: "Website undangan dan pengumuman pernikahan digital yang elegan dengan fitur RSVP dan detail acara.",
 
-                achiTag: "Pencapaian",
-                achiTitle: "Piagam & Sertifikat Pencapaian",
+                achiTag: "Pencapaian", achiTitle: "Piagam & Sertifikat Pencapaian",
 
-                card1: "Peserta MSIB Batch 6 – Web Fullstack Developer.",
-                card2: "Video Content Creator pada Sektor Pendidikan Tinggi",
-                card5: "Ketua Umum",
-                pcard5: "Dewan Perwakilan Mahasiswa Keluarga Mahasiswa Universitas Dian Nuswantoro",
-
+                card1: "Peserta MSIB Batch 6 – Web Fullstack Developer.", pcard1: "Gamelab Indonesia — 2024",
+                card2: "Video Content Creator pada Sektor Pendidikan Tinggi", pcard2: "Digitalent — 2023",
+                card3: "Ethical Hacker", pcard3: "Digitalent - 2025",
+                card4: "Penilaian Kemahiran Berbahasa Inggris", pcard4: "CFLT Universitas Dian Nuswantoro - 2025",
+                card5: "Ketua Umum", pcard5: "Dewan Perwakilan Mahasiswa Keluarga Mahasiswa Universitas Dian Nuswantoro",
 
                 footer: "© 2025 | Dirancang dan dikode oleh Ahmad Yasin Fadhilah"
             }
         };
 
-
-        // Event listener language switch
         langSwitch.addEventListener('change', () => {
             const lang = langSwitch.value;
             document.querySelectorAll("[data-key]").forEach(el => {
                 const key = el.getAttribute("data-key");
-                if (langData[lang][key]) el.innerHTML = langData[lang][key];
+                if (langData[lang] && langData[lang][key]) {
+                    el.innerHTML = langData[lang][key];
+                }
             });
-            document.querySelectorAll('#menu a').forEach(link => {
-                const id = link.getAttribute('data-id');
-                link.textContent = langData[lang][id];
-            });
-            // Simpan pilihan bahasa ke localStorage
             localStorage.setItem('lang', lang);
         });
 
-        // Saat load halaman, ambil bahasa dari localStorage
         const savedLang = localStorage.getItem('lang') || 'en';
         langSwitch.value = savedLang;
         langSwitch.dispatchEvent(new Event('change'));
 
-        // Typing effect
-        const roles = ["Web Developer", "UI/UX Designer", "Event Enthusiast"];
-        const typedElement = document.getElementById("typed");
-        let roleIndex = 0,
-            charIndex = 0,
-            isDeleting = false;
+        // === SMOOTH DRAG TO SCROLL (ACHIEVEMENTS) ===
+        const scrollContainer = document.getElementById('achievements-scroll');
+        let isDown = false;
+        let startX;
+        let scrollLeft;
 
-        function typeEffect() {
-            const current = roles[roleIndex];
-            typedElement.textContent = current.substring(0, charIndex);
-            if (!isDeleting && charIndex < current.length) {
-                charIndex++;
-                setTimeout(typeEffect, 120);
-            } else if (isDeleting && charIndex > 0) {
-                charIndex--;
-                setTimeout(typeEffect, 60);
-            } else {
-                isDeleting = !isDeleting;
-                if (!isDeleting) roleIndex = (roleIndex + 1) % roles.length;
-                setTimeout(typeEffect, isDeleting ? 1000 : 300);
-            }
-        }
-        document.addEventListener("DOMContentLoaded", typeEffect);
-
-        // Auto-scroll ringan
-        const scrollContainer = document.querySelector('.achievements-scroll');
-        let isDown = false,
-            startX, scrollLeft;
-
-        scrollContainer.addEventListener('mousedown', e => {
+        scrollContainer.addEventListener('mousedown', (e) => {
             isDown = true;
-            scrollContainer.classList.add('active');
+            scrollContainer.style.cursor = 'grabbing';
             startX = e.pageX - scrollContainer.offsetLeft;
             scrollLeft = scrollContainer.scrollLeft;
         });
-        scrollContainer.addEventListener('mouseleave', () => isDown = false);
-        scrollContainer.addEventListener('mouseup', () => isDown = false);
-        scrollContainer.addEventListener('mousemove', e => {
+        scrollContainer.addEventListener('mouseleave', () => {
+            isDown = false;
+            scrollContainer.style.cursor = 'grab';
+        });
+        scrollContainer.addEventListener('mouseup', () => {
+            isDown = false;
+            scrollContainer.style.cursor = 'grab';
+        });
+        scrollContainer.addEventListener('mousemove', (e) => {
             if (!isDown) return;
             e.preventDefault();
             const x = e.pageX - scrollContainer.offsetLeft;
-            scrollContainer.scrollLeft = scrollLeft - (x - startX) * 2;
+            const walk = (x - startX) * 2; 
+            scrollContainer.scrollLeft = scrollLeft - walk;
         });
+        
+        scrollContainer.style.cursor = 'grab';
     </script>
 </body>
-
-</html>
 
 </html>
