@@ -115,7 +115,7 @@
             100% { transform: translateY(0px); }
         }
 
-        /* ================= NAVBAR (FLOATING PILL MODERN) ================= */
+        /* ================= NAVBAR ================= */
         nav {
             display: flex;
             justify-content: space-between;
@@ -242,7 +242,6 @@
         }
 
         html.dark button.lang-toggle:hover {
-            border-color: var(--primary);
             background: rgba(138, 180, 255, 0.15);
         }
 
@@ -265,23 +264,38 @@
         button.theme-toggle:hover { background: var(--border-light); transform: translateY(-1px); }
         html.dark button.theme-toggle:hover { background: var(--border-dark); }
 
-        .cv-btn {
-            background: var(--primary);
+        .cv-btn, .btn-download-green {
             color: #fff;
             padding: 8px 20px;
             border-radius: 50px;
             font-weight: 600;
-            font-size: 13px;
             transition: var(--transition);
-            box-shadow: 0 4px 10px rgba(138, 180, 255, 0.3);
             text-align: center;
+            display: inline-block;
+        }
+
+        .cv-btn {
+            background: var(--primary);
+            font-size: 13px;
+            box-shadow: 0 4px 10px rgba(138, 180, 255, 0.3);
         }
 
         .cv-btn:hover {
             background: var(--accent);
             transform: translateY(-2px);
             box-shadow: 0 6px 15px rgba(255, 77, 109, 0.4);
-            color: #fff;
+        }
+
+        .btn-download-green {
+            background: #22c55e;
+            font-size: 14px;
+            padding: 10px 24px;
+            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
+        }
+
+        .btn-download-green:hover {
+            background: #16a34a;
+            transform: translateY(-2px);
         }
 
         .menu-toggle {
@@ -327,7 +341,7 @@
             font-weight: 600;
         }
 
-        /* ================= HOME VIEW (CENTERED & EXPANDED) ================= */
+        /* ================= HOME VIEW ================= */
         .hero {
             display: flex;
             flex-direction: column;
@@ -342,7 +356,6 @@
             position: relative;
         }
 
-        /* Centered Background Glow */
         .hero::before {
             content: '';
             position: absolute;
@@ -381,7 +394,6 @@
             color: transparent;
         }
 
-        /* Typing Effect Area matching image style */
         .role-wrapper {
             display: flex;
             align-items: center;
@@ -409,7 +421,7 @@
         .typing-text {
             color: var(--text-light); 
             font-weight: 500;
-            border-right: 3px solid #22c55e; /* Green cursor like the image */
+            border-right: 3px solid #22c55e;
             white-space: nowrap;
             overflow: hidden;
             padding-right: 5px;
@@ -418,7 +430,6 @@
         html.dark .typing-text { color: var(--text-dark); }
         @keyframes blink { 50% { border-color: transparent; } }
 
-        /* Floating Find Me On (Left Side) - sleek styling */
         .hero-social-sidebar {
             position: absolute;
             left: 5%;
@@ -437,7 +448,7 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            background: #111; /* Dark background matching image */
+            background: #111;
             color: #fff;
             font-size: 17px;
             transition: var(--transition);
@@ -445,7 +456,7 @@
         }
         html.dark .hero-social-sidebar a { background: rgba(255, 255, 255, 0.08); }
         .hero-social-sidebar a:hover {
-            background: #22c55e; /* Green pop */
+            background: #22c55e;
             transform: scale(1.1);
         }
 
@@ -460,7 +471,6 @@
         }
         html.dark .find-me-text { color: #94a3b8; }
 
-        /* Scroll Down Arrows - Absolute Bottom Center */
         .scroll-down {
             position: absolute;
             bottom: 30px;
@@ -472,12 +482,12 @@
             cursor: pointer;
             opacity: 0.8;
             transition: var(--transition);
-            color: #22c55e; /* Green chevrons */
+            color: #22c55e;
         }
         .scroll-down:hover { opacity: 1; transform: translate(-50%, 5px); }
         .scroll-down i {
             font-size: 22px;
-            line-height: 0.5; /* Tight overlap */
+            line-height: 0.5;
             animation: arrow-bounce 2s infinite;
         }
         .scroll-down i:nth-child(2) { animation-delay: 0.2s;}
@@ -488,13 +498,11 @@
             60% { transform: translateY(-4px); opacity: 0.8; }
         }
 
-        /* ================= ABOUT VIEW (AS REFERENCE IMAGE) ================= */
+        /* ================= ABOUT VIEW ================= */
         .about { background: var(--bg-light-sec); }
         html.dark .about { background: var(--bg-dark-sec); }
         
         .about-container { max-width: 1100px; margin: 0 auto; }
-        
-        /* Hilangkan header "About Me" yang di tengah (section-header) karena desain baru tidak pakai */
         
         .about-content {
             display: flex;
@@ -512,7 +520,7 @@
         .about-image img {
             width: 100%;
             max-width: 400px;
-            border-radius: 16px; /* Sudut membulat kecil seperti gambar */
+            border-radius: 16px;
             object-fit: cover;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
@@ -539,7 +547,6 @@
         .about-text strong { color: var(--text-light); font-weight: 600; }
         html.dark .about-text strong { color: var(--text-dark); }
 
-        /* Garis Pemisah Tipis */
         .about-divider {
             width: 100%;
             height: 1px;
@@ -548,7 +555,6 @@
         }
         html.dark .about-divider { background: rgba(255, 255, 255, 0.1); }
 
-        /* Detail List: Name, Email, dll */
         .about-details {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -569,32 +575,15 @@
             font-weight: 600;
         }
         html.dark .detail-item strong { color: var(--text-dark); }
-        .detail-item a { color: #22c55e; transition: opacity 0.3s;} /* Warna Hijau Email */
+        .detail-item a { color: #22c55e; transition: opacity 0.3s;}
         .detail-item a:hover { opacity: 0.8; }
 
-        /* Tombol & Social Row */
         .about-action-row {
             display: flex;
             align-items: center;
             gap: 25px;
         }
         
-        .btn-download-green {
-            background: #22c55e;
-            color: #fff;
-            padding: 10px 24px;
-            border-radius: 50px;
-            font-size: 14px;
-            font-weight: 600;
-            transition: var(--transition);
-            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
-        }
-        .btn-download-green:hover {
-            background: #16a34a;
-            transform: translateY(-2px);
-            color: #fff;
-        }
-
         .action-line {
             width: 40px;
             height: 1px;
@@ -785,7 +774,6 @@
         html.dark .skill-card {
             background: var(--bg-dark-sec);
             border-color: var(--border-dark);
-            box-shadow: var(--shadow-sm);
         }
         .skill-card:hover {
             transform: translateY(-3px);
@@ -864,8 +852,8 @@
             width: 100%; 
             height: 220px; 
             object-fit: cover;
-            object-position: top; /* Berfokus pada header image untuk memperkecil distorsi visual/blur */
-            image-rendering: high-quality; /* Perbaikan untuk gambar blur */
+            object-position: top;
+            image-rendering: high-quality;
             border-bottom: 1px solid var(--border-light);
         }
         html.dark .project-thumb { border-bottom-color: var(--border-dark); }
@@ -936,7 +924,7 @@
         .certificate-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-md); }
         .certificate-card img { 
             width: 100%; height: 200px; object-fit: cover; 
-            image-rendering: high-quality; /* Perbaikan untuk gambar blur */
+            image-rendering: high-quality;
             border-bottom: 1px solid var(--border-light); 
         }
         html.dark .certificate-card img { border-bottom-color: var(--border-dark); }
@@ -946,7 +934,7 @@
         .certificate-card p { font-size: 13px; color: #64748b; }
         html.dark .certificate-card p { color: #94a3b8; }
 
-        /* ================= CONTACT VIEW (GALLERY & CONTACT) ================= */
+        /* ================= CONTACT VIEW ================= */
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -958,7 +946,7 @@
             border-radius: 16px; display: block;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
             transition: transform 0.3s ease;
-            image-rendering: high-quality; /* Perbaikan untuk gambar blur */
+            image-rendering: high-quality;
         }
         .gallery-grid img:hover { transform: scale(1.02); z-index: 1; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); }
         .gallery-grid img.landscape { grid-column: span 2; }
@@ -1065,7 +1053,7 @@
             .controls { flex-direction: column; padding: 20px 15px 0 15px; gap: 15px; border-top: 1px solid var(--border-light); margin-top: 10px; }
             html.dark .controls { border-top-color: var(--border-dark); }
             .controls-top { justify-content: center; width: 100%; }
-            .cv-btn { width: 100%; max-width: none; padding: 12px; }
+            .cv-btn, .btn-download-green { width: 100%; max-width: none; padding: 12px; }
             .skill-tab { padding: 12px 5px; font-size: 13px; }
         }
         
@@ -1464,7 +1452,6 @@
                         <div class="project-content">
                             <h3 class="project-title">Website Manajemen Keuangan</h3>
                             <p class="project-desc" data-key="projectdesc2">Financial management application for recording income, expenses, and financial reports. (Laravel, MySQL, Bootstrap).</p>
-                            <!-- Tautan diubah agar mengarah ke file HTML sesuai nama -->
                             <a href="project/Website Manajemen Keuangan.html" class="project-btn"><i class="fa-solid fa-circle-info"></i> <span data-key="viewDetails">View Details</span></a>
                         </div>
                     </div>
@@ -1474,7 +1461,6 @@
                         <div class="project-content">
                             <h3 class="project-title">Website Sejuk</h3>
                             <p class="project-desc" data-key="projectdesc3">Modern café website selling milkshakes and smoothies with a fresh and interactive UI design. (Html,Css,Js, MySQL).</p>
-                            <!-- Tautan diubah agar mengarah ke file HTML sesuai nama -->
                             <a href="project/Website Sejuk.html" class="project-btn"><i class="fa-solid fa-circle-info"></i> <span data-key="viewDetails">View Details</span></a>
                         </div>
                     </div>
@@ -1484,7 +1470,6 @@
                         <div class="project-content">
                             <h3 class="project-title">Wedding Announcement</h3>
                             <p class="project-desc" data-key="projectdesc8">An elegant digital wedding invitation and announcement website with RSVP features and event details.</p>
-                            <!-- Tautan diubah agar mengarah ke file HTML sesuai nama -->
                             <a href="project/Wedding Announcement.html" class="project-btn"><i class="fa-solid fa-circle-info"></i> <span data-key="viewDetails">View Details</span></a>
                         </div>
                     </div>
@@ -1663,20 +1648,8 @@
 
     <!-- Scripts -->
     <script>
-        // === SPA NAVIGATION LOGIC (SMOOTH TRANSITIONS & PERSISTENCE) ===
-        async function navigateTo(targetId, updateHistory = true) {
-            const currentView = document.querySelector('.page-view.active');
-            const targetView = document.getElementById(targetId);
-            
-            if (currentView === targetView) return;
-
-            // Simpan status ke URL Hash & LocalStorage agar tidak hilang saat refresh
-            if (updateHistory) {
-                history.pushState(null, null, '#' + targetId);
-                localStorage.setItem('activeTab', targetId);
-            }
-
-            // Close Mobile Nav if open
+        // === UTILITY FUNCTION: REUSABLE NAV UI MODIFIERS ===
+        function closeMobileNav() {
             const navContainer = document.getElementById('nav-container');
             const icon = document.getElementById('menu-toggle').querySelector('i');
             if(navContainer && navContainer.classList.contains('active')) {
@@ -1684,14 +1657,32 @@
                 icon.classList.remove('fa-xmark');
                 icon.classList.add('fa-bars');
             }
+        }
 
-            // Update Navbar Active State
+        function updateNavActiveState(targetId) {
             document.querySelectorAll('.nav-btn').forEach(btn => {
                 btn.classList.remove('active');
                 if(btn.getAttribute('onclick') && btn.getAttribute('onclick').includes(targetId)) {
                     btn.classList.add('active');
                 }
             });
+        }
+
+        // === SPA NAVIGATION LOGIC (SMOOTH TRANSITIONS & PERSISTENCE) ===
+        async function navigateTo(targetId, updateHistory = true) {
+            const currentView = document.querySelector('.page-view.active');
+            const targetView = document.getElementById(targetId);
+            
+            if (currentView === targetView) return;
+
+            // Simpan status ke LocalStorage agar tidak hilang saat refresh (Tanpa mengubah URL)
+            if (updateHistory) {
+                // history.pushState(null, null, '#' + targetId); <-- Baris ini dinonaktifkan
+                localStorage.setItem('activeTab', targetId);
+            }
+
+            closeMobileNav();
+            updateNavActiveState(targetId);
 
             // Transition Logic
             if(currentView) {
@@ -1713,17 +1704,17 @@
 
         // === INITIATE ACTIVE TAB ON PAGE LOAD (REFRESH) ===
         document.addEventListener('DOMContentLoaded', () => {
-            // Ambil tab dari URL Hash atau LocalStorage (Default: view-home)
-            let initialView = window.location.hash.substring(1) || localStorage.getItem('activeTab') || 'view-home';
+            // Ambil tab dari LocalStorage saja (Tanpa melihat Hash URL)
+            let initialView = localStorage.getItem('activeTab') || 'view-home';
             
             // Validasi apakah ID tersebut benar-benar ada
             if (!document.getElementById(initialView) || !initialView.startsWith('view-')) {
                 initialView = 'view-home';
             }
             
-            // Sinkronisasi URL jika diakses tanpa Hash tapi ada riwayat di LocalStorage
-            if (window.location.hash.substring(1) !== initialView) {
-                history.replaceState(null, null, '#' + initialView);
+            // Bersihkan URL Hash jika kebetulan ada sisa dari versi sebelumnya
+            if (window.location.hash) {
+                history.replaceState(null, null, window.location.pathname);
             }
 
             // Jika tab aktif bukanlah home, langsung ubah tampilan tanpa animasi panjang
@@ -1738,24 +1729,18 @@
                     targetView.style.display = 'block';
                     targetView.classList.add('active');
                 }
-
-                // Update Navbar
-                document.querySelectorAll('.nav-btn').forEach(btn => {
-                    btn.classList.remove('active');
-                    if(btn.getAttribute('onclick') && btn.getAttribute('onclick').includes(initialView)) {
-                        btn.classList.add('active');
-                    }
-                });
+                updateNavActiveState(initialView);
             }
         });
 
         // === HANDLE BROWSER BACK / FORWARD BUTTONS ===
         window.addEventListener('popstate', () => {
-            const targetId = window.location.hash.substring(1) || 'view-home';
-            if (document.getElementById(targetId)) {
-                navigateTo(targetId, false); // false = jangan update history lagi, karena URL sudah berubah
-                localStorage.setItem('activeTab', targetId);
-            }
+            // Fungsi back/forward dinonaktifkan untuk internal routing karena kita tidak pakai hash lagi
+            // const targetId = window.location.hash.substring(1) || 'view-home';
+            // if (document.getElementById(targetId)) {
+            //     navigateTo(targetId, false);
+            //     localStorage.setItem('activeTab', targetId);
+            // }
         });
 
         // === SKILLS TABS LOGIC ===
@@ -1783,10 +1768,10 @@
         // === NAVBAR MOBILE TOGGLE ===
         const toggle = document.getElementById('menu-toggle');
         const navContainer = document.getElementById('nav-container');
-        const icon = toggle.querySelector('i');
 
-        if (toggle && navContainer && icon) {
+        if (toggle && navContainer) {
             toggle.addEventListener('click', () => {
+                const icon = toggle.querySelector('i');
                 navContainer.classList.toggle('active');
                 if(navContainer.classList.contains('active')) {
                     icon.classList.remove('fa-bars');
@@ -1800,9 +1785,7 @@
             // Menutup menu jika klik di luar menu (Mobile)
             document.addEventListener('click', (e) => {
                 if (!navContainer.contains(e.target) && !toggle.contains(e.target) && navContainer.classList.contains('active')) {
-                    navContainer.classList.remove('active');
-                    icon.classList.remove('fa-xmark');
-                    icon.classList.add('fa-bars');
+                    closeMobileNav();
                 }
             });
         }
@@ -1816,12 +1799,8 @@
             themeToggle.textContent = isDark ? '☀️' : '🌙';
         }
         
-        if (!document.documentElement.style.background && localStorage.getItem('theme') !== 'dark') {
-            updateThemeIcon();
-        } else {
-            document.documentElement.style.background = '';
-            updateThemeIcon();
-        }
+        // Inisialisasi ikon
+        updateThemeIcon();
 
         if (themeToggle) {
             themeToggle.addEventListener('click', () => {
@@ -1837,20 +1816,13 @@
 
         const langData = {
             en: {
-                // Nav & Global
                 home: "Home", experience: "Experience", projects: "Projects", contact: "Contact",
                 downloadCV: "Download CV", footer: "© 2025 | Designed and coded by Ahmad Yasin Fadhilah",
-                
-                // Home
                 heroTitle: "Hi, I’m <span>Yaasin</span> 👋",
-                
-                // About
                 aboutTitle: "Ahmad Yasin Fadhilah",
                 aboutP1: "I’m a graduate of <strong>Informatics Engineering at Dian Nuswantoro University</strong>, with a strong passion for <strong>web development</strong> and <strong>information systems</strong>. I have hands-on experience developing web-based applications using <strong>Laravel</strong>, <strong>HTML</strong>, <strong>CSS</strong>, and <strong>MySQL</strong>.",
                 aboutP2: "Beyond the tech world, I’ve been actively involved in various organizations such as the <strong>Student Representative Council</strong>, <strong>FL2MI Semarang Raya</strong>, and the <strong>Dian Nuswantoro Computer Club</strong>. These experiences shaped me into a communicative, adaptive, and collaborative person with strong leadership skills. For me, technology is more than just code — it’s a way to create real, meaningful impact.",
                 lbl_name: "Name:", lbl_email: "Email:", lbl_from: "From:", txt_from: "Indonesia, Central Java",
-                
-                // Experience
                 experienceTag: "Experience", experienceTitle: "Here is a quick summary of my most recent experiences:",
                 roleBbpvp: "Computer Administrator, Intern", companyBbpvp: "BBPVP Semarang (Balai Besar Pelatihan Vokasi dan Produktivitas)", dateBbpvp: "<i class='fa-regular fa-calendar'></i> November 2025 - Present",
                 bbpvp1: "Co-developed and managed the Activity Report Management System project for Short Course Vocational Training to digitalize and streamline reporting.", bbpvp2: "Performed routine maintenance, installation, and configuration of hardware and software to ensure smooth IT operations.", bbpvp3: "Assisted in periodic internal data management and digital inventory systems to maintain the accuracy of the institution's information technology assets.", bbpvp4: "Served as a multimedia equipment operator responsible for audio-visual support in the implementation of various training activities.",
@@ -1862,33 +1834,22 @@
                 seo1: "Acted as an event consultant and personal Liaison Officer with full responsibility for assistance, accommodation, and ensuring smooth performances of national-level artists at various mass music concerts.", seo2: "Demonstrated a track record of managing the needs of large-scale guest stars such as Souljah in 2018, Ndarboy Genk in 2019, Damara De in 2023, and Massdhoo in 2024 at the annual SMA N 2 Rembang anniversary event.", seo3: "Contributed to the early-stage operational team to ensure the smooth execution and success of the Rembang Color Fun event.", seo4: "Served as a tour guide and field coordinator to facilitate various working visit programs for government agencies from outside the region.", seo5: "Ensured smooth mobility, schedule management, and participant comfort during trips, with specific experience handling groups from the Katingan Regency Health Office and the Kotawaringin Barat Tourism Office.",
                 skillsTitle: "My Skills", skillsSubtitle: "Technical expertise and proficiency across different domains of software development",
                 tabFrontend: "Frontend", tabBackend: "Backend", tabDesign: "Design & Editing", tabTools: "Tools",
-                
-                // Projects
                 projectTag: "Projects", projectTitle: "Some of my highlighted works:", 
-                viewDetails: "View Details", // Unified key for all buttons
+                viewDetails: "View Details", 
                 projectdesc1: "Koperasi Karyawan web system with savings and loan features and member management. (Laravel, MySQL, Bootstrap).", projectdesc2: "Financial management application for recording income, expenses, and financial reports. (Laravel, MySQL, Bootstrap).", projectdesc3: "Modern café website selling milkshakes and smoothies with a fresh and interactive UI design. (Html,Css,Js, MySQL).", projectdesc4: "A web-based dormitory permission system to easily manage and track student leave requests.", projectdesc5: "An integrated training certificate database system (PELITA) for centralized and efficient certificate management.", projectdesc6: "Data collection system for PBL (Project Based Learning) participants and methodology tracking.", projectdesc7: "An integrated portal information system for BBPVP providing various training services and institutional information.", projectdesc8: "An elegant digital wedding invitation and announcement website with RSVP features and event details.",
                 achiTag: "Achievements", achiTitle: "Certificates & Achievement Awards",
                 card1: "MSIB Batch 6 Participant – Web Fullstack Developer", pcard1: "Gamelab Indonesia — 2024", card2: "Video Content Creator in Higher Education", pcard2: "Digitalent — 2023", card3: "Ethical Hacker", pcard3: "Digitalent - 2025", card4: "English Proficiency Assessment", pcard4: "CFLT Universitas Dian Nuswantoro - 2025", card5: "General Chairman", pcard5: "Student Representative Council Universitas Dian Nuswantoro - 2023",
-                
-                // Contact
                 galleryTag: "Documentation", galleryTitle: "My Gallery",
                 contactTag: "Contact Me", contactTitle: "Let’s work together! Drop me a line below or reach me through these platforms.", ccSocial: "My Social Media:", ccFind: "Find my Portfolio:"
             },
             id: {
-                // Nav & Global
                 home: "Beranda", experience: "Pengalaman", projects: "Proyek", contact: "Kontak",
                 downloadCV: "Unduh CV", footer: "© 2025 | Dirancang dan dikode oleh Ahmad Yasin Fadhilah",
-                
-                // Home
                 heroTitle: "Halo, Saya <span>Yaasin</span> 👋",
-                
-                // About
                 aboutTitle: "Ahmad Yasin Fadhilah",
                 aboutP1: "Saya adalah lulusan <strong>Teknik Informatika Universitas Dian Nuswantoro</strong> yang memiliki ketertarikan besar di bidang <strong>pengembangan web</strong> dan <strong>sistem informasi</strong>. Saya berpengalaman mengembangkan aplikasi berbasis web menggunakan <strong>Laravel</strong>, <strong>HTML</strong>, <strong>CSS</strong>, dan <strong>MySQL</strong>.",
                 aboutP2: "Selain fokus di dunia teknologi, saya juga aktif di berbagai organisasi seperti <strong>Dewan Perwakilan Mahasiswa</strong>, <strong>FL2MI Semarang Raya</strong>, dan <strong>Dian Nuswantoro Computer Club</strong>. Pengalaman tersebut membentuk saya menjadi pribadi yang adaptif, komunikatif, serta mampu memimpin dan bekerja sama dalam tim. Bagi saya, teknologi bukan sekadar kode — tapi cara untuk menciptakan solusi nyata yang berdampak positif.",
                 lbl_name: "Nama:", lbl_email: "Email:", lbl_from: "Dari:", txt_from: "Indonesia, Jawa Tengah",
-                
-                // Experience
                 experienceTag: "Pengalaman", experienceTitle: "Berikut ringkasan singkat dari pengalaman terbaru saya:",
                 roleBbpvp: "Pranata Komputer, Magang", companyBbpvp: "Balai Besar Pelatihan Vokasi dan Produktivitas (BBPVP) Semarang", dateBbpvp: "<i class='fa-regular fa-calendar'></i> November 2025 - Sekarang",
                 bbpvp1: "Turut mengembangkan dan mengelola proyek Sistem Manajemen Laporan Kegiatan untuk Pelatihan Vokasi Short Course guna mendigitalisasi dan mengefisiensikan pelaporan.", bbpvp2: "Melakukan pemeliharaan (maintenance) rutin, instalasi, serta konfigurasi pada perangkat keras (hardware) dan perangkat lunak (software) untuk memastikan kelancaran operasional IT.", bbpvp3: "Membantu pengelolaan data internal dan sistem inventori digital secara berkala untuk menjaga akurasi aset teknologi informasi lembaga.", bbpvp4: "Bertugas sebagai operator perangkat multimedia yang bertanggung jawab atas dukungan audio-visual dalam pelaksanaan berbagai kegiatan pelatihan.",
@@ -1900,15 +1861,11 @@
                 seo1: "Menjalankan peran sebagai konsultan acara dan Liaison Officer personal dengan tanggung jawab penuh atas pendampingan, akomodasi, hingga kelancaran penampilan artis tingkat nasional pada berbagai konser musik massal.", seo2: "Memiliki rekam jejak dalam mengelola kebutuhan bintang tamu berskala besar seperti Souljah pada 2018, Ndarboy Genk pada 2019, Damara De pada 2023, serta Massdhoo pada 2024 di acara rutin HUT SMA N 2 Rembang.", seo3: "Berkontribusi dalam tim operasional tahap awal guna memastikan kelancaran dan kesuksesan penyelenggaraan acara Rembang Color Fun.", seo4: "Bertugas sebagai pemandu wisata sekaligus koordinator lapangan untuk memfasilitasi berbagai program kunjungan kerja instansi kepemerintahan dari luar daerah.", seo5: "Memastikan kelancaran mobilitas, manajemen jadwal, dan kenyamanan peserta selama perjalanan, dengan pengalaman khusus menangani rombongan dari Dinas Kesehatan Kabupaten Katingan dan Dinas Pariwisata Kotawaringin Barat.",
                 skillsTitle: "Keahlian Saya", skillsSubtitle: "Keahlian teknis dan kemahiran di berbagai bidang pengembangan perangkat lunak",
                 tabFrontend: "Frontend", tabBackend: "Backend", tabDesign: "Desain & Editing", tabTools: "Alat (Tools)",
-                
-                // Projects
                 projectTag: "Proyek", projectTitle: "Beberapa karya unggulan saya:", 
-                viewDetails: "Lihat Selengkapnya", // Unified key for all buttons
+                viewDetails: "Lihat Selengkapnya", 
                 projectdesc1: "Sistem koperasi karyawan berbasis web dengan fitur simpan pinjam dan manajemen anggota. (Laravel, MySQL, Bootstrap).", projectdesc2: "Aplikasi manajemen keuangan untuk mencatat pemasukan, pengeluaran, dan laporan keuangan. (Laravel, MySQL, Bootstrap).", projectdesc3: "Website cafe modern yang menjual milkshake dan smoothies dengan desain UI segar dan interaktif. (Html,Css,Js, MySQL).", projectdesc4: "Sistem perizinan asrama berbasis web untuk mengelola dan melacak permintaan izin siswa dengan mudah.", projectdesc5: "Sistem pangkalan data sertifikat pelatihan terpadu (PELITA) untuk manajemen sertifikat yang terpusat dan efisien.", projectdesc6: "Sistem pendataan untuk peserta PBL (Project Based Learning) dan pelacakan metodologi pembelajaran.", projectdesc7: "Sistem informasi portal terpadu BBPVP yang menyediakan berbagai layanan pelatihan dan informasi kelembagaan.", projectdesc8: "Website undangan dan pengumuman pernikahan digital yang elegan dengan fitur RSVP dan detail acara.",
                 achiTag: "Pencapaian", achiTitle: "Piagam & Sertifikat Pencapaian",
                 card1: "Peserta MSIB Batch 6 – Web Fullstack Developer.", pcard1: "Gamelab Indonesia — 2024", card2: "Video Content Creator pada Sektor Pendidikan Tinggi", pcard2: "Digitalent — 2023", card3: "Ethical Hacker", pcard3: "Digitalent - 2025", card4: "Penilaian Kemahiran Berbahasa Inggris", pcard4: "CFLT Universitas Dian Nuswantoro - 2025", card5: "Ketua Umum", pcard5: "Dewan Perwakilan Mahasiswa KM Universitas Dian Nuswantoro",
-                
-                // Contact
                 galleryTag: "Dokumentasi", galleryTitle: "Galeriku",
                 contactTag: "Kontak Saya", contactTitle: "Mari bekerja sama! Tinggalkan pesan di bawah ini atau hubungi saya melalui platform berikut.", ccSocial: "Sosial Media Saya:", ccFind: "Temukan Portofolio Saya:"
             }
@@ -1976,20 +1933,19 @@
         let scrollLeft;
 
         if (scrollContainer) {
+            const endDrag = () => {
+                isDown = false;
+                scrollContainer.style.cursor = 'grab';
+            };
+
             scrollContainer.addEventListener('mousedown', (e) => {
                 isDown = true;
                 scrollContainer.style.cursor = 'grabbing';
                 startX = e.pageX - scrollContainer.offsetLeft;
                 scrollLeft = scrollContainer.scrollLeft;
             });
-            scrollContainer.addEventListener('mouseleave', () => {
-                isDown = false;
-                scrollContainer.style.cursor = 'grab';
-            });
-            scrollContainer.addEventListener('mouseup', () => {
-                isDown = false;
-                scrollContainer.style.cursor = 'grab';
-            });
+            scrollContainer.addEventListener('mouseleave', endDrag);
+            scrollContainer.addEventListener('mouseup', endDrag);
             scrollContainer.addEventListener('mousemove', (e) => {
                 if (!isDown) return;
                 e.preventDefault();
