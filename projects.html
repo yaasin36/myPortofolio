@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Yaasin — Portfolio | Projects</title>
+    
+    <link rel="icon" type="image/x-icon" href="img/logo.yasin.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <script>
+        (function () { try { if (localStorage.getItem("theme") === "dark") { document.documentElement.classList.add("dark"); document.documentElement.style.background = "#090c1b"; } } catch (e) {} })();
+    </script>
+
+    <style>
+        :root {
+            --bg-light: #f8fafc; --bg-light-sec: #f1f5f9; --text-light: #0a2240; --nav-light: rgba(255, 255, 255, 0.85); --nav-mobile-light: #ffffff; --border-light: rgba(0, 0, 0, 0.08);
+            --bg-dark: #090c1b; --bg-dark-sec: #111730; --text-dark: #f8fafc; --nav-dark: rgba(11, 14, 26, 0.85); --nav-mobile-dark: #0b0e1a; --border-dark: rgba(255, 255, 255, 0.08);
+            --primary: #8ab4ff; --accent: #ff4d6d;
+            --shadow-sm: 0 4px 15px rgba(0, 0, 0, 0.05); --shadow-md: 0 10px 25px rgba(0, 0, 0, 0.1); --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: "Poppins", sans-serif; background: var(--bg-light); color: var(--text-light); display: flex; flex-direction: column; min-height: 100vh; transition: background 0.3s, color 0.3s; overflow-x: hidden; }
+        html.dark body { background: var(--bg-dark); color: var(--text-dark); }
+        a { text-decoration: none; color: inherit; }
+        main { flex: 1; display: flex; flex-direction: column; width: 100%; }
+        
+        /* NAVBAR */
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 12px 25px; background: var(--nav-light); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid var(--border-light); position: sticky; top: 20px; margin: 0 auto 30px auto; width: 92%; max-width: 1100px; border-radius: 50px; z-index: 1000; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05); transition: background 0.3s, border-color 0.3s, box-shadow 0.3s; }
+        html.dark nav { background: var(--nav-dark); border: 1px solid var(--border-dark); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); }
+        .logo { display: flex; align-items: center; z-index: 1001; transition: var(--transition); }
+        .logo img { height: 22px; filter: brightness(0); transition: filter 0.3s ease, opacity 0.3s ease; }
+        html.dark .logo img { filter: brightness(0) invert(1); }
+        .nav-container { display: flex; align-items: center; gap: 25px; }
+        .nav-links { list-style: none; display: flex; align-items: center; gap: 10px; }
+        .nav-links a { color: #64748b; font-weight: 500; transition: var(--transition); font-size: 14px; padding: 8px 16px; border-radius: 50px; cursor: pointer; }
+        html.dark .nav-links a { color: #94a3b8; }
+        .nav-links a:hover, .nav-links a.active { color: var(--text-light); background: rgba(0, 0, 0, 0.05); font-weight: 600; }
+        html.dark .nav-links a:hover, html.dark .nav-links a.active { color: var(--text-dark); background: rgba(255, 255, 255, 0.1); }
+        .divider { width: 1px; height: 20px; background: var(--border-light); }
+        html.dark .divider { background: var(--border-dark); }
+        .controls { display: flex; align-items: center; gap: 15px; }
+        .controls-top { display: flex; align-items: center; gap: 10px; }
+        button.lang-toggle { background: transparent; border: 1px solid var(--border-light); border-radius: 50px; color: var(--text-light); padding: 6px 14px; font-size: 13px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; min-width: 48px; }
+        html.dark button.lang-toggle { border-color: var(--border-dark); color: var(--text-dark); background: rgba(255, 255, 255, 0.05); }
+        button.theme-toggle { background: transparent; border: none; color: var(--text-light); font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 50%; }
+        html.dark button.theme-toggle { color: var(--text-dark); }
+        .cv-btn { background: var(--primary); color: #fff; padding: 8px 20px; border-radius: 50px; font-weight: 600; font-size: 13px; text-align: center; }
+        .menu-toggle { display: none; font-size: 22px; cursor: pointer; color: var(--text-light); z-index: 1001; padding: 5px; }
+        html.dark .menu-toggle { color: var(--text-dark); }
+
+        /* GENERAL SECTION STYLES */
+        section { padding: 80px 5%; width: 100%; }
+        .section-header { text-align: center; margin-bottom: 50px; }
+        .section-tag { display: inline-block; background: var(--border-light); color: var(--text-light); padding: 6px 20px; border-radius: 50px; font-size: 14px; font-weight: 600; margin-bottom: 15px; }
+        html.dark .section-tag { background: var(--border-dark); color: var(--text-dark); }
+        .section-title { font-size: clamp(22px, 3vw, 32px); font-weight: 600; }
+
+        /* ================= PROJECTS STYLES ================= */
+        .projects-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; max-width: 1200px; margin: 0 auto; }
+        .project-card { width: clamp(280px, 100%, 360px); background: var(--nav-mobile-light); border-radius: 16px; box-shadow: var(--shadow-sm); overflow: hidden; transition: var(--transition); display: flex; flex-direction: column; border: 1px solid transparent; }
+        html.dark .project-card { background: var(--bg-dark-sec); border: 1px solid var(--border-dark); }
+        .project-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-md); border-color: rgba(138, 180, 255, 0.3); }
+        .project-thumb { width: 100%; height: 220px; object-fit: cover; object-position: top; image-rendering: high-quality; border-bottom: 1px solid var(--border-light); }
+        html.dark .project-thumb { border-bottom-color: var(--border-dark); }
+        .project-content { padding: 25px 20px; display: flex; flex-direction: column; align-items: center; text-align: center; flex-grow: 1; }
+        .project-title { font-size: 18px; font-weight: 600; margin-bottom: 12px; line-height: 1.3; }
+        .project-desc { font-size: 14px; color: #64748b; margin-bottom: 25px; flex-grow: 1; line-height: 1.6; }
+        html.dark .project-desc { color: #94a3b8; }
+        .project-btn { background: var(--text-light); color: #fff; padding: 10px 18px; border-radius: 8px; font-size: 14px; font-weight: 500; transition: var(--transition); display: flex; align-items: center; gap: 8px; cursor: pointer; }
+        html.dark .project-btn { background: #2a3454; }
+        .project-btn:hover { background: var(--primary); color: #090c1b; }
+
+        /* ================= ACHIEVEMENTS STYLES ================= */
+        .achievements { background: var(--bg-light-sec); overflow: hidden; }
+        html.dark .achievements { background: var(--bg-dark); }
+        .achievements-scroll { display: flex; gap: 25px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 10px 5% 30px 5%; max-width: 1400px; margin: 0 auto; scroll-behavior: smooth; }
+        .achievements-scroll::-webkit-scrollbar { height: 6px; }
+        .achievements-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        html.dark .achievements-scroll::-webkit-scrollbar-thumb { background: #334155; }
+        .certificate-card { flex: 0 0 auto; width: clamp(280px, 85vw, 360px); background: var(--nav-mobile-light); border-radius: 16px; box-shadow: var(--shadow-sm); scroll-snap-align: center; transition: var(--transition); overflow: hidden; border: 1px solid transparent; }
+        html.dark .certificate-card { background: var(--bg-dark-sec); border-color: var(--border-dark); }
+        .certificate-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-md); }
+        .certificate-card img { width: 100%; height: 200px; object-fit: cover; image-rendering: high-quality; border-bottom: 1px solid var(--border-light); }
+        html.dark .certificate-card img { border-bottom-color: var(--border-dark); }
+        .certificate-info { padding: 20px; text-align: center; display: flex; flex-direction: column; align-items: center; }
+        .certificate-card h3 { font-size: 15px; font-weight: 600; margin-bottom: 8px; line-height: 1.4; }
+        .certificate-card p { font-size: 13px; color: #64748b; }
+        html.dark .certificate-card p { color: #94a3b8; }
+
+        footer { background: var(--nav-mobile-light); color: var(--text-light); text-align: center; padding: 25px 20px; font-size: 14px; margin-top: auto; border-top: 1px solid var(--border-light); transition: var(--transition); }
+        html.dark footer { background: #050711; color: var(--text-dark); border-top-color: var(--border-dark); }
+
+        @media (max-width: 900px) {
+            .menu-toggle { display: block; }
+            .nav-container { position: absolute; top: calc(100% + 15px); left: 0; width: 100%; background: var(--nav-mobile-light); flex-direction: column; align-items: stretch; padding: 15px 0 25px 0; gap: 0; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); border: 1px solid var(--border-light); border-radius: 24px; opacity: 0; visibility: hidden; transform: translateY(-10px); transition: all 0.3s ease; z-index: 999; }
+            html.dark .nav-container { background: var(--nav-mobile-dark); border: 1px solid var(--border-dark); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5); }
+            .nav-container.active { opacity: 1; visibility: visible; transform: translateY(0); }
+            .nav-links { flex-direction: column; width: 100%; gap: 5px; padding: 0 15px; }
+            .nav-links li { width: 100%; }
+            .nav-links a { display: block; padding: 12px 20px; text-align: center; border-radius: 12px; }
+            .divider { display: none; }
+            .controls { flex-direction: column; padding: 20px 15px 0 15px; gap: 15px; border-top: 1px solid var(--border-light); margin-top: 10px; }
+            html.dark .controls { border-top-color: var(--border-dark); }
+            .controls-top { justify-content: center; width: 100%; }
+            .cv-btn { width: 100%; max-width: none; padding: 12px; }
+        }
+        @media (max-width: 768px) {
+            section { padding: 60px 5%; }
+            .project-thumb { height: 200px; }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav>
+        <div class="logo">
+            <img src="img/fontyasin.png" alt="Yasinisme Logo" />
+        </div>
+        <div class="menu-toggle" id="menu-toggle"><i class="fa-solid fa-bars"></i></div>
+        <div class="nav-container" id="nav-container">
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-btn" data-key="home">Home</a></li>
+                <li><a href="experience.html" class="nav-btn" data-key="experience">Experience</a></li>
+                <li><a href="projects.html" class="nav-btn active" data-key="projects">Projects</a></li>
+                <li><a href="contact.html" class="nav-btn" data-key="contact">Contact</a></li>
+            </ul>
+            <div class="divider"></div>
+            <div class="controls">
+                <div class="controls-top">
+                    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle Theme">🌙</button>
+                    <button class="lang-toggle" id="lang-switch" aria-label="Toggle Language">EN</button>
+                </div>
+                <a href="https://drive.google.com/drive/folders/1qD1MSs_e6KTrl34RY7e4E9DL1CkG4P8S?usp=sharing" class="cv-btn" target="_blank" data-key="downloadCV">Download CV</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- PROJECTS SECTION -->
+        <section class="projects">
+            <div class="section-header">
+                <span class="section-tag" data-key="projectTag">Projects</span>
+                <h2 class="section-title" data-key="projectTitle">Some of my highlighted works:</h2>
+            </div>
+
+            <div class="projects-grid">
+                <div class="project-card">
+                    <img src="img/Project/Website Koperasi Karyawan.png" alt="Website Koperasi Karyawan" class="project-thumb" loading="lazy" />
+                    <div class="project-content">
+                        <h3 class="project-title">Website Koperasi Karyawan</h3>
+                        <p class="project-desc" data-key="projectdesc1">Koperasi Karyawan web system with savings and loan features and member management. (Laravel, MySQL, Bootstrap).</p>
+                        <a href="project/Website Koperasi Karyawan.html" class="project-btn"><i class="fa-solid fa-circle-info"></i> <span data-key="viewDetails">View Details</span></a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <img src="img/Project/Web Management Keuangan.png" alt="Website Manajemen Keuangan" class="project-thumb" loading="lazy" />
+                    <div class="project-content">
+                        <h3 class="project-title">Website Manajemen Keuangan</h3>
+                        <p class="project-desc" data-key="projectdesc2">Financial management application for recording income, expenses, and financial reports. (Laravel, MySQL, Bootstrap).</p>
+                        <a href="project/Website Manajemen Keuangan.html" class="project-btn"><i class="fa-solid fa-circle-info"></i> <span data-key="viewDetails">View Details</span></a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <img src="img/Project/Website Sejuk.png" alt="Website Sejuk" class="project-thumb" loading="lazy" />
+                    <div class="project-content">
+                        <h3 class="project-title">Website Sejuk</h3>
+                        <p class="project-desc" data-key="projectdesc3">Modern café website selling milkshakes and smoothies with a fresh and interactive UI design. (Html,Css,Js, MySQL).</p>
+                        <a href="project/Website Sejuk.html" class="project-btn"><i class="fa-solid fa-circle-info"></i> <span data-key="viewDetails">View Details</span></a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <img src="img/Project/Weeding Annoucement.png" alt="Wedding Announcement" class="project-thumb" loading="lazy" />
+                    <div class="project-content">
+                        <h3 class="project-title">Wedding Announcement</h3>
+                        <p class="project-desc" data-key="projectdesc8">An elegant digital wedding invitation and announcement website with RSVP features and event details.</p>
+                        <a href="project/Wedding Announcement.html" class="project-btn"><i class="fa-solid fa-circle-info"></i> <span data-key="viewDetails">View Details</span></a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <img src="img/Project/Pangkalan Data Sertifikat Pelatihan Terpadu (PELITA).png" alt="Database Sertifikat PELITA" class="project-thumb" loading="lazy" />
+                    <div class="project-content">
+                        <h3 class="project-title">Sistem Pangkalan Data PELITA</h3>
+                        <p class="project-desc" data-key="projectdesc5">An integrated training certificate database system (PELITA) for centralized and efficient certificate management.</p>
+                        <a href="project/Pangkalan Data Sertifikat Pelatihan Terpadu (PELITA).html" class="project-btn"><i class="fa-solid fa-circle-info"></i> <span data-key="viewDetails">View Details</span></a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <img src="img/Project/IZIN ASRAMA.png" alt="Sistem Izin Asrama" class="project-thumb" loading="lazy" />
+                    <div class="project-content">
+                        <h3 class="project-title">Sistem Izin Asrama</h3>
+                        <p class="project-desc" data-key="projectdesc4">A web-based dormitory permission system to easily manage and track student leave requests.</p>
+                        <a href="project/IZIN ASRAMA.html" class="project-btn"><i class="fa-solid fa-circle-info"></i> <span data-key="viewDetails">View Details</span></a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <img src="img/Project/PENDATAAN PESERTA PBL DAN METODOLOGI.png" alt="Metodologi dan PBL" class="project-thumb" loading="lazy" />
+                    <div class="project-content">
+                        <h3 class="project-title">Metodologi dan PBL</h3>
+                        <p class="project-desc" data-key="projectdesc6">Data collection system for PBL (Project Based Learning) participants and methodology tracking.</p>
+                        <a href="project/Metodologi dan PBL.html" class="project-btn"><i class="fa-solid fa-circle-info"></i> <span data-key="viewDetails">View Details</span></a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <img src="img/Project/Portal BBPVP.png" alt="Portal BBPVP" class="project-thumb" loading="lazy" />
+                    <div class="project-content">
+                        <h3 class="project-title">Portal BBPVP</h3>
+                        <p class="project-desc" data-key="projectdesc7">An integrated portal information system for BBPVP providing various training services and institutional information.</p>
+                        <a href="project/Portal BBPVP.html" class="project-btn"><i class="fa-solid fa-circle-info"></i> <span data-key="viewDetails">View Details</span></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ACHIEVEMENTS SECTION -->
+        <section class="achievements">
+            <div class="section-header">
+                <span class="section-tag" data-key="achiTag">Achievements</span>
+                <h2 class="section-title" data-key="achiTitle">Certificates & Achievement Awards</h2>
+            </div>
+
+            <div class="achievements-scroll" id="achievements-scroll">
+                <div class="certificate-card">
+                    <img src="img/Sertifikat/gamelab.png" alt="MSIB Participant" loading="lazy" />
+                    <div class="certificate-info">
+                        <h3 data-key="card1">MSIB Batch 6 Participant – Web Fullstack Developer</h3>
+                        <p data-key="pcard1">Gamelab Indonesia — 2024</p>
+                    </div>
+                </div>
+                <div class="certificate-card">
+                    <img src="img/Sertifikat/VideoContentCreator.png" alt="Video Content Creator" loading="lazy" />
+                    <div class="certificate-info">
+                        <h3 data-key="card2">Video Content Creator in Higher Education</h3>
+                        <p data-key="pcard2">Digitalent — 2023</p>
+                    </div>
+                </div>
+                <div class="certificate-card">
+                    <img src="img/Sertifikat/Ethical-Hacker.png" alt="Ethical Hacker" loading="lazy" />
+                    <div class="certificate-info">
+                        <h3 data-key="card3">Ethical Hacker</h3>
+                        <p data-key="pcard3">Digitalent - 2025</p>
+                    </div>
+                </div>
+                <div class="certificate-card">
+                    <img src="img/Sertifikat/TOEFL_AHMAD YASIN FADHILAH (2)-1.png" alt="English Proficiency" loading="lazy" />
+                    <div class="certificate-info">
+                        <h3 data-key="card4">English Proficiency Assessment</h3>
+                        <p data-key="pcard4">CFLT Universitas Dian Nuswantoro - 2025</p>
+                    </div>
+                </div>
+                <div class="certificate-card">
+                    <img src="img/Sertifikat/SERTIFIKAT PENGURUS DPM KM.png" alt="General Chairman DPM" loading="lazy" />
+                    <div class="certificate-info">
+                        <h3 data-key="card5">General Chairman</h3>
+                        <p data-key="pcard5">Student Representative Council Universitas Dian Nuswantoro - 2023</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer><p data-key="footer">© 2025 | Designed and coded by Ahmad Yasin Fadhilah</p></footer>
+
+    <script>
+        // === NAVBAR MOBILE TOGGLE ===
+        const toggle = document.getElementById('menu-toggle');
+        const navContainer = document.getElementById('nav-container');
+        const icon = toggle ? toggle.querySelector('i') : null;
+        if (toggle && navContainer && icon) {
+            toggle.addEventListener('click', () => { navContainer.classList.toggle('active'); icon.classList.toggle('fa-bars'); icon.classList.toggle('fa-xmark'); });
+            document.addEventListener('click', (e) => { if (!navContainer.contains(e.target) && !toggle.contains(e.target) && navContainer.classList.contains('active')) { navContainer.classList.remove('active'); icon.classList.remove('fa-xmark'); icon.classList.add('fa-bars'); } });
+        }
+
+        // === THEME TOGGLE ===
+        const themeToggle = document.getElementById('theme-toggle');
+        function updateThemeIcon() { if(!themeToggle) return; const isDark = document.documentElement.classList.contains('dark'); themeToggle.textContent = isDark ? '☀️' : '🌙'; }
+        if (!document.documentElement.style.background && localStorage.getItem('theme') !== 'dark') { updateThemeIcon(); } else { document.documentElement.style.background = ''; updateThemeIcon(); }
+        if (themeToggle) { themeToggle.addEventListener('click', () => { document.documentElement.classList.toggle('dark'); localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light'); updateThemeIcon(); }); }
+
+        // === SMOOTH DRAG TO SCROLL (ACHIEVEMENTS) ===
+        const scrollContainer = document.getElementById('achievements-scroll');
+        let isDown = false; let startX; let scrollLeft;
+        if (scrollContainer) {
+            scrollContainer.addEventListener('mousedown', (e) => { isDown = true; scrollContainer.style.cursor = 'grabbing'; startX = e.pageX - scrollContainer.offsetLeft; scrollLeft = scrollContainer.scrollLeft; });
+            scrollContainer.addEventListener('mouseleave', () => { isDown = false; scrollContainer.style.cursor = 'grab'; });
+            scrollContainer.addEventListener('mouseup', () => { isDown = false; scrollContainer.style.cursor = 'grab'; });
+            scrollContainer.addEventListener('mousemove', (e) => { if (!isDown) return; e.preventDefault(); const x = e.pageX - scrollContainer.offsetLeft; const walk = (x - startX) * 2; scrollContainer.scrollLeft = scrollLeft - walk; });
+            scrollContainer.style.cursor = 'grab';
+        }
+
+        // === LANGUAGE SWITCH (Simplified for specific page strings) ===
+        const langSwitch = document.getElementById('lang-switch');
+        const langData = {
+            en: {
+                home: "Home", experience: "Experience", projects: "Projects", contact: "Contact", downloadCV: "Download CV", footer: "© 2025 | Designed and coded by Ahmad Yasin Fadhilah",
+                projectTag: "Projects", projectTitle: "Some of my highlighted works:", viewDetails: "View Details",
+                projectdesc1: "Koperasi Karyawan web system with savings and loan features and member management. (Laravel, MySQL, Bootstrap).", projectdesc2: "Financial management application for recording income, expenses, and financial reports. (Laravel, MySQL, Bootstrap).", projectdesc3: "Modern café website selling milkshakes and smoothies with a fresh and interactive UI design. (Html,Css,Js, MySQL).", projectdesc4: "A web-based dormitory permission system to easily manage and track student leave requests.", projectdesc5: "An integrated training certificate database system (PELITA) for centralized and efficient certificate management.", projectdesc6: "Data collection system for PBL (Project Based Learning) participants and methodology tracking.", projectdesc7: "An integrated portal information system for BBPVP providing various training services and institutional information.", projectdesc8: "An elegant digital wedding invitation and announcement website with RSVP features and event details.",
+                achiTag: "Achievements", achiTitle: "Certificates & Achievement Awards",
+                card1: "MSIB Batch 6 Participant – Web Fullstack Developer", pcard1: "Gamelab Indonesia — 2024", card2: "Video Content Creator in Higher Education", pcard2: "Digitalent — 2023", card3: "Ethical Hacker", pcard3: "Digitalent - 2025", card4: "English Proficiency Assessment", pcard4: "CFLT Universitas Dian Nuswantoro - 2025", card5: "General Chairman", pcard5: "Student Representative Council Universitas Dian Nuswantoro - 2023"
+            },
+            id: {
+                home: "Beranda", experience: "Pengalaman", projects: "Proyek", contact: "Kontak", downloadCV: "Unduh CV", footer: "© 2025 | Dirancang dan dikode oleh Ahmad Yasin Fadhilah",
+                projectTag: "Proyek", projectTitle: "Beberapa karya unggulan saya:", viewDetails: "Lihat Selengkapnya",
+                projectdesc1: "Sistem koperasi karyawan berbasis web dengan fitur simpan pinjam dan manajemen anggota. (Laravel, MySQL, Bootstrap).", projectdesc2: "Aplikasi manajemen keuangan untuk mencatat pemasukan, pengeluaran, dan laporan keuangan. (Laravel, MySQL, Bootstrap).", projectdesc3: "Website cafe modern yang menjual milkshake dan smoothies dengan desain UI segar dan interaktif. (Html,Css,Js, MySQL).", projectdesc4: "Sistem perizinan asrama berbasis web untuk mengelola dan melacak permintaan izin siswa dengan mudah.", projectdesc5: "Sistem pangkalan data sertifikat pelatihan terpadu (PELITA) untuk manajemen sertifikat yang terpusat dan efisien.", projectdesc6: "Sistem pendataan untuk peserta PBL (Project Based Learning) dan pelacakan metodologi pembelajaran.", projectdesc7: "Sistem informasi portal terpadu BBPVP yang menyediakan berbagai layanan pelatihan dan informasi kelembagaan.", projectdesc8: "Website undangan dan pengumuman pernikahan digital yang elegan dengan fitur RSVP dan detail acara.",
+                achiTag: "Pencapaian", achiTitle: "Piagam & Sertifikat Pencapaian",
+                card1: "Peserta MSIB Batch 6 – Web Fullstack Developer.", pcard1: "Gamelab Indonesia — 2024", card2: "Video Content Creator pada Sektor Pendidikan Tinggi", pcard2: "Digitalent — 2023", card3: "Ethical Hacker", pcard3: "Digitalent - 2025", card4: "Penilaian Kemahiran Berbahasa Inggris", pcard4: "CFLT Universitas Dian Nuswantoro - 2025", card5: "Ketua Umum", pcard5: "Dewan Perwakilan Mahasiswa KM Universitas Dian Nuswantoro"
+            }
+        };
+        function applyLanguage(lang) { document.querySelectorAll("[data-key]").forEach(el => { const key = el.getAttribute("data-key"); if (langData[lang] && langData[lang][key]) { el.innerHTML = langData[lang][key]; } }); if (langSwitch) langSwitch.textContent = lang === 'en' ? 'EN' : 'ID'; localStorage.setItem('lang', lang); }
+        if (langSwitch) { langSwitch.addEventListener('click', () => { const currentLang = localStorage.getItem('lang') || 'en'; applyLanguage(currentLang === 'en' ? 'id' : 'en'); }); }
+        applyLanguage(localStorage.getItem('lang') || 'en');
+    </script>
+</body>
+</html>
