@@ -148,13 +148,15 @@
 
         html.dark .nav-links a { color: #94a3b8; }
 
-        .nav-links a:hover {
+        .nav-links a:hover,
+        .nav-links a.active {
             color: var(--text-light);
             background: rgba(0, 0, 0, 0.05);
             font-weight: 600;
         }
 
-        html.dark .nav-links a:hover {
+        html.dark .nav-links a:hover,
+        html.dark .nav-links a.active {
             color: var(--text-dark);
             background: rgba(255, 255, 255, 0.1);
         }
@@ -170,38 +172,30 @@
         .controls { display: flex; align-items: center; gap: 15px; }
         .controls-top { display: flex; align-items: center; gap: 10px; }
 
-        button.lang-toggle {
-            background: transparent;
-            border: 1px solid var(--border-light);
-            border-radius: 50px;
-            color: var(--text-light);
-            padding: 6px 14px;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            outline: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-width: 48px;
+        /* MODERN LANG TOGGLE (PILL SWITCH) */
+        .modern-lang-toggle {
+            position: relative; display: flex; align-items: center; justify-content: space-between;
+            width: 60px; height: 32px; padding: 0 6px; border-radius: 50px;
+            background: rgba(0,0,0,0.05); border: 1px solid var(--border-light);
+            cursor: pointer; transition: var(--transition); outline: none;
         }
-
-        html.dark button.lang-toggle {
-            border-color: var(--border-dark);
-            color: var(--text-dark);
-            background: rgba(255, 255, 255, 0.05);
+        html.dark .modern-lang-toggle { background: rgba(255, 255, 255, 0.05); border-color: var(--border-dark); }
+        .modern-lang-toggle span { font-size: 11px; font-weight: 700; z-index: 2; transition: color 0.3s; width: 50%; text-align: center; color: #64748b; }
+        html.dark .modern-lang-toggle span { color: #94a3b8; }
+        .modern-lang-toggle .lang-slider {
+            position: absolute; top: 2px; left: 2px; width: calc(50% - 2px); height: calc(100% - 4px);
+            background: #fff; border-radius: 50px; z-index: 1; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
         }
-
-        button.lang-toggle:hover {
-            border-color: var(--primary);
-            background: rgba(138, 180, 255, 0.1);
-        }
-
-        html.dark button.lang-toggle:hover {
-            border-color: var(--primary);
-            background: rgba(138, 180, 255, 0.15);
-        }
+        html.dark .modern-lang-toggle .lang-slider { background: var(--primary); }
+        
+        /* Animasi dan Warna Teks Saat Toggle Aktif */
+        .modern-lang-toggle[data-current-lang="en"] .lang-slider { transform: translateX(0); }
+        .modern-lang-toggle[data-current-lang="en"] .lang-en { color: var(--text-light); }
+        html.dark .modern-lang-toggle[data-current-lang="en"] .lang-en { color: #090c1b; }
+        .modern-lang-toggle[data-current-lang="id"] .lang-slider { transform: translateX(100%); }
+        .modern-lang-toggle[data-current-lang="id"] .lang-id { color: var(--text-light); }
+        html.dark .modern-lang-toggle[data-current-lang="id"] .lang-id { color: #090c1b; }
 
         button.theme-toggle {
             background: transparent;
@@ -336,7 +330,7 @@
         }
         html.dark .info-text { color: var(--text-dark); }
 
-        /* ================= RIGHT CONTENT (ACTION BUTTONS) ================= */
+        /* ================= RIGHT CONTENT ================= */
         .action-panel {
             flex: 0 0 250px;
             display: flex;
@@ -426,14 +420,6 @@
         }
         html.dark .screenshot-title {
             color: var(--text-dark);
-        }
-
-        /* Interactive Gallery Layout */
-        .gallery-wrapper {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            width: 100%;
         }
 
         .main-img-container {
@@ -526,7 +512,7 @@
 <body>
     <!-- Navbar -->
     <nav>
-        <a href="../index.html" class="logo">
+        <a href="/" class="logo">
             <img src="../img/fontyasin.png" alt="Yasinisme Logo" />
         </a>
         
@@ -536,16 +522,20 @@
 
         <div class="nav-container" id="nav-container">
             <ul class="nav-links">
-                <li><a href="../index.html#view-home" class="nav-btn" data-key="home">Home</a></li>
-                <li><a href="../index.html#view-experience" class="nav-btn" data-key="experience">Experience</a></li>
-                <li><a href="../index.html#view-projects" class="nav-btn" data-key="projects">Projects</a></li>
-                <li><a href="../index.html#view-contact" class="nav-btn" data-key="contact">Contact</a></li>
+                <li><a href="/" class="nav-btn" data-key="home">Home</a></li>
+                <li><a href="/experience" class="nav-btn" data-key="experience">Experience</a></li>
+                <li><a href="/projects" class="nav-btn active" data-key="projects">Projects</a></li>
+                <li><a href="/contact" class="nav-btn" data-key="contact">Contact</a></li>
             </ul>
             <div class="divider"></div>
             <div class="controls">
                 <div class="controls-top">
                     <button class="theme-toggle" id="theme-toggle" aria-label="Toggle Theme">🌙</button>
-                    <button class="lang-toggle" id="lang-switch" aria-label="Toggle Language">EN</button>
+                    <button class="modern-lang-toggle" id="lang-switch" aria-label="Toggle Language" data-current-lang="en">
+                        <div class="lang-slider"></div>
+                        <span class="lang-en">EN</span>
+                        <span class="lang-id">ID</span>
+                    </button>
                 </div>
                 <a href="https://drive.google.com/drive/folders/1qD1MSs_e6KTrl34RY7e4E9DL1CkG4P8S?usp=sharing" class="cv-btn" target="_blank" data-key="downloadCV">Download CV</a>
             </div>
@@ -555,14 +545,11 @@
     <!-- Main Content -->
     <main class="project-detail">
         <div class="detail-grid">
-            <!-- Bagian Kiri: Teks & Info -->
             <div class="detail-content">
                 <h1 data-key="projTitle">Website Sejuk</h1>
                 
                 <p class="detail-desc" data-key="projDesc">
-                    Website Sejuk adalah website kafe modern yang berdedikasi untuk menjual milkshake dan smoothies yang menyegarkan. Website ini menampilkan antarmuka pengguna yang segar, cerah, dan interaktif, dirancang untuk menarik pelanggan dan memberikan pengalaman menjelajah menu yang mulus.
-                    <br><br>
-                    Dibangun dengan teknologi web esensial termasuk HTML, CSS, dan JavaScript, serta didukung oleh basis data MySQL, platform ini menawarkan tampilan produk yang dinamis dan tata letak responsif yang beradaptasi sempurna dengan layar seluler maupun desktop.
+                    Website Sejuk is a modern café website dedicated to selling refreshing milkshakes and smoothies. It features a fresh, vibrant, and interactive user interface designed to attract customers and provide a seamless menu browsing experience.<br><br>Built with essential web technologies including HTML, CSS, and JavaScript, and supported by a MySQL database, the platform offers dynamic product displays and a responsive layout that perfectly adapts to mobile and desktop screens.
                 </p>
 
                 <!-- Tech Stack -->
@@ -602,11 +589,11 @@
         <div class="obj-res-grid">
             <div class="obj-res-card">
                 <h3 data-key="objTitle">Objective</h3>
-                <p data-key="objText">Mengembangkan antarmuka website kafe yang menarik secara visual dan interaktif untuk meningkatkan daya tarik produk milkshake dan smoothies kepada pelanggan secara online.</p>
+                <p data-key="objText">To develop a visually appealing and interactive café website interface to enhance the online product appeal of milkshakes and smoothies to customers.</p>
             </div>
             <div class="obj-res-card">
                 <h3 data-key="resTitle">Result</h3>
-                <p data-key="resText">Terciptanya website katalog produk yang responsif dengan animasi mulus dan navigasi intuitif, memberikan pengalaman menjelajah menu yang menyegarkan bagi pengguna.</p>
+                <p data-key="resText">Created a responsive product catalog website with smooth animations and intuitive navigation, providing a refreshing menu-browsing experience for users.</p>
             </div>
         </div>
 
@@ -632,6 +619,11 @@
 
     </main>
 
+    <!-- Footer -->
+    <footer>
+        <p data-key="footer">© 2025 | Designed and coded by Ahmad Yasin Fadhilah</p>
+    </footer>
+
     <!-- Scripts -->
     <script>
         // === INTERACTIVE GALLERY LOGIC ===
@@ -639,20 +631,16 @@
             const mainImg = document.getElementById("main-screenshot");
             const thumbnails = document.querySelectorAll(".thumb-img");
 
-            // Animasi memudar saat berganti gambar
             mainImg.style.opacity = 0;
             
             setTimeout(() => {
                 mainImg.src = element.src;
                 mainImg.style.opacity = 1;
-            }, 150); // sesuaikan dengan durasi css transition opacity
+            }, 150);
 
-            // Hapus kelas 'active' dari semua thumbnail
             thumbnails.forEach(img => img.classList.remove('active'));
-            // Tambahkan kelas 'active' ke thumbnail yang di-klik
             element.classList.add('active');
         }
-
 
         // === NAVBAR MOBILE TOGGLE ===
         const toggle = document.getElementById('menu-toggle');
@@ -671,7 +659,6 @@
                 }
             });
 
-            // Menutup menu jika klik di luar menu (Mobile)
             document.addEventListener('click', (e) => {
                 if (!navContainer.contains(e.target) && !toggle.contains(e.target) && navContainer.classList.contains('active')) {
                     navContainer.classList.remove('active');
@@ -683,20 +670,17 @@
 
         // === THEME TOGGLE ===
         const themeToggle = document.getElementById('theme-toggle');
-
         function updateThemeIcon() {
             if(!themeToggle) return;
             const isDark = document.documentElement.classList.contains('dark');
             themeToggle.textContent = isDark ? '☀️' : '🌙';
         }
-        
         if (!document.documentElement.style.background && localStorage.getItem('theme') !== 'dark') {
             updateThemeIcon();
         } else {
             document.documentElement.style.background = '';
             updateThemeIcon();
         }
-
         if (themeToggle) {
             themeToggle.addEventListener('click', () => {
                 document.documentElement.classList.toggle('dark');
@@ -708,8 +692,6 @@
 
         // === LANGUAGE SWITCH LOGIC ===
         const langSwitch = document.getElementById('lang-switch');
-
-        // Kamus Bahasa Khusus Halaman Website Sejuk
         const langData = {
             en: {
                 home: "Home", experience: "Experience", projects: "Projects", contact: "Contact",
@@ -750,9 +732,8 @@
                     el.innerHTML = langData[lang][key];
                 }
             });
-            // Update teks tombol
             if (langSwitch) {
-                langSwitch.textContent = lang === 'en' ? 'EN' : 'ID';
+                langSwitch.setAttribute('data-current-lang', lang);
             }
             localStorage.setItem('lang', lang);
         }
@@ -764,11 +745,7 @@
                 applyLanguage(newLang);
             });
         }
-
-        // Terapkan bahasa saat halaman dimuat
-        const savedLang = localStorage.getItem('lang') || 'en';
-        applyLanguage(savedLang);
-
+        applyLanguage(localStorage.getItem('lang') || 'en');
     </script>
 </body>
 </html>

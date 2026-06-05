@@ -101,29 +101,14 @@
         .controls { display: flex; align-items: center; gap: 15px; }
         .controls-top { display: flex; align-items: center; gap: 10px; }
 
-        .modern-lang-toggle {
-            position: relative; display: flex; align-items: center; justify-content: space-between;
-            width: 60px; height: 32px; padding: 0 6px; border-radius: 50px;
-            background: rgba(0,0,0,0.05); border: 1px solid var(--border-light);
-            cursor: pointer; transition: var(--transition); outline: none;
+        button.lang-toggle {
+            background: transparent; border: 1px solid var(--border-light); border-radius: 50px;
+            color: var(--text-light); padding: 6px 14px; font-size: 13px; font-weight: 600;
+            cursor: pointer; transition: var(--transition); display: flex; align-items: center; justify-content: center; min-width: 48px;
         }
-        html.dark .modern-lang-toggle { background: rgba(255, 255, 255, 0.05); border-color: var(--border-dark); }
-        .modern-lang-toggle span { font-size: 11px; font-weight: 700; z-index: 2; transition: color 0.3s; width: 50%; text-align: center; color: #64748b; }
-        html.dark .modern-lang-toggle span { color: #94a3b8; }
-        .modern-lang-toggle .lang-slider {
-            position: absolute; top: 2px; left: 2px; width: calc(50% - 2px); height: calc(100% - 4px);
-            background: #fff; border-radius: 50px; z-index: 1; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-        }
-        html.dark .modern-lang-toggle .lang-slider { background: var(--primary); }
-        
-        /* Animasi dan Warna Teks Saat Toggle Aktif */
-        .modern-lang-toggle[data-current-lang="en"] .lang-slider { transform: translateX(0); }
-        .modern-lang-toggle[data-current-lang="en"] .lang-en { color: var(--text-light); }
-        html.dark .modern-lang-toggle[data-current-lang="en"] .lang-en { color: #090c1b; }
-        .modern-lang-toggle[data-current-lang="id"] .lang-slider { transform: translateX(100%); }
-        .modern-lang-toggle[data-current-lang="id"] .lang-id { color: var(--text-light); }
-        html.dark .modern-lang-toggle[data-current-lang="id"] .lang-id { color: #090c1b; }
+        html.dark button.lang-toggle { border-color: var(--border-dark); color: var(--text-dark); background: rgba(255, 255, 255, 0.05); }
+        button.lang-toggle:hover { border-color: var(--primary); background: rgba(138, 180, 255, 0.1); }
+        html.dark button.lang-toggle:hover { border-color: var(--primary); background: rgba(138, 180, 255, 0.15); }
 
         button.theme-toggle {
             background: transparent; border: none; color: var(--text-light); font-size: 18px;
@@ -274,11 +259,7 @@
             <div class="controls">
                 <div class="controls-top">
                     <button class="theme-toggle" id="theme-toggle" aria-label="Toggle Theme">🌙</button>
-                    <button class="modern-lang-toggle" id="lang-switch" aria-label="Toggle Language" data-current-lang="en">
-                        <div class="lang-slider"></div>
-                        <span class="lang-en">EN</span>
-                        <span class="lang-id">ID</span>
-                    </button>
+                    <button class="lang-toggle" id="lang-switch" aria-label="Toggle Language">EN</button>
                 </div>
                 <a href="https://drive.google.com/drive/folders/1qD1MSs_e6KTrl34RY7e4E9DL1CkG4P8S?usp=sharing" class="cv-btn" target="_blank" data-key="downloadCV">Download CV</a>
             </div>
@@ -451,7 +432,7 @@
                     el.innerHTML = langData[lang][key];
                 }
             });
-            if (langSwitch) langSwitch.setAttribute('data-current-lang', lang);
+            if (langSwitch) langSwitch.textContent = lang === 'en' ? 'EN' : 'ID';
             localStorage.setItem('lang', lang);
         }
 
