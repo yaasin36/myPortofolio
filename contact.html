@@ -1,255 +1,860 @@
 <!doctype html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Yaasin — Portfolio | Contact</title>
-    
-    <link rel="icon" type="image/x-icon" href="img/logo.yasin.png">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <link rel="icon" type="image/x-icon" href="img/logo.yasin.png" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
 
     <script>
-        (function () { try { if (localStorage.getItem("theme") === "dark") { document.documentElement.classList.add("dark"); document.documentElement.style.background = "#090c1b"; } } catch (e) {} })();
+      (function () {
+        try {
+          if (localStorage.getItem("theme") === "dark") {
+            document.documentElement.classList.add("dark");
+            document.documentElement.style.background = "#090c1b";
+          }
+        } catch (e) {}
+      })();
     </script>
 
     <style>
-        :root {
-            --bg-light: #f8fafc; --bg-light-sec: #f1f5f9; --text-light: #0a2240; --nav-light: rgba(255, 255, 255, 0.85); --nav-mobile-light: #ffffff; --border-light: rgba(0, 0, 0, 0.08);
-            --bg-dark: #090c1b; --bg-dark-sec: #111730; --text-dark: #f8fafc; --nav-dark: rgba(11, 14, 26, 0.85); --nav-mobile-dark: #0b0e1a; --border-dark: rgba(255, 255, 255, 0.08);
-            --primary: #8ab4ff; --accent: #ff4d6d;
-            --shadow-sm: 0 4px 15px rgba(0, 0, 0, 0.05); --shadow-md: 0 10px 25px rgba(0, 0, 0, 0.1); --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      :root {
+        --bg-light: #f8fafc;
+        --bg-light-sec: #f1f5f9;
+        --text-light: #0a2240;
+        --nav-light: rgba(255, 255, 255, 0.85);
+        --nav-mobile-light: #ffffff;
+        --border-light: rgba(0, 0, 0, 0.08);
+        --bg-dark: #090c1b;
+        --bg-dark-sec: #111730;
+        --text-dark: #f8fafc;
+        --nav-dark: rgba(11, 14, 26, 0.85);
+        --nav-mobile-dark: #0b0e1a;
+        --border-dark: rgba(255, 255, 255, 0.08);
+        --primary: #8ab4ff;
+        --accent: #ff4d6d;
+        --shadow-sm: 0 4px 15px rgba(0, 0, 0, 0.05);
+        --shadow-md: 0 10px 25px rgba(0, 0, 0, 0.1);
+        --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "Poppins", sans-serif;
+        background: var(--bg-light);
+        color: var(--text-light);
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        transition:
+          background 0.3s,
+          color 0.3s;
+        overflow-x: hidden;
+      }
+      html.dark body {
+        background: var(--bg-dark);
+        color: var(--text-dark);
+      }
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+      main {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+      }
+
+      /* NAVBAR */
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 25px;
+        background: var(--nav-light);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid var(--border-light);
+        position: sticky;
+        top: 20px;
+        margin: 0 auto 30px auto;
+        width: 92%;
+        max-width: 1100px;
+        border-radius: 50px;
+        z-index: 1000;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        transition:
+          background 0.3s,
+          border-color 0.3s,
+          box-shadow 0.3s;
+      }
+      html.dark nav {
+        background: var(--nav-dark);
+        border: 1px solid var(--border-dark);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      }
+      .logo {
+        display: flex;
+        align-items: center;
+        z-index: 1001;
+        transition: var(--transition);
+      }
+      .logo img {
+        height: 22px;
+        filter: brightness(0);
+        transition:
+          filter 0.3s ease,
+          opacity 0.3s ease;
+      }
+      html.dark .logo img {
+        filter: brightness(0) invert(1);
+      }
+      .nav-container {
+        display: flex;
+        align-items: center;
+        gap: 25px;
+      }
+      .nav-links {
+        list-style: none;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .nav-links a {
+        color: #64748b;
+        font-weight: 500;
+        transition: var(--transition);
+        font-size: 14px;
+        padding: 8px 16px;
+        border-radius: 50px;
+        cursor: pointer;
+      }
+      html.dark .nav-links a {
+        color: #94a3b8;
+      }
+      .nav-links a:hover,
+      .nav-links a.active {
+        color: var(--text-light);
+        background: rgba(0, 0, 0, 0.05);
+        font-weight: 600;
+      }
+      html.dark .nav-links a:hover,
+      html.dark .nav-links a.active {
+        color: var(--text-dark);
+        background: rgba(255, 255, 255, 0.1);
+      }
+      .divider {
+        width: 1px;
+        height: 20px;
+        background: var(--border-light);
+      }
+      html.dark .divider {
+        background: var(--border-dark);
+      }
+      .controls {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+      .controls-top {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      button.lang-toggle {
+        background: transparent;
+        border: 1px solid var(--border-light);
+        border-radius: 50px;
+        color: var(--text-light);
+        padding: 6px 14px;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 48px;
+      }
+      html.dark button.lang-toggle {
+        border-color: var(--border-dark);
+        color: var(--text-dark);
+        background: rgba(255, 255, 255, 0.05);
+      }
+      button.theme-toggle {
+        background: transparent;
+        border: none;
+        color: var(--text-light);
+        font-size: 18px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+      }
+      html.dark button.theme-toggle {
+        color: var(--text-dark);
+      }
+      .cv-btn {
+        background: var(--primary);
+        color: #fff;
+        padding: 8px 20px;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 13px;
+        text-align: center;
+      }
+      .menu-toggle {
+        display: none;
+        font-size: 22px;
+        cursor: pointer;
+        color: var(--text-light);
+        z-index: 1001;
+        padding: 5px;
+      }
+      html.dark .menu-toggle {
+        color: var(--text-dark);
+      }
+
+      /* GENERAL SECTION STYLES */
+      section {
+        padding: 80px 5%;
+        width: 100%;
+      }
+      .section-header {
+        text-align: center;
+        margin-bottom: 50px;
+      }
+      .section-tag {
+        display: inline-block;
+        background: var(--border-light);
+        color: var(--text-light);
+        padding: 6px 20px;
+        border-radius: 50px;
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 15px;
+      }
+      html.dark .section-tag {
+        background: var(--border-dark);
+        color: var(--text-dark);
+      }
+      .section-title {
+        font-size: clamp(22px, 3vw, 32px);
+        font-weight: 600;
+      }
+
+      /* ================= GALLERY STYLES ================= */
+      .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        grid-auto-rows: 220px;
+        gap: 15px;
+        grid-auto-flow: dense;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .gallery-grid img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 16px;
+        display: block;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        transition: transform 0.3s ease;
+        image-rendering: high-quality;
+      }
+      .gallery-grid img:hover {
+        transform: scale(1.02);
+        z-index: 1;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      }
+      .gallery-grid img.landscape {
+        grid-column: span 2;
+      }
+      .gallery-grid img.portrait {
+        grid-row: span 2;
+        height: 100%;
+      }
+
+      /* ================= CONTACT STYLES ================= */
+      .contact-container {
+        max-width: 1100px;
+        margin: 0 auto;
+        text-align: center;
+      }
+      .contact-intro {
+        font-size: 16px;
+        margin-bottom: 40px;
+        color: #64748b;
+      }
+      html.dark .contact-intro {
+        color: #94a3b8;
+      }
+      .contact-boxes {
+        display: flex;
+        justify-content: center;
+        align-items: stretch;
+        flex-wrap: wrap;
+        gap: 20px;
+        margin-bottom: 40px;
+      }
+      .contact-box {
+        background: var(--nav-mobile-light);
+        border: 1px solid var(--border-light);
+        border-radius: 24px;
+        padding: 25px 35px;
+        min-width: 280px;
+        text-align: center;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+        transition: var(--transition);
+      }
+      html.dark .contact-box {
+        background: var(--bg-dark-sec);
+        border-color: var(--border-dark);
+      }
+      .contact-box:hover {
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: 0 15px 30px rgba(138, 180, 255, 0.15);
+        border-color: rgba(138, 180, 255, 0.3);
+      }
+      .contact-box .label {
+        font-size: 14px;
+        color: #64748b;
+        margin-bottom: 6px;
+      }
+      html.dark .contact-box .label {
+        color: #94a3b8;
+      }
+      .contact-box .value {
+        font-weight: 600;
+        font-size: 16px;
+      }
+      .findme {
+        font-size: 16px;
+        margin-bottom: 20px;
+        color: #64748b;
+        font-weight: 500;
+      }
+      html.dark .findme {
+        color: #94a3b8;
+      }
+      .social-links {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 25px;
+        margin-bottom: 30px;
+      }
+      .social-links a {
+        font-size: 26px;
+        color: var(--text-light);
+        transition: var(--transition);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: var(--bg-light-sec);
+        border: 1px solid var(--border-light);
+      }
+      html.dark .social-links a {
+        color: var(--text-dark);
+        background: var(--bg-dark-sec);
+        border-color: var(--border-dark);
+      }
+      .social-links a:hover {
+        color: #fff;
+        background: var(--primary);
+        border-color: var(--primary);
+        transform: translateY(-5px);
+      }
+
+      footer {
+        background: var(--nav-mobile-light);
+        color: var(--text-light);
+        text-align: center;
+        padding: 25px 20px;
+        font-size: 14px;
+        margin-top: auto;
+        border-top: 1px solid var(--border-light);
+        transition: var(--transition);
+      }
+      html.dark footer {
+        background: #050711;
+        color: var(--text-dark);
+        border-top-color: var(--border-dark);
+      }
+
+      @media (max-width: 992px) {
+        .gallery-grid {
+          grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+          grid-auto-rows: 180px;
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: "Poppins", sans-serif; background: var(--bg-light); color: var(--text-light); display: flex; flex-direction: column; min-height: 100vh; transition: background 0.3s, color 0.3s; overflow-x: hidden; }
-        html.dark body { background: var(--bg-dark); color: var(--text-dark); }
-        a { text-decoration: none; color: inherit; }
-        main { flex: 1; display: flex; flex-direction: column; width: 100%; }
-        
-        /* NAVBAR */
-        nav { display: flex; justify-content: space-between; align-items: center; padding: 12px 25px; background: var(--nav-light); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid var(--border-light); position: sticky; top: 20px; margin: 0 auto 30px auto; width: 92%; max-width: 1100px; border-radius: 50px; z-index: 1000; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05); transition: background 0.3s, border-color 0.3s, box-shadow 0.3s; }
-        html.dark nav { background: var(--nav-dark); border: 1px solid var(--border-dark); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); }
-        .logo { display: flex; align-items: center; z-index: 1001; transition: var(--transition); }
-        .logo img { height: 22px; filter: brightness(0); transition: filter 0.3s ease, opacity 0.3s ease; }
-        html.dark .logo img { filter: brightness(0) invert(1); }
-        .nav-container { display: flex; align-items: center; gap: 25px; }
-        .nav-links { list-style: none; display: flex; align-items: center; gap: 10px; }
-        .nav-links a { color: #64748b; font-weight: 500; transition: var(--transition); font-size: 14px; padding: 8px 16px; border-radius: 50px; cursor: pointer; }
-        html.dark .nav-links a { color: #94a3b8; }
-        .nav-links a:hover, .nav-links a.active { color: var(--text-light); background: rgba(0, 0, 0, 0.05); font-weight: 600; }
-        html.dark .nav-links a:hover, html.dark .nav-links a.active { color: var(--text-dark); background: rgba(255, 255, 255, 0.1); }
-        .divider { width: 1px; height: 20px; background: var(--border-light); }
-        html.dark .divider { background: var(--border-dark); }
-        .controls { display: flex; align-items: center; gap: 15px; }
-        .controls-top { display: flex; align-items: center; gap: 10px; }
-        button.lang-toggle { background: transparent; border: 1px solid var(--border-light); border-radius: 50px; color: var(--text-light); padding: 6px 14px; font-size: 13px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; min-width: 48px; }
-        html.dark button.lang-toggle { border-color: var(--border-dark); color: var(--text-dark); background: rgba(255, 255, 255, 0.05); }
-        button.theme-toggle { background: transparent; border: none; color: var(--text-light); font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 50%; }
-        html.dark button.theme-toggle { color: var(--text-dark); }
-        .cv-btn { background: var(--primary); color: #fff; padding: 8px 20px; border-radius: 50px; font-weight: 600; font-size: 13px; text-align: center; }
-        .menu-toggle { display: none; font-size: 22px; cursor: pointer; color: var(--text-light); z-index: 1001; padding: 5px; }
-        html.dark .menu-toggle { color: var(--text-dark); }
-
-        /* GENERAL SECTION STYLES */
-        section { padding: 80px 5%; width: 100%; }
-        .section-header { text-align: center; margin-bottom: 50px; }
-        .section-tag { display: inline-block; background: var(--border-light); color: var(--text-light); padding: 6px 20px; border-radius: 50px; font-size: 14px; font-weight: 600; margin-bottom: 15px; }
-        html.dark .section-tag { background: var(--border-dark); color: var(--text-dark); }
-        .section-title { font-size: clamp(22px, 3vw, 32px); font-weight: 600; }
-
-        /* ================= GALLERY STYLES ================= */
-        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); grid-auto-rows: 220px; gap: 15px; grid-auto-flow: dense; max-width: 1200px; margin: 0 auto; }
-        .gallery-grid img { width: 100%; height: 100%; object-fit: cover; border-radius: 16px; display: block; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); transition: transform 0.3s ease; image-rendering: high-quality; }
-        .gallery-grid img:hover { transform: scale(1.02); z-index: 1; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); }
-        .gallery-grid img.landscape { grid-column: span 2; }
-        .gallery-grid img.portrait { grid-row: span 2; height: 100%; }
-
-        /* ================= CONTACT STYLES ================= */
-        .contact-container { max-width: 1100px; margin: 0 auto; text-align: center; }
-        .contact-intro { font-size: 16px; margin-bottom: 40px; color: #64748b; }
-        html.dark .contact-intro { color: #94a3b8; }
-        .contact-boxes { display: flex; justify-content: center; align-items: stretch; flex-wrap: wrap; gap: 20px; margin-bottom: 40px; }
-        .contact-box { background: var(--nav-mobile-light); border: 1px solid var(--border-light); border-radius: 24px; padding: 25px 35px; min-width: 280px; text-align: center; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03); transition: var(--transition); }
-        html.dark .contact-box { background: var(--bg-dark-sec); border-color: var(--border-dark); }
-        .contact-box:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 15px 30px rgba(138, 180, 255, 0.15); border-color: rgba(138, 180, 255, 0.3); }
-        .contact-box .label { font-size: 14px; color: #64748b; margin-bottom: 6px; }
-        html.dark .contact-box .label { color: #94a3b8; }
-        .contact-box .value { font-weight: 600; font-size: 16px; }
-        .findme { font-size: 16px; margin-bottom: 20px; color: #64748b; font-weight: 500; }
-        html.dark .findme { color: #94a3b8; }
-        .social-links { display: flex; justify-content: center; align-items: center; gap: 25px; margin-bottom: 30px;}
-        .social-links a { font-size: 26px; color: var(--text-light); transition: var(--transition); display: flex; align-items: center; justify-content: center; width: 50px; height: 50px; border-radius: 50%; background: var(--bg-light-sec); border: 1px solid var(--border-light); }
-        html.dark .social-links a { color: var(--text-dark); background: var(--bg-dark-sec); border-color: var(--border-dark); }
-        .social-links a:hover { color: #fff; background: var(--primary); border-color: var(--primary); transform: translateY(-5px); }
-
-        footer { background: var(--nav-mobile-light); color: var(--text-light); text-align: center; padding: 25px 20px; font-size: 14px; margin-top: auto; border-top: 1px solid var(--border-light); transition: var(--transition); }
-        html.dark footer { background: #050711; color: var(--text-dark); border-top-color: var(--border-dark); }
-
-        @media (max-width: 992px) { .gallery-grid { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); grid-auto-rows: 180px; } }
-        @media (max-width: 900px) {
-            .menu-toggle { display: block; }
-            .nav-container { position: absolute; top: calc(100% + 15px); left: 0; width: 100%; background: var(--nav-mobile-light); flex-direction: column; align-items: stretch; padding: 15px 0 25px 0; gap: 0; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); border: 1px solid var(--border-light); border-radius: 24px; opacity: 0; visibility: hidden; transform: translateY(-10px); transition: all 0.3s ease; z-index: 999; }
-            html.dark .nav-container { background: var(--nav-mobile-dark); border: 1px solid var(--border-dark); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5); }
-            .nav-container.active { opacity: 1; visibility: visible; transform: translateY(0); }
-            .nav-links { flex-direction: column; width: 100%; gap: 5px; padding: 0 15px; }
-            .nav-links li { width: 100%; }
-            .nav-links a { display: block; padding: 12px 20px; text-align: center; border-radius: 12px; }
-            .divider { display: none; }
-            .controls { flex-direction: column; padding: 20px 15px 0 15px; gap: 15px; border-top: 1px solid var(--border-light); margin-top: 10px; }
-            html.dark .controls { border-top-color: var(--border-dark); }
-            .controls-top { justify-content: center; width: 100%; }
-            .cv-btn { width: 100%; max-width: none; padding: 12px; }
+      }
+      @media (max-width: 900px) {
+        .menu-toggle {
+          display: block;
         }
-        @media (max-width: 768px) {
-            section { padding: 60px 5%; }
-            .contact-boxes { flex-direction: column; align-items: center; }
-            .contact-box { width: 100%; max-width: 350px; }
-            .gallery-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 160px; }
-            .gallery-grid img.landscape { grid-column: span 2; }
+        .nav-container {
+          position: absolute;
+          top: calc(100% + 15px);
+          left: 0;
+          width: 100%;
+          background: var(--nav-mobile-light);
+          flex-direction: column;
+          align-items: stretch;
+          padding: 15px 0 25px 0;
+          gap: 0;
+          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+          border: 1px solid var(--border-light);
+          border-radius: 24px;
+          opacity: 0;
+          visibility: hidden;
+          transform: translateY(-10px);
+          transition: all 0.3s ease;
+          z-index: 999;
         }
+        html.dark .nav-container {
+          background: var(--nav-mobile-dark);
+          border: 1px solid var(--border-dark);
+          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        }
+        .nav-container.active {
+          opacity: 1;
+          visibility: visible;
+          transform: translateY(0);
+        }
+        .nav-links {
+          flex-direction: column;
+          width: 100%;
+          gap: 5px;
+          padding: 0 15px;
+        }
+        .nav-links li {
+          width: 100%;
+        }
+        .nav-links a {
+          display: block;
+          padding: 12px 20px;
+          text-align: center;
+          border-radius: 12px;
+        }
+        .divider {
+          display: none;
+        }
+        .controls {
+          flex-direction: column;
+          padding: 20px 15px 0 15px;
+          gap: 15px;
+          border-top: 1px solid var(--border-light);
+          margin-top: 10px;
+        }
+        html.dark .controls {
+          border-top-color: var(--border-dark);
+        }
+        .controls-top {
+          justify-content: center;
+          width: 100%;
+        }
+        .cv-btn {
+          width: 100%;
+          max-width: none;
+          padding: 12px;
+        }
+      }
+      @media (max-width: 768px) {
+        section {
+          padding: 60px 5%;
+        }
+        .contact-boxes {
+          flex-direction: column;
+          align-items: center;
+        }
+        .contact-box {
+          width: 100%;
+          max-width: 350px;
+        }
+        .gallery-grid {
+          grid-template-columns: repeat(2, 1fr);
+          grid-auto-rows: 160px;
+        }
+        .gallery-grid img.landscape {
+          grid-column: span 2;
+        }
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <!-- Navbar -->
     <nav>
-        <div class="logo">
-            <img src="img/fontyasin.png" alt="Yasinisme Logo" />
+      <div class="logo">
+        <img src="img/fontyasin.png" alt="Yasinisme Logo" />
+      </div>
+      <div class="menu-toggle" id="menu-toggle">
+        <i class="fa-solid fa-bars"></i>
+      </div>
+      <div class="nav-container" id="nav-container">
+        <ul class="nav-links">
+          <li><a href="/" class="nav-btn" data-key="home">Home</a></li>
+          <li>
+            <a href="/experience" class="nav-btn" data-key="experience"
+              >Experience</a
+            >
+          </li>
+          <li>
+            <a href="/projects" class="nav-btn" data-key="projects">Projects</a>
+          </li>
+          <li>
+            <a href="/contact" class="nav-btn active" data-key="contact"
+              >Contact</a
+            >
+          </li>
+        </ul>
+        <div class="divider"></div>
+        <div class="controls">
+          <div class="controls-top">
+            <button
+              class="theme-toggle"
+              id="theme-toggle"
+              aria-label="Toggle Theme"
+            >
+              🌙
+            </button>
+            <button
+              class="lang-toggle"
+              id="lang-switch"
+              aria-label="Toggle Language"
+            >
+              EN
+            </button>
+          </div>
+          <a
+            href="https://drive.google.com/drive/folders/1qD1MSs_e6KTrl34RY7e4E9DL1CkG4P8S?usp=sharing"
+            class="cv-btn"
+            target="_blank"
+            data-key="downloadCV"
+            >Download CV</a
+          >
         </div>
-        <div class="menu-toggle" id="menu-toggle"><i class="fa-solid fa-bars"></i></div>
-        <div class="nav-container" id="nav-container">
-            <ul class="nav-links">
-                <li><a href="index.html" class="nav-btn" data-key="home">Home</a></li>
-                <li><a href="experience.html" class="nav-btn" data-key="experience">Experience</a></li>
-                <li><a href="projects.html" class="nav-btn" data-key="projects">Projects</a></li>
-                <li><a href="contact.html" class="nav-btn active" data-key="contact">Contact</a></li>
-            </ul>
-            <div class="divider"></div>
-            <div class="controls">
-                <div class="controls-top">
-                    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle Theme">🌙</button>
-                    <button class="lang-toggle" id="lang-switch" aria-label="Toggle Language">EN</button>
-                </div>
-                <a href="https://drive.google.com/drive/folders/1qD1MSs_e6KTrl34RY7e4E9DL1CkG4P8S?usp=sharing" class="cv-btn" target="_blank" data-key="downloadCV">Download CV</a>
-            </div>
-        </div>
+      </div>
     </nav>
 
     <!-- Main Content -->
     <main>
-        <!-- GALLERY SECTION -->
-        <section class="gallery">
-            <div class="gallery-container">
-                <div class="section-header">
-                    <span class="section-tag" data-key="galleryTag">Documentation</span>
-                    <h2 class="section-title" data-key="galleryTitle">My Gallery</h2>
-                </div>
+      <!-- GALLERY SECTION -->
+      <section class="gallery">
+        <div class="gallery-container">
+          <div class="section-header">
+            <span class="section-tag" data-key="galleryTag">Documentation</span>
+            <h2 class="section-title" data-key="galleryTitle">My Gallery</h2>
+          </div>
 
-                <div class="gallery-grid">
-                    <img src="img/gallery/1.jpg" alt="Gallery 1" class="landscape" loading="lazy">
-                    <img src="img/gallery/2.jpg" alt="Gallery 2" class="landscape" loading="lazy">
-                    <img src="img/gallery/3.jpg" alt="Gallery 3" class="landscape" loading="lazy">
-                    <img src="img/gallery/4.jpg" alt="Gallery 4" class="landscape" loading="lazy">
-                    <img src="img/gallery/5.jpg" alt="Gallery 5" class="portrait" loading="lazy">
-                    <img src="img/gallery/6.JPG" alt="Gallery 6" class="landscape" loading="lazy">
-                    <img src="img/gallery/7.JPG" alt="Gallery 7" class="landscape" loading="lazy">
-                    <img src="img/gallery/8.png" alt="Gallery 8" class="portrait" loading="lazy">
-                    <img src="img/gallery/9.jpg" alt="Gallery 9" class="landscape" loading="lazy">
-                    <img src="img/gallery/10.jpg" alt="Gallery 10" class="portrait" loading="lazy">
-                    <img src="img/gallery/11.jpg" alt="Gallery 11" class="landscape" loading="lazy">
-                    <img src="img/gallery/12.jpg" alt="Gallery 12" class="landscape" loading="lazy">
-                </div>
+          <div class="gallery-grid">
+            <img
+              src="img/gallery/1.jpg"
+              alt="Gallery 1"
+              class="landscape"
+              loading="lazy"
+            />
+            <img
+              src="img/gallery/2.jpg"
+              alt="Gallery 2"
+              class="landscape"
+              loading="lazy"
+            />
+            <img
+              src="img/gallery/3.jpg"
+              alt="Gallery 3"
+              class="landscape"
+              loading="lazy"
+            />
+            <img
+              src="img/gallery/4.jpg"
+              alt="Gallery 4"
+              class="landscape"
+              loading="lazy"
+            />
+            <img
+              src="img/gallery/5.jpg"
+              alt="Gallery 5"
+              class="portrait"
+              loading="lazy"
+            />
+            <img
+              src="img/gallery/6.JPG"
+              alt="Gallery 6"
+              class="landscape"
+              loading="lazy"
+            />
+            <img
+              src="img/gallery/7.JPG"
+              alt="Gallery 7"
+              class="landscape"
+              loading="lazy"
+            />
+            <img
+              src="img/gallery/8.png"
+              alt="Gallery 8"
+              class="portrait"
+              loading="lazy"
+            />
+            <img
+              src="img/gallery/9.jpg"
+              alt="Gallery 9"
+              class="landscape"
+              loading="lazy"
+            />
+            <img
+              src="img/gallery/10.jpg"
+              alt="Gallery 10"
+              class="portrait"
+              loading="lazy"
+            />
+            <img
+              src="img/gallery/11.jpg"
+              alt="Gallery 11"
+              class="landscape"
+              loading="lazy"
+            />
+            <img
+              src="img/gallery/12.jpg"
+              alt="Gallery 12"
+              class="landscape"
+              loading="lazy"
+            />
+          </div>
+        </div>
+      </section>
+
+      <!-- CONTACT SECTION -->
+      <section class="contact">
+        <div class="contact-container">
+          <div class="section-header">
+            <span class="section-tag" data-key="contactTag">Contact Me</span>
+          </div>
+
+          <div class="contact-content">
+            <p class="contact-intro" data-key="contactTitle">
+              Let’s work together! Drop me a line below or reach me through
+              these platforms.
+            </p>
+
+            <!-- First Row: Direct Contacts -->
+            <div class="contact-boxes">
+              <div class="contact-box">
+                <i
+                  class="fa-solid fa-envelope"
+                  style="
+                    font-size: 28px;
+                    color: var(--primary);
+                    margin-bottom: 15px;
+                  "
+                ></i>
+                <p class="label">Email</p>
+                <p class="value">
+                  <a href="mailto:ahmadyasin1601@gmail.com"
+                    >ahmadyasin1601@gmail.com</a
+                  >
+                </p>
+              </div>
+
+              <div class="contact-box">
+                <i
+                  class="fa-brands fa-whatsapp"
+                  style="font-size: 28px; color: #25d366; margin-bottom: 15px"
+                ></i>
+                <p class="label">WhatsApp</p>
+                <p class="value">
+                  <a href="https://wa.me/6285182320091" target="_blank"
+                    >+62 851-8232-0091</a
+                  >
+                </p>
+              </div>
             </div>
-        </section>
 
-        <!-- CONTACT SECTION -->
-        <section class="contact">
-            <div class="contact-container">
-                <div class="section-header">
-                    <span class="section-tag" data-key="contactTag">Contact Me</span>
+            <!-- Second Row: Socials & Portfolio -->
+            <div class="contact-boxes">
+              <div class="contact-box">
+                <p class="findme" data-key="ccSocial">My Social Media:</p>
+                <div class="social-links">
+                  <a
+                    href="https://www.instagram.com/yaasin_36/"
+                    target="_blank"
+                    title="Instagram"
+                    ><i class="fab fa-instagram"></i
+                  ></a>
+                  <a
+                    href="https://facebook.com/ahmad.y.fadhilah"
+                    target="_blank"
+                    title="Facebook"
+                    ><i class="fab fa-facebook"></i
+                  ></a>
+                  <a
+                    href="https://www.youtube.com/@ahmadyasin3767"
+                    target="_blank"
+                    title="YouTube"
+                    ><i class="fab fa-youtube"></i
+                  ></a>
+                  <a
+                    href="https://www.tiktok.com/@yaasinn36"
+                    target="_blank"
+                    title="TikTok"
+                    ><i class="fab fa-tiktok"></i
+                  ></a>
                 </div>
+              </div>
 
-                <div class="contact-content">
-                    <p class="contact-intro" data-key="contactTitle">
-                        Let’s work together! Drop me a line below or reach me through these platforms.
-                    </p>
-
-                    <!-- First Row: Direct Contacts -->
-                    <div class="contact-boxes">
-                        <div class="contact-box">
-                            <i class="fa-solid fa-envelope" style="font-size:28px; color:var(--primary); margin-bottom:15px;"></i>
-                            <p class="label">Email</p>
-                            <p class="value"><a href="mailto:ahmadyasin1601@gmail.com">ahmadyasin1601@gmail.com</a></p>
-                        </div>
-
-                        <div class="contact-box">
-                            <i class="fa-brands fa-whatsapp" style="font-size:28px; color:#25D366; margin-bottom:15px;"></i>
-                            <p class="label">WhatsApp</p>
-                            <p class="value"><a href="https://wa.me/6285182320091" target="_blank">+62 851-8232-0091</a></p>
-                        </div>
-                    </div>
-
-                    <!-- Second Row: Socials & Portfolio -->
-                    <div class="contact-boxes">
-                        <div class="contact-box">
-                            <p class="findme" data-key="ccSocial">My Social Media:</p>
-                            <div class="social-links">
-                                <a href="https://www.instagram.com/yaasin_36/" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
-                                <a href="https://facebook.com/ahmad.y.fadhilah" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
-                                <a href="https://www.youtube.com/@ahmadyasin3767" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
-                                <a href="https://www.tiktok.com/@yaasinn36" target="_blank" title="TikTok"><i class="fab fa-tiktok"></i></a>
-                            </div>
-                        </div>
-
-                        <div class="contact-box">
-                            <p class="findme" data-key="ccFind">Find my Portfolio:</p>
-                            <div class="social-links">
-                                <a href="https://www.linkedin.com/in/yaasin36/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                                <a href="https://github.com/yaasin36" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
-                            </div>
-                        </div>
-                    </div>
+              <div class="contact-box">
+                <p class="findme" data-key="ccFind">Find my Portfolio:</p>
+                <div class="social-links">
+                  <a
+                    href="https://www.linkedin.com/in/yaasin36/"
+                    target="_blank"
+                    title="LinkedIn"
+                    ><i class="fab fa-linkedin"></i
+                  ></a>
+                  <a
+                    href="https://github.com/yaasin36"
+                    target="_blank"
+                    title="GitHub"
+                    ><i class="fab fa-github"></i
+                  ></a>
                 </div>
+              </div>
             </div>
-        </section>
+          </div>
+        </div>
+      </section>
     </main>
 
     <!-- Footer -->
-    <footer><p data-key="footer">© 2025 | Designed and coded by Ahmad Yasin Fadhilah</p></footer>
+    <footer>
+      <p data-key="footer">
+        © 2025 | Designed and coded by Ahmad Yasin Fadhilah
+      </p>
+    </footer>
 
     <script>
-        // === NAVBAR MOBILE TOGGLE ===
-        const toggle = document.getElementById('menu-toggle');
-        const navContainer = document.getElementById('nav-container');
-        const icon = toggle ? toggle.querySelector('i') : null;
-        if (toggle && navContainer && icon) {
-            toggle.addEventListener('click', () => { navContainer.classList.toggle('active'); icon.classList.toggle('fa-bars'); icon.classList.toggle('fa-xmark'); });
-            document.addEventListener('click', (e) => { if (!navContainer.contains(e.target) && !toggle.contains(e.target) && navContainer.classList.contains('active')) { navContainer.classList.remove('active'); icon.classList.remove('fa-xmark'); icon.classList.add('fa-bars'); } });
-        }
+      // === NAVBAR MOBILE TOGGLE ===
+      const toggle = document.getElementById("menu-toggle");
+      const navContainer = document.getElementById("nav-container");
+      const icon = toggle ? toggle.querySelector("i") : null;
+      if (toggle && navContainer && icon) {
+        toggle.addEventListener("click", () => {
+          navContainer.classList.toggle("active");
+          icon.classList.toggle("fa-bars");
+          icon.classList.toggle("fa-xmark");
+        });
+        document.addEventListener("click", (e) => {
+          if (
+            !navContainer.contains(e.target) &&
+            !toggle.contains(e.target) &&
+            navContainer.classList.contains("active")
+          ) {
+            navContainer.classList.remove("active");
+            icon.classList.remove("fa-xmark");
+            icon.classList.add("fa-bars");
+          }
+        });
+      }
 
-        // === THEME TOGGLE ===
-        const themeToggle = document.getElementById('theme-toggle');
-        function updateThemeIcon() { if(!themeToggle) return; const isDark = document.documentElement.classList.contains('dark'); themeToggle.textContent = isDark ? '☀️' : '🌙'; }
-        if (!document.documentElement.style.background && localStorage.getItem('theme') !== 'dark') { updateThemeIcon(); } else { document.documentElement.style.background = ''; updateThemeIcon(); }
-        if (themeToggle) { themeToggle.addEventListener('click', () => { document.documentElement.classList.toggle('dark'); localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light'); updateThemeIcon(); }); }
+      // === THEME TOGGLE ===
+      const themeToggle = document.getElementById("theme-toggle");
+      function updateThemeIcon() {
+        if (!themeToggle) return;
+        const isDark = document.documentElement.classList.contains("dark");
+        themeToggle.textContent = isDark ? "☀️" : "🌙";
+      }
+      if (
+        !document.documentElement.style.background &&
+        localStorage.getItem("theme") !== "dark"
+      ) {
+        updateThemeIcon();
+      } else {
+        document.documentElement.style.background = "";
+        updateThemeIcon();
+      }
+      if (themeToggle) {
+        themeToggle.addEventListener("click", () => {
+          document.documentElement.classList.toggle("dark");
+          localStorage.setItem(
+            "theme",
+            document.documentElement.classList.contains("dark")
+              ? "dark"
+              : "light",
+          );
+          updateThemeIcon();
+        });
+      }
 
-        // === LANGUAGE SWITCH ===
-        const langSwitch = document.getElementById('lang-switch');
-        const langData = {
-            en: {
-                home: "Home", experience: "Experience", projects: "Projects", contact: "Contact", downloadCV: "Download CV", footer: "© 2025 | Designed and coded by Ahmad Yasin Fadhilah",
-                galleryTag: "Documentation", galleryTitle: "My Gallery",
-                contactTag: "Contact Me", contactTitle: "Let’s work together! Drop me a line below or reach me through these platforms.", ccSocial: "My Social Media:", ccFind: "Find my Portfolio:"
-            },
-            id: {
-                home: "Beranda", experience: "Pengalaman", projects: "Proyek", contact: "Kontak", downloadCV: "Unduh CV", footer: "© 2025 | Dirancang dan dikode oleh Ahmad Yasin Fadhilah",
-                galleryTag: "Dokumentasi", galleryTitle: "Galeriku",
-                contactTag: "Kontak Saya", contactTitle: "Mari bekerja sama! Tinggalkan pesan di bawah ini atau hubungi saya melalui platform berikut.", ccSocial: "Sosial Media Saya:", ccFind: "Temukan Portofolio Saya:"
-            }
-        };
-        function applyLanguage(lang) { document.querySelectorAll("[data-key]").forEach(el => { const key = el.getAttribute("data-key"); if (langData[lang] && langData[lang][key]) { el.innerHTML = langData[lang][key]; } }); if (langSwitch) langSwitch.textContent = lang === 'en' ? 'EN' : 'ID'; localStorage.setItem('lang', lang); }
-        if (langSwitch) { langSwitch.addEventListener('click', () => { const currentLang = localStorage.getItem('lang') || 'en'; applyLanguage(currentLang === 'en' ? 'id' : 'en'); }); }
-        applyLanguage(localStorage.getItem('lang') || 'en');
+      // === LANGUAGE SWITCH ===
+      const langSwitch = document.getElementById("lang-switch");
+      const langData = {
+        en: {
+          home: "Home",
+          experience: "Experience",
+          projects: "Projects",
+          contact: "Contact",
+          downloadCV: "Download CV",
+          footer: "© 2025 | Designed and coded by Ahmad Yasin Fadhilah",
+          galleryTag: "Documentation",
+          galleryTitle: "My Gallery",
+          contactTag: "Contact Me",
+          contactTitle:
+            "Let’s work together! Drop me a line below or reach me through these platforms.",
+          ccSocial: "My Social Media:",
+          ccFind: "Find my Portfolio:",
+        },
+        id: {
+          home: "Beranda",
+          experience: "Pengalaman",
+          projects: "Proyek",
+          contact: "Kontak",
+          downloadCV: "Unduh CV",
+          footer: "© 2025 | Dirancang dan dikode oleh Ahmad Yasin Fadhilah",
+          galleryTag: "Dokumentasi",
+          galleryTitle: "Galeriku",
+          contactTag: "Kontak Saya",
+          contactTitle:
+            "Mari bekerja sama! Tinggalkan pesan di bawah ini atau hubungi saya melalui platform berikut.",
+          ccSocial: "Sosial Media Saya:",
+          ccFind: "Temukan Portofolio Saya:",
+        },
+      };
+      function applyLanguage(lang) {
+        document.querySelectorAll("[data-key]").forEach((el) => {
+          const key = el.getAttribute("data-key");
+          if (langData[lang] && langData[lang][key]) {
+            el.innerHTML = langData[lang][key];
+          }
+        });
+        if (langSwitch) langSwitch.textContent = lang === "en" ? "EN" : "ID";
+        localStorage.setItem("lang", lang);
+      }
+      if (langSwitch) {
+        langSwitch.addEventListener("click", () => {
+          const currentLang = localStorage.getItem("lang") || "en";
+          applyLanguage(currentLang === "en" ? "id" : "en");
+        });
+      }
+      applyLanguage(localStorage.getItem("lang") || "en");
     </script>
-</body>
+  </body>
 </html>
