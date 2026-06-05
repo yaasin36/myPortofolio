@@ -1,19 +1,13 @@
 <!doctype html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Yaasin — Portfolio | Contact</title>
-
+    
     <link rel="icon" type="image/x-icon" href="img/logo.yasin.png" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
     <script>
       (function () {
@@ -174,25 +168,31 @@
         align-items: center;
         gap: 10px;
       }
-      button.lang-toggle {
-        background: transparent;
-        border: 1px solid var(--border-light);
-        border-radius: 50px;
-        color: var(--text-light);
-        padding: 6px 14px;
-        font-size: 13px;
-        font-weight: 600;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-width: 48px;
+      
+      /* --- MODERN LANG TOGGLE --- */
+      .modern-lang-toggle {
+          position: relative; display: flex; align-items: center; justify-content: space-between;
+          width: 60px; height: 32px; padding: 0 6px; border-radius: 50px;
+          background: rgba(0,0,0,0.05); border: 1px solid var(--border-light);
+          cursor: pointer; transition: var(--transition); outline: none;
       }
-      html.dark button.lang-toggle {
-        border-color: var(--border-dark);
-        color: var(--text-dark);
-        background: rgba(255, 255, 255, 0.05);
+      html.dark .modern-lang-toggle { background: rgba(255, 255, 255, 0.05); border-color: var(--border-dark); }
+      .modern-lang-toggle span { font-size: 11px; font-weight: 700; z-index: 2; transition: color 0.3s; width: 50%; text-align: center; color: #64748b; }
+      html.dark .modern-lang-toggle span { color: #94a3b8; }
+      .modern-lang-toggle .lang-slider {
+          position: absolute; top: 2px; left: 2px; width: calc(50% - 2px); height: calc(100% - 4px);
+          background: #fff; border-radius: 50px; z-index: 1; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+          transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
       }
+      html.dark .modern-lang-toggle .lang-slider { background: var(--primary); }
+      
+      .modern-lang-toggle[data-current-lang="en"] .lang-slider { transform: translateX(0); }
+      .modern-lang-toggle[data-current-lang="en"] .lang-en { color: var(--text-light); }
+      html.dark .modern-lang-toggle[data-current-lang="en"] .lang-en { color: #090c1b; }
+      .modern-lang-toggle[data-current-lang="id"] .lang-slider { transform: translateX(100%); }
+      .modern-lang-toggle[data-current-lang="id"] .lang-id { color: var(--text-light); }
+      html.dark .modern-lang-toggle[data-current-lang="id"] .lang-id { color: #090c1b; }
+
       button.theme-toggle {
         background: transparent;
         border: none;
@@ -506,7 +506,7 @@
     <nav>
       <a href="/" class="logo">
         <img src="img/fontyasin.png" alt="Yasinisme Logo" />
-      </div>
+      </a>
       <div class="menu-toggle" id="menu-toggle">
         <i class="fa-solid fa-bars"></i>
       </div>
@@ -514,15 +514,15 @@
         <ul class="nav-links">
           <li><a href="/" class="nav-btn" data-key="home">Home</a></li>
           <li>
-            <a href="/experience" class="nav-btn" data-key="experience"
+            <a href="experience" class="nav-btn" data-key="experience"
               >Experience</a
             >
           </li>
           <li>
-            <a href="/projects" class="nav-btn" data-key="projects">Projects</a>
+            <a href="projects" class="nav-btn" data-key="projects">Projects</a>
           </li>
           <li>
-            <a href="/contact" class="nav-btn active" data-key="contact"
+            <a href="contact" class="nav-btn active" data-key="contact"
               >Contact</a
             >
           </li>
@@ -537,12 +537,10 @@
             >
               🌙
             </button>
-            <button
-              class="lang-toggle"
-              id="lang-switch"
-              aria-label="Toggle Language"
-            >
-              EN
+            <button class="modern-lang-toggle" id="lang-switch" aria-label="Toggle Language" data-current-lang="en">
+                <div class="lang-slider"></div>
+                <span class="lang-en">EN</span>
+                <span class="lang-id">ID</span>
             </button>
           </div>
           <a
@@ -838,6 +836,7 @@
           ccFind: "Temukan Portofolio Saya:",
         },
       };
+      
       function applyLanguage(lang) {
         document.querySelectorAll("[data-key]").forEach((el) => {
           const key = el.getAttribute("data-key");
@@ -845,9 +844,10 @@
             el.innerHTML = langData[lang][key];
           }
         });
-        if (langSwitch) langSwitch.textContent = lang === "en" ? "EN" : "ID";
+        if (langSwitch) langSwitch.setAttribute('data-current-lang', lang);
         localStorage.setItem("lang", lang);
       }
+      
       if (langSwitch) {
         langSwitch.addEventListener("click", () => {
           const currentLang = localStorage.getItem("lang") || "en";
