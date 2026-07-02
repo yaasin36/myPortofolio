@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -11,11 +11,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
-    <!-- Script Cegah Kedip Tema (Dark Mode) -->
+    <!-- Script Cegah Kedip Tema (Dark Mode Default) -->
     <script>
         (function () {
             try {
-                if (localStorage.getItem("theme") === "dark") {
+                // Tema default adalah dark (gelap). 
+                // Hanya gunakan terang jika user pernah menyimpannya sebagai 'light'.
+                if (localStorage.getItem("theme") === "light") {
+                    document.documentElement.classList.remove("dark");
+                    document.documentElement.style.background = "#f8fafc";
+                } else {
                     document.documentElement.classList.add("dark");
                     document.documentElement.style.background = "#090c1b";
                 }
@@ -29,7 +34,7 @@
             /* Light Mode */
             --bg-light: #f8fafc;
             --bg-light-sec: #f1f5f9;
-            --text-light: #0a2240;
+            --text-light: #0f172a; /* Dipergelap sedikit agar teks lebih tajam */
             --nav-light: rgba(255, 255, 255, 0.85);
             --nav-mobile-light: #ffffff;
             --border-light: rgba(0, 0, 0, 0.08);
@@ -42,15 +47,23 @@
             --nav-mobile-dark: #0b0e1a;
             --border-dark: rgba(255, 255, 255, 0.08);
 
-            /* Brand Colors */
-            --primary: #8ab4ff;
-            --accent: #ff4d6d;
-            --gradient-text: linear-gradient(135deg, #8ab4ff, #ff4d6d);
+            /* Brand Colors (LIGHT MODE DEFAULT) */
+            /* Menggunakan warna yang lebih pekat dan berani untuk kontras tinggi di layar putih */
+            --primary: #2563eb; 
+            --accent: #e11d48;
+            --gradient-text: linear-gradient(135deg, #2563eb, #e11d48);
             
             /* Shadows & Transitions */
             --shadow-sm: 0 4px 15px rgba(0, 0, 0, 0.05);
             --shadow-md: 0 10px 25px rgba(0, 0, 0, 0.1);
             --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        /* Override Brand Colors KHUSUS UNTUK DARK MODE */
+        html.dark {
+            --primary: #8ab4ff; /* Kembali ke warna pastel bercahaya */
+            --accent: #ff4d6d;
+            --gradient-text: linear-gradient(135deg, #8ab4ff, #ff4d6d);
         }
 
         /* ================= RESET & BASE ================= */
@@ -154,23 +167,73 @@
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             text-align: center; max-width: 1400px; margin: 0 auto; min-height: 90vh;
             padding-top: 80px; padding-bottom: 80px; position: relative;
+            overflow: hidden;
         }
-        .hero::before {
-            content: ''; position: absolute; width: 65vw; height: 65vw; background: var(--primary);
-            filter: blur(220px); opacity: 0.15; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: -1; border-radius: 50%;
-        }
-        html.dark .hero::before { opacity: 0.12; }
-        .hero-content { display: flex; flex-direction: column; align-items: center; width: 100%; }
-        .hero-content h1 { font-size: clamp(45px, 8vw, 85px); margin-bottom: 5px; line-height: 1.2; font-weight: 700; letter-spacing: -1px; }
-        .hero-content h1 span { background: var(--gradient-text); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; color: transparent; }
 
-        .role-wrapper { display: flex; align-items: center; justify-content: center; gap: 15px; font-size: clamp(16px, 2.5vw, 22px); margin: 10px 0 35px; }
+        /* Modern Grid Background */
+        .hero-bg-grid {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;
+            background-size: 40px 40px; pointer-events: none;
+            /* Grid sedikit ditebalkan di Light Mode agar terlihat tegas (0.05 opacity) */
+            background-image: linear-gradient(to right, rgba(0,0,0,0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,0.05) 1px, transparent 1px);
+            mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+            -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+        }
+        html.dark .hero-bg-grid { background-image: linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px); }
+
+        /* Glowing Background Orb */
+        .hero::before {
+            content: ''; position: absolute; width: 50vw; height: 50vw; background: var(--primary);
+            /* Orb dibuat lebih subtle (0.08) di Light Mode agar tidak mengganggu bacaan */
+            filter: blur(150px); opacity: 0.08; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: -1; border-radius: 50%;
+            animation: pulse-glow 8s ease-in-out infinite alternate;
+        }
+        html.dark .hero::before { opacity: 0.12; background: var(--accent); filter: blur(180px); }
+        
+        @keyframes pulse-glow { 0% { transform: translate(-50%, -50%) scale(1); } 100% { transform: translate(-50%, -50%) scale(1.1); } }
+
+        .hero-content { display: flex; flex-direction: column; align-items: center; width: 100%; z-index: 1; }
+        
+        /* Status Badge */
+        .status-badge {
+            display: inline-flex; align-items: center; gap: 8px; padding: 6px 16px; border-radius: 50px;
+            /* Latar belakang badge lebih putih di Light Mode untuk kesan Clean & Premium */
+            background: rgba(255, 255, 255, 0.85); border: 1px solid rgba(0, 0, 0, 0.1);
+            font-size: 13px; font-weight: 600; color: #334155; margin-bottom: 25px;
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        html.dark .status-badge { background: rgba(11, 14, 26, 0.5); border-color: var(--border-dark); color: var(--text-dark); font-weight: 500;}
+        .status-dot { width: 8px; height: 8px; background: #22c55e; border-radius: 50%; box-shadow: 0 0 10px rgba(34, 197, 94, 0.6); animation: pulse-dot 2s infinite; }
+        @keyframes pulse-dot { 0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(34, 197, 94, 0); } 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); } }
+
+        /* Typography Hero */
+        .hero-content h1 { font-size: clamp(40px, 7vw, 75px); margin-bottom: 15px; line-height: 1.1; font-weight: 700; letter-spacing: -1px; }
+        .hero-content h1 span.name { background: var(--gradient-text); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; color: transparent; display: inline-block; }
+        
+        /* Waving Hand Animation */
+        .wave { display: inline-block; animation: waving-hand 2.5s infinite; transform-origin: 70% 70%; }
+        @keyframes waving-hand { 0% { transform: rotate( 0.0deg) } 10% { transform: rotate(14.0deg) } 20% { transform: rotate(-8.0deg) } 30% { transform: rotate(14.0deg) } 40% { transform: rotate(-4.0deg) } 50% { transform: rotate(10.0deg) } 60% { transform: rotate( 0.0deg) } 100% { transform: rotate( 0.0deg) } }
+
+        .role-wrapper { display: flex; align-items: center; justify-content: center; gap: 15px; font-size: clamp(16px, 2.5vw, 22px); margin: 5px 0 20px; }
         .role-static { color: #64748b; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; font-size: 13px; }
         .role-divider { width: 1px; height: 20px; background: var(--border-light); }
         html.dark .role-divider { background: rgba(255,255,255,0.2); }
-        .typing-text { color: var(--text-light); font-weight: 500; border-right: 3px solid #22c55e; white-space: nowrap; overflow: hidden; padding-right: 5px; animation: blink 0.8s infinite; }
+        .typing-text { color: var(--text-light); font-weight: 600; border-right: 3px solid #22c55e; white-space: nowrap; overflow: hidden; padding-right: 5px; animation: blink 0.8s infinite; }
         html.dark .typing-text { color: var(--text-dark); }
         @keyframes blink { 50% { border-color: transparent; } }
+
+        /* Subtitle & Buttons */
+        .hero-subtitle { max-width: 580px; color: #64748b; font-size: clamp(15px, 2vw, 17px); line-height: 1.6; margin-bottom: 35px; }
+        html.dark .hero-subtitle { color: #94a3b8; }
+
+        .hero-cta { display: flex; align-items: center; gap: 15px; flex-wrap: wrap; justify-content: center; }
+        .btn-primary { background: var(--primary); color: #fff; padding: 12px 28px; border-radius: 50px; font-weight: 600; font-size: 15px; transition: var(--transition); box-shadow: 0 10px 20px rgba(138, 180, 255, 0.3); }
+        .btn-primary:hover { background: var(--accent); transform: translateY(-3px); box-shadow: 0 15px 25px rgba(255, 77, 109, 0.4); color: #fff; }
+        .btn-secondary { background: transparent; color: var(--text-light); padding: 11px 28px; border-radius: 50px; font-weight: 600; font-size: 15px; transition: var(--transition); border: 2px solid var(--border-light); }
+        html.dark .btn-secondary { color: var(--text-dark); border-color: rgba(255,255,255,0.1); }
+        .btn-secondary:hover { background: rgba(0,0,0,0.05); transform: translateY(-3px); }
+        html.dark .btn-secondary:hover { background: rgba(255,255,255,0.05); }
 
         .hero-social-sidebar { position: absolute; left: 5%; bottom: 50px; display: flex; flex-direction: column; align-items: center; gap: 12px; z-index: 10; }
         .hero-social-sidebar a { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background: #111; color: #fff; font-size: 17px; transition: var(--transition); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
@@ -185,13 +248,64 @@
         .scroll-down i:nth-child(2) { animation-delay: 0.2s;}
         @keyframes arrow-bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); opacity: 0.5; } 40% { transform: translateY(-8px); opacity: 1; } 60% { transform: translateY(-4px); opacity: 0.8; } }
 
-        .about { background: var(--bg-light-sec); }
+        .about { background: var(--bg-light-sec); overflow: hidden;}
         html.dark .about { background: var(--bg-dark-sec); }
         .about-container { max-width: 1100px; margin: 0 auto; }
-        .about-content { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 50px; }
-        .about-image { flex: 1 1 350px; display: flex; justify-content: center; }
-        .about-image img { width: 100%; max-width: 400px; border-radius: 16px; object-fit: cover; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); }
-        html.dark .about-image img { box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); }
+        .about-content { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 50px; }
+        
+        /* REACT-LIKE ANIMATIONS CSS */
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .about-image { 
+            flex: 1 1 350px; 
+            display: flex; 
+            justify-content: center; 
+            /* Memberikan efek melayang (floating) persisten */
+            animation: floating 6s ease-in-out infinite;
+            perspective: 1000px;
+        }
+        .about-image img { 
+            width: 100%; 
+            max-width: 400px; 
+            border-radius: 16px; 
+            object-fit: cover; 
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            /* Transform preserve 3d penting untuk efek tilt */
+            transform-style: preserve-3d;
+            border: 2px solid transparent;
+            /* Animasi Hitam Putih (Grayscale) ke Berwarna */
+            filter: grayscale(100%) brightness(0.9);
+            transition: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .about-image:hover img {
+            filter: grayscale(0%) brightness(1);
+            transform: translateZ(40px) scale(1.02) !important;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+        }
+        html.dark .about-image img { 
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); 
+            border-color: rgba(255,255,255,0.05);
+        }
+        html.dark .about-image:hover img {
+            border-color: var(--primary);
+            box-shadow: 0 25px 50px rgba(138, 180, 255, 0.2);
+        }
+
+        /* SCROLL REVEAL (Framer Motion style fade-up) */
+        .reveal-up {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .reveal-up.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         .about-text { flex: 1 1 550px; display: flex; flex-direction: column; }
         .about-text h2 { font-size: clamp(26px, 3.5vw, 36px); margin-bottom: 25px; font-weight: 700; }
         .about-text p { line-height: 1.8; margin-bottom: 20px; color: #64748b; font-size: 15px; }
@@ -258,9 +372,10 @@
 
 <body>
     <!-- Navbar -->
-    <nav>
+    <nav class="reveal-up active">
         <a href="/" class="logo">
-            <img src="img/fontyasin.png" alt="Yasinisme Logo" />
+            <!-- Fallback added if image doesn't exist -->
+            <img src="img/fontyasin.png" alt="Yasinisme Logo" onerror="this.onerror=null; this.src='https://placehold.co/120x30/22c55e/ffffff?text=Yaasin';" />
         </a>
         
         <div class="menu-toggle" id="menu-toggle">
@@ -278,7 +393,7 @@
             <div class="controls">
                 <div class="controls-top">
                     <button class="theme-toggle" id="theme-toggle" aria-label="Toggle Theme">🌙</button>
-                    <!-- UPDATED: Modern Language Toggle Slider -->
+                    <!-- Modern Language Toggle Slider -->
                     <button class="modern-lang-toggle" id="lang-switch" aria-label="Toggle Language" data-current-lang="en">
                         <div class="lang-slider"></div>
                         <span class="lang-en">EN</span>
@@ -294,7 +409,9 @@
     <main>
         <!-- HERO SECTION -->
         <section class="hero">
-            <div class="hero-social-sidebar">
+            <div class="hero-bg-grid"></div>
+
+            <div class="hero-social-sidebar reveal-up" style="transition-delay: 0.8s;">
                 <a href="https://github.com/yaasin36" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
                 <a href="https://www.linkedin.com/in/yaasin36/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
                 <a href="https://www.instagram.com/yaasin_36/" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
@@ -302,18 +419,32 @@
             </div>
 
             <div class="hero-content">
-                <h1 id="hero-title" data-key="heroTitle">
-                    Hi, I’m <span>Yaasin</span> 👋
+                <div class="status-badge reveal-up" style="transition-delay: 0.1s;">
+                    <div class="status-dot"></div>
+                    <span data-key="statusAvailable">Available for new projects</span>
+                </div>
+
+                <h1 class="reveal-up" style="transition-delay: 0.2s;">
+                    <span data-key="heroTitle">Hi, I’m</span> <span class="name">Yaasin</span> <span class="wave">👋</span>
                 </h1>
                 
-                <div class="role-wrapper">
+                <div class="role-wrapper reveal-up" style="transition-delay: 0.3s;">
                     <span class="role-static">ROLE</span>
                     <div class="role-divider"></div>
                     <span class="typing-text"><span id="typed"></span></span>
                 </div>
+
+                <p class="hero-subtitle reveal-up" style="transition-delay: 0.4s;" data-key="heroSubtitle">
+                    Crafting elegant, functional, and user-centric digital experiences. Let's build something amazing together.
+                </p>
+
+                <div class="hero-cta reveal-up" style="transition-delay: 0.5s;">
+                    <a href="/projects" class="btn-primary" data-key="btnProjects">View Projects</a>
+                    <a href="/contact" class="btn-secondary" data-key="btnContact">Contact Me</a>
+                </div>
             </div>
 
-            <div class="scroll-down" onclick="document.querySelector('.about').scrollIntoView({behavior: 'smooth'})">
+            <div class="scroll-down reveal-up" style="transition-delay: 0.8s;" onclick="document.querySelector('.about').scrollIntoView({behavior: 'smooth'})">
                 <i class="fa-solid fa-angle-down"></i>
                 <i class="fa-solid fa-angle-down"></i>
             </div>
@@ -323,11 +454,15 @@
         <section class="about">
             <div class="about-container">
                 <div class="about-content">
-                    <div class="about-image">
-                        <img src="img/SamYasin.png" alt="Ahmad Yasin Fadhilah" loading="lazy" />
+                    
+                    <!-- FOTO DENGAN EFEK 3D TILT SEPERTI REACT TILT -->
+                    <!-- Ditambahkan data-tilt untuk interaksi mouse dari vanilla-tilt.js -->
+                    <div class="about-image reveal-up" data-tilt data-tilt-max="12" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.3">
+                        <!-- Menambahkan onerror untuk demo jika gambar lokal tidak ada -->
+                        <img src="img/SamYasin.png" alt="Ahmad Yasin Fadhilah" loading="lazy" style="transform: translateZ(30px);" onerror="this.onerror=null; this.src='https://placehold.co/400x500/8ab4ff/ffffff?text=Foto+Yaasin';" />
                     </div>
                     
-                    <div class="about-text">
+                    <div class="about-text reveal-up" style="transition-delay: 0.2s;">
                         <h2 data-key="aboutTitle">Ahmad Yasin Fadhilah</h2>
                         <p data-key="aboutP1">
                             I’m a graduate of <strong>Informatics Engineering at Dian Nuswantoro University</strong>, with a strong passion for <strong>web development</strong> and <strong>information systems</strong>. I have hands-on experience developing web-based applications using <strong>Laravel</strong>, <strong>HTML</strong>, <strong>CSS</strong>, and <strong>MySQL</strong>.
@@ -370,10 +505,13 @@
     </main>
 
     <!-- Footer -->
-    <footer>
+    <footer class="reveal-up">
         <p data-key="footer">© 2025 | Designed and coded by Ahmad Yasin Fadhilah</p>
     </footer>
 
+    <!-- Tambahan Library Vanilla Tilt untuk 3D Hover mirip react-tilt -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
+    
     <!-- Scripts -->
     <script>
         // === NAVBAR MOBILE TOGGLE ===
@@ -410,12 +548,9 @@
             themeToggle.textContent = isDark ? '☀️' : '🌙';
         }
         
-        if (!document.documentElement.style.background && localStorage.getItem('theme') !== 'dark') {
-            updateThemeIcon();
-        } else {
-            document.documentElement.style.background = '';
-            updateThemeIcon();
-        }
+        // Bersihkan background inline dari script anti-flicker dan perbarui ikon
+        document.documentElement.style.background = '';
+        updateThemeIcon();
 
         if (themeToggle) {
             themeToggle.addEventListener('click', () => {
@@ -432,7 +567,11 @@
             en: {
                 home: "Home", experience: "Experience", projects: "Projects", contact: "Contact",
                 downloadCV: "Download CV", footer: "© 2025 | Designed and coded by Ahmad Yasin Fadhilah",
-                heroTitle: "Hi, I’m <span>Yaasin</span> 👋",
+                heroTitle: "Hi, I’m",
+                statusAvailable: "Available for new projects",
+                heroSubtitle: "Crafting elegant, functional, and user-centric digital experiences. Let's build something amazing together.",
+                btnProjects: "View Projects",
+                btnContact: "Contact Me",
                 aboutTitle: "Ahmad Yasin Fadhilah",
                 aboutP1: "I’m a graduate of <strong>Informatics Engineering at Dian Nuswantoro University</strong>, with a strong passion for <strong>web development</strong> and <strong>information systems</strong>. I have hands-on experience developing web-based applications using <strong>Laravel</strong>, <strong>HTML</strong>, <strong>CSS</strong>, and <strong>MySQL</strong>.",
                 aboutP2: "Beyond the tech world, I’ve been actively involved in various organizations such as the <strong>Student Representative Council</strong>, <strong>FL2MI Semarang Raya</strong>, and the <strong>Dian Nuswantoro Computer Club</strong>. These experiences shaped me into a communicative, adaptive, and collaborative person with strong leadership skills. For me, technology is more than just code — it’s a way to create real, meaningful impact.",
@@ -441,7 +580,11 @@
             id: {
                 home: "Beranda", experience: "Pengalaman", projects: "Proyek", contact: "Kontak",
                 downloadCV: "Unduh CV", footer: "© 2025 | Dirancang dan dikode oleh Ahmad Yasin Fadhilah",
-                heroTitle: "Halo, Saya <span>Yaasin</span> 👋",
+                heroTitle: "Halo, Saya",
+                statusAvailable: "Tersedia untuk proyek baru",
+                heroSubtitle: "Menciptakan pengalaman digital yang elegan, fungsional, dan berpusat pada pengguna. Mari bangun sesuatu yang luar biasa bersama.",
+                btnProjects: "Lihat Proyek",
+                btnContact: "Hubungi Saya",
                 aboutTitle: "Ahmad Yasin Fadhilah",
                 aboutP1: "Saya adalah lulusan <strong>Teknik Informatika Universitas Dian Nuswantoro</strong> yang memiliki ketertarikan besar di bidang <strong>pengembangan web</strong> dan <strong>sistem informasi</strong>. Saya berpengalaman mengembangkan aplikasi berbasis web menggunakan <strong>Laravel</strong>, <strong>HTML</strong>, <strong>CSS</strong>, dan <strong>MySQL</strong>.",
                 aboutP2: "Selain fokus di dunia teknologi, saya juga aktif di berbagai organisasi seperti <strong>Dewan Perwakilan Mahasiswa</strong>, <strong>FL2MI Semarang Raya</strong>, dan <strong>Dian Nuswantoro Computer Club</strong>. Pengalaman tersebut membentuk saya menjadi pribadi yang adaptif, komunikatif, serta mampu memimpin dan bekerja sama dalam tim. Bagi saya, teknologi bukan sekadar kode — tapi cara untuk menciptakan solusi nyata yang berdampak positif.",
@@ -456,7 +599,6 @@
                     el.innerHTML = langData[lang][key];
                 }
             });
-            // UPDATED: Now toggles the data-current-lang attribute to trigger CSS slider animation
             if (langSwitch) langSwitch.setAttribute('data-current-lang', lang);
             localStorage.setItem('lang', lang);
         }
@@ -490,6 +632,33 @@
             }
         }
         if (typedElement) typeEffect();
+
+        // === SCROLL REVEAL ANIMATION (Framer Motion feel) ===
+        // Efek ini membuat elemen muncul perlahan (fade up) saat di-scroll layaknya aplikasi React modern
+        document.addEventListener("DOMContentLoaded", function() {
+            const reveals = document.querySelectorAll(".reveal-up");
+            
+            const revealOptions = {
+                threshold: 0.15,
+                rootMargin: "0px 0px -50px 0px"
+            };
+
+            const revealOnScroll = new IntersectionObserver(function(entries, observer) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("active");
+                        observer.unobserve(entry.target); // Hanya animasi sekali
+                    }
+                });
+            }, revealOptions);
+
+            reveals.forEach(reveal => {
+                // Jangan observer elemen yang sudah aktif di awal (seperti hero section)
+                if(!reveal.classList.contains('active')) {
+                    revealOnScroll.observe(reveal);
+                }
+            });
+        });
 
     </script>
 </body>
