@@ -1,36 +1,100 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Yaasin — Portfolio | Experience</title>
     
+    <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="img/logo.yasin.png">
+    
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
+    <!-- Script Cegah Kedip Tema (Dark Mode Default) -->
     <script>
         (function () {
-            try { if (localStorage.getItem("theme") === "dark") { document.documentElement.classList.add("dark"); document.documentElement.style.background = "#090c1b"; } } catch (e) {}
+            try {
+                if (localStorage.getItem("theme") === "light") {
+                    document.documentElement.classList.remove("dark");
+                    document.documentElement.style.background = "#f8fafc";
+                } else {
+                    document.documentElement.classList.add("dark");
+                    document.documentElement.style.background = "#090c1b";
+                }
+            } catch (e) {}
         })();
     </script>
 
     <style>
-        /* (CSS Core dipersingkat di preview ini, gunakan variabel dasar yang sama seperti di index.html) */
+        /* ================= VARIABLES ================= */
         :root {
-            --bg-light: #f8fafc; --bg-light-sec: #f1f5f9; --text-light: #0a2240; --nav-light: rgba(255, 255, 255, 0.85); --nav-mobile-light: #ffffff; --border-light: rgba(0, 0, 0, 0.08);
-            --bg-dark: #090c1b; --bg-dark-sec: #111730; --text-dark: #f8fafc; --nav-dark: rgba(11, 14, 26, 0.85); --nav-mobile-dark: #0b0e1a; --border-dark: rgba(255, 255, 255, 0.08);
-            --primary: #8ab4ff; --accent: #ff4d6d;
-            --shadow-sm: 0 4px 15px rgba(0, 0, 0, 0.05); --shadow-md: 0 10px 25px rgba(0, 0, 0, 0.1); --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            /* Light Mode */
+            --bg-light: #f8fafc;
+            --bg-light-sec: #f1f5f9;
+            --text-light: #0f172a; 
+            --nav-light: rgba(255, 255, 255, 0.85);
+            --nav-mobile-light: #ffffff;
+            --border-light: rgba(0, 0, 0, 0.08);
+
+            /* Dark Mode */
+            --bg-dark: #090c1b;
+            --bg-dark-sec: #111730;
+            --text-dark: #f8fafc;
+            --nav-dark: rgba(11, 14, 26, 0.85);
+            --nav-mobile-dark: #0b0e1a;
+            --border-dark: rgba(255, 255, 255, 0.08);
+
+            /* Brand Colors (Light Mode Default) */
+            --primary: #2563eb; 
+            --accent: #e11d48;
+            --gradient-text: linear-gradient(135deg, #2563eb, #e11d48);
+            
+            /* Shadows & Transitions */
+            --shadow-sm: 0 4px 15px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --shadow-glow: 0 10px 30px rgba(37, 99, 235, 0.15);
+            --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
+
+        /* Override Brand Colors KHUSUS UNTUK DARK MODE */
+        html.dark {
+            --primary: #8ab4ff; 
+            --accent: #ff4d6d;
+            --gradient-text: linear-gradient(135deg, #8ab4ff, #ff4d6d);
+            --shadow-glow: 0 10px 30px rgba(138, 180, 255, 0.15);
+        }
+
+        /* ================= RESET & BASE ================= */
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: "Poppins", sans-serif; background: var(--bg-light); color: var(--text-light); display: flex; flex-direction: column; min-height: 100vh; transition: background 0.3s, color 0.3s; overflow-x: hidden; }
+        body {
+            font-family: "Poppins", sans-serif;
+            background: var(--bg-light); color: var(--text-light);
+            display: flex; flex-direction: column; min-height: 100vh;
+            transition: background 0.3s, color 0.3s; overflow-x: hidden;
+        }
         html.dark body { background: var(--bg-dark); color: var(--text-dark); }
         a { text-decoration: none; color: inherit; }
-        main { flex: 1; display: flex; flex-direction: column; width: 100%; }
-        
-        /* NAVBAR */
-        nav { display: flex; justify-content: space-between; align-items: center; padding: 12px 25px; background: var(--nav-light); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid var(--border-light); position: sticky; top: 20px; margin: 0 auto 30px auto; width: 92%; max-width: 1100px; border-radius: 50px; z-index: 1000; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05); transition: background 0.3s, border-color 0.3s, box-shadow 0.3s; }
+        main { flex: 1; display: flex; flex-direction: column; width: 100%; position: relative;}
+
+        /* Background Grid subtle (opsional untuk kesan modern) */
+        main::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;
+            background-size: 40px 40px; pointer-events: none; opacity: 0.5;
+            background-image: linear-gradient(to right, rgba(0,0,0,0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,0.03) 1px, transparent 1px);
+            mask-image: linear-gradient(to bottom, black 0%, transparent 60%);
+            -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 60%);
+        }
+        html.dark main::before { background-image: linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px); }
+
+        /* ================= NAVBAR ================= */
+        nav {
+            display: flex; justify-content: space-between; align-items: center; padding: 12px 25px;
+            background: var(--nav-light); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border-light); position: sticky; top: 20px; margin: 0 auto 30px auto;
+            width: 92%; max-width: 1100px; border-radius: 50px; z-index: 1000; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
+        }
         html.dark nav { background: var(--nav-dark); border: 1px solid var(--border-dark); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); }
         .logo { display: flex; align-items: center; z-index: 1001; transition: var(--transition); }
         .logo img { height: 22px; filter: brightness(0); transition: filter 0.3s ease, opacity 0.3s ease; }
@@ -57,70 +121,126 @@
         .modern-lang-toggle[data-current-lang="id"] .lang-slider { transform: translateX(100%); }
         .modern-lang-toggle[data-current-lang="id"] .lang-id { color: var(--text-light); }
         html.dark .modern-lang-toggle[data-current-lang="id"] .lang-id { color: #090c1b; }
-        button.theme-toggle { background: transparent; border: none; color: var(--text-light); font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 50%; }
+        button.theme-toggle { background: transparent; border: none; color: var(--text-light); font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 50%; transition: var(--transition); }
         html.dark button.theme-toggle { color: var(--text-dark); }
-        .cv-btn { background: var(--primary); color: #fff; padding: 8px 20px; border-radius: 50px; font-weight: 600; font-size: 13px; text-align: center; }
-        .menu-toggle { display: none; font-size: 22px; cursor: pointer; color: var(--text-light); z-index: 1001; padding: 5px; }
+        button.theme-toggle:hover { background: var(--border-light); transform: translateY(-1px); }
+        html.dark button.theme-toggle:hover { background: var(--border-dark); }
+        
+        .cv-btn { background: var(--primary); color: #fff; padding: 8px 20px; border-radius: 50px; font-weight: 600; font-size: 13px; text-align: center; transition: var(--transition); box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3); }
+        html.dark .cv-btn { box-shadow: 0 4px 10px rgba(138, 180, 255, 0.3); }
+        .cv-btn:hover { background: var(--accent); transform: translateY(-2px); box-shadow: 0 6px 15px rgba(225, 29, 72, 0.4); color:#fff; }
+        html.dark .cv-btn:hover { box-shadow: 0 6px 15px rgba(255, 77, 109, 0.4); }
+        
+        .menu-toggle { display: none; font-size: 22px; cursor: pointer; color: var(--text-light); z-index: 1001; padding: 5px; transition: var(--transition);}
         html.dark .menu-toggle { color: var(--text-dark); }
 
-        /* GENERAL SECTION STYLES */
-        section { padding: 80px 5%; width: 100%; }
+        /* ================= ANIMATIONS ================= */
+        .reveal-up { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1); }
+        .reveal-up.active { opacity: 1; transform: translateY(0); }
+
+        /* ================= GENERAL SECTION STYLES ================= */
+        section { padding: 60px 5% 80px; width: 100%; position: relative; z-index: 1;}
         .section-header { text-align: center; margin-bottom: 50px; }
-        .section-tag { display: inline-block; background: var(--border-light); color: var(--text-light); padding: 6px 20px; border-radius: 50px; font-size: 14px; font-weight: 600; margin-bottom: 15px; }
-        html.dark .section-tag { background: var(--border-dark); color: var(--text-dark); }
-        .section-title { font-size: clamp(22px, 3vw, 32px); font-weight: 600; }
+        .section-tag { display: inline-flex; align-items: center; justify-content: center; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); border: 1px solid rgba(0, 0, 0, 0.1); color: #334155; padding: 6px 20px; border-radius: 50px; font-size: 13px; font-weight: 600; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        html.dark .section-tag { background: rgba(11, 14, 26, 0.5); border-color: var(--border-dark); color: var(--text-dark); font-weight: 500;}
+        .section-title { font-size: clamp(28px, 4vw, 42px); font-weight: 700; letter-spacing: -0.5px; }
 
         /* ================= EXPERIENCE STYLES ================= */
-        .experience-container { max-width: 1000px; margin: 0 auto; display: flex; flex-direction: column; gap: 30px; }
-        .experience-card { background: var(--nav-mobile-light); border-radius: 20px; padding: 30px; display: flex; align-items: flex-start; gap: 25px; box-shadow: var(--shadow-sm); border: 1px solid transparent; transition: var(--transition); }
-        html.dark .experience-card { background: var(--bg-dark-sec); border: 1px solid var(--border-dark); }
-        .experience-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-md); border-color: rgba(138, 180, 255, 0.2); }
-        .exp-logo { flex-shrink: 0; }
-        .exp-logo img { width: 70px; height: 70px; object-fit: contain; background: #fff; border-radius: 12px; padding: 8px; border: 1px solid var(--border-light); box-shadow: 0 4px 10px rgba(0,0,0,0.03); transition: var(--transition); }
-        .experience-card:hover .exp-logo img { transform: scale(1.05); }
+        .experience-container { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 30px; position: relative;}
+        
+        /* Garis timeline vertical (opsional, memberikan kesan journey) */
+        .experience-container::before { content: ''; position: absolute; left: 45px; top: 0; bottom: 0; width: 2px; background: var(--border-light); z-index: -1; border-radius: 2px;}
+        html.dark .experience-container::before { background: var(--border-dark); }
+
+        .experience-card { background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(20px); border-radius: 24px; padding: 35px; display: flex; align-items: flex-start; gap: 30px; box-shadow: var(--shadow-sm); border: 1px solid rgba(255,255,255,0.8); transition: var(--transition); position: relative;}
+        html.dark .experience-card { background: rgba(17, 23, 48, 0.6); border: 1px solid rgba(255, 255, 255, 0.05); }
+        
+        /* Efek Glow & Pop-out saat Hover */
+        .experience-card:hover { transform: translateY(-8px) scale(1.01); box-shadow: var(--shadow-glow); border-color: var(--primary); }
+        
+        .exp-logo { flex-shrink: 0; position: relative; z-index: 2; background: var(--bg-light); border-radius: 16px; padding: 5px; }
+        html.dark .exp-logo { background: var(--bg-dark); }
+        .exp-logo img { width: 70px; height: 70px; object-fit: contain; background: #fff; border-radius: 12px; padding: 8px; border: 1px solid var(--border-light); box-shadow: 0 4px 10px rgba(0,0,0,0.05); transition: var(--transition); }
+        .experience-card:hover .exp-logo img { transform: scale(1.1) rotate(5deg); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
         html.dark .exp-logo img { border: none; }
+        
         .exp-content { flex: 1; }
-        .exp-header h3 { font-size: 20px; font-weight: 600; margin-bottom: 4px; }
-        .exp-company { font-size: 15px; color: #64748b; margin-bottom: 15px; font-weight: 500; }
-        html.dark .exp-company { color: #94a3b8; }
-        .exp-details { margin: 0 0 20px 0; padding-left: 20px; line-height: 1.7; font-size: 14.5px; color: var(--text-light); opacity: 0.9; }
-        html.dark .exp-details { color: var(--text-dark); }
-        .exp-details li { margin-bottom: 8px; }
-        .exp-footer { display: flex; justify-content: space-between; font-size: 13px; color: #64748b; flex-wrap: wrap; gap: 10px; padding-top: 15px; border-top: 1px solid var(--border-light); font-weight: 500; }
-        html.dark .exp-footer { border-top-color: var(--border-dark); color: #94a3b8; }
-        .exp-location { display: flex; align-items: center; gap: 5px; }
+        .exp-header h3 { font-size: 22px; font-weight: 700; margin-bottom: 6px; letter-spacing: -0.5px;}
+        .exp-company { font-size: 15.5px; color: var(--primary); margin-bottom: 20px; font-weight: 600; }
+        
+        .exp-details { margin: 0 0 25px 0; padding-left: 20px; line-height: 1.8; font-size: 15px; color: #475569; }
+        html.dark .exp-details { color: #94a3b8; }
+        .exp-details li { margin-bottom: 10px; position: relative; list-style-type: none; }
+        .exp-details li::before { content: '▹'; position: absolute; left: -20px; color: var(--primary); font-size: 18px; line-height: 1.5; }
+        
+        .exp-footer { display: flex; justify-content: space-between; font-size: 13.5px; color: #64748b; flex-wrap: wrap; gap: 15px; padding-top: 20px; border-top: 1px dashed var(--border-light); font-weight: 500; }
+        html.dark .exp-footer { border-top-color: rgba(255,255,255,0.1); color: #94a3b8; }
+        .exp-location { display: flex; align-items: center; gap: 6px; background: rgba(0,0,0,0.03); padding: 5px 12px; border-radius: 50px; }
+        html.dark .exp-location { background: rgba(255,255,255,0.05); }
+        .exp-date { display: flex; align-items: center; gap: 6px; background: rgba(0,0,0,0.03); padding: 5px 12px; border-radius: 50px; }
+        html.dark .exp-date { background: rgba(255,255,255,0.05); }
 
         /* ================= SKILLS STYLES ================= */
-        .skills { background: var(--bg-light-sec); }
-        html.dark .skills { background: var(--bg-dark); }
-        .skills-container { max-width: 1000px; margin: 0 auto; }
+        .skills { background: var(--bg-light-sec); position: relative;}
+        html.dark .skills { background: var(--bg-dark-sec); }
+        .skills-container { max-width: 1000px; margin: 0 auto; position: relative; z-index: 2;}
         .skills-header-text { text-align: center; margin-bottom: 40px; }
-        .skills-header-text p { color: #64748b; font-size: 15px; margin-top: 10px; }
+        .skills-header-text p { color: #64748b; font-size: 16px; margin-top: 15px; max-width: 600px; margin-left: auto; margin-right: auto;}
         html.dark .skills-header-text p { color: #94a3b8; }
-        .skills-tabs { display: flex; background: #e2e8f0; border-radius: 12px; padding: 6px; margin-bottom: 30px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); overflow-x: auto; -ms-overflow-style: none; scrollbar-width: none; }
-        .skills-tabs::-webkit-scrollbar { display: none; }
-        html.dark .skills-tabs { background: var(--bg-dark-sec); box-shadow: inset 0 2px 4px rgba(0,0,0,0.2); }
-        .skill-tab { flex: 1; padding: 12px 15px; border: none; background: transparent; border-radius: 8px; font-weight: 600; color: #64748b; cursor: pointer; transition: var(--transition); font-size: 14px; display: flex; align-items: center; justify-content: center; gap: 8px; white-space: nowrap; }
-        html.dark .skill-tab { color: #94a3b8; }
-        .skill-tab:hover { color: var(--text-light); }
-        html.dark .skill-tab:hover { color: var(--text-dark); }
-        .skill-tab.active { background: #1e293b; color: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        html.dark .skill-tab.active { background: var(--primary); color: #090c1b; }
-        .skill-pane { display: none; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; animation: fadeInPage 0.4s ease forwards; }
-        .skill-pane.active { display: grid; }
-        .skill-card { background: #fff; border-radius: 12px; padding: 24px; box-shadow: var(--shadow-sm); border: 1px solid var(--border-light); transition: var(--transition); position: relative; }
-        html.dark .skill-card { background: var(--bg-dark-sec); border-color: var(--border-dark); box-shadow: var(--shadow-sm); }
-        .skill-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: rgba(138, 180, 255, 0.2); }
-        .skill-card-icon { position: absolute; top: 20px; right: 24px; width: 32px; height: 32px; object-fit: contain; opacity: 0.8; transition: var(--transition); }
-        .skill-card:hover .skill-card-icon { opacity: 1; transform: scale(1.1); }
-        .skill-card-header { display: flex; justify-content: flex-start; align-items: center; gap: 15px; margin-bottom: 25px; padding-right: 40px; }
-        .skill-card-title { font-weight: 700; font-size: 16px; }
-        .skill-tag { background: #f1f5f9; padding: 5px 14px; border-radius: 20px; font-size: 12px; font-weight: 500; color: #475569; display: inline-block; }
-        html.dark .skill-tag { background: #1e293b; color: #cbd5e1; }
         
+        /* Modern Segmented Control (Tabs) */
+        .skills-tabs { 
+            display: flex; background: rgba(0,0,0,0.04); border-radius: 50px; padding: 6px; margin: 0 auto 40px auto; 
+            max-width: fit-content; box-shadow: inset 0 2px 5px rgba(0,0,0,0.02); overflow-x: auto; 
+            -ms-overflow-style: none; scrollbar-width: none; border: 1px solid var(--border-light);
+        }
+        .skills-tabs::-webkit-scrollbar { display: none; }
+        html.dark .skills-tabs { background: rgba(255,255,255,0.03); box-shadow: inset 0 2px 5px rgba(0,0,0,0.2); border-color: var(--border-dark); }
+        
+        .skill-tab { 
+            flex: 1; padding: 10px 24px; border: none; background: transparent; border-radius: 50px; 
+            font-weight: 600; color: #64748b; cursor: pointer; transition: var(--transition); 
+            font-size: 14.5px; display: flex; align-items: center; justify-content: center; gap: 8px; white-space: nowrap; 
+        }
+        html.dark .skill-tab { color: #94a3b8; }
+        .skill-tab:hover { color: var(--text-light); background: rgba(0,0,0,0.02); }
+        html.dark .skill-tab:hover { color: var(--text-dark); background: rgba(255,255,255,0.02); }
+        
+        .skill-tab.active { background: #fff; color: var(--primary); box-shadow: 0 4px 15px rgba(0,0,0,0.08); }
+        html.dark .skill-tab.active { background: rgba(255,255,255,0.1); color: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.05); }
+
+        .skill-pane { display: none; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; animation: fadeInPage 0.5s cubic-bezier(0.25, 0.8, 0.25, 1) forwards; }
+        .skill-pane.active { display: grid; }
+        @keyframes fadeInPage { from { opacity: 0; transform: translateY(15px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        
+        .skill-card { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); border-radius: 20px; padding: 25px; box-shadow: var(--shadow-sm); border: 1px solid rgba(255,255,255,0.9); transition: var(--transition); position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: center;}
+        html.dark .skill-card { background: rgba(17, 23, 48, 0.5); border-color: rgba(255, 255, 255, 0.05); }
+        
+        /* Glowing Skill Cards on Hover */
+        .skill-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-glow); border-color: var(--primary); }
+        .skill-card::after { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(to right, transparent, rgba(255,255,255,0.2), transparent); transform: skewX(-20deg); transition: 0.5s; }
+        .skill-card:hover::after { left: 150%; }
+        html.dark .skill-card::after { background: linear-gradient(to right, transparent, rgba(255,255,255,0.05), transparent); }
+
+        .skill-card-icon { position: absolute; top: 20px; right: 24px; width: 38px; height: 38px; object-fit: contain; opacity: 0.7; transition: var(--transition); filter: grayscale(20%); }
+        .skill-card:hover .skill-card-icon { opacity: 1; transform: scale(1.15) rotate(-5deg); filter: grayscale(0%); }
+        
+        /* Mengubah Logo GitHub menjadi putih di Dark Mode */
+        html.dark .skill-card-icon[alt="GitHub"] { filter: brightness(0) invert(1); }
+        html.dark .skill-card:hover .skill-card-icon[alt="GitHub"] { filter: brightness(0) invert(1); }
+        
+        .skill-card-header { display: flex; flex-direction: column; gap: 8px; margin-bottom: 0; padding-right: 45px; }
+        .skill-card-title { font-weight: 700; font-size: 17px; color: var(--text-light); }
+        html.dark .skill-card-title { color: var(--text-dark); }
+        
+        .skill-tag { background: rgba(37, 99, 235, 0.1); padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; color: var(--primary); display: inline-block; width: fit-content; border: 1px solid rgba(37, 99, 235, 0.1);}
+        html.dark .skill-tag { background: rgba(138, 180, 255, 0.1); border-color: rgba(138, 180, 255, 0.1); }
+        
+        /* ================= FOOTER ================= */
         footer { background: var(--nav-mobile-light); color: var(--text-light); text-align: center; padding: 25px 20px; font-size: 14px; margin-top: auto; border-top: 1px solid var(--border-light); transition: var(--transition); }
         html.dark footer { background: #050711; color: var(--text-dark); border-top-color: var(--border-dark); }
         
+        /* ================= RESPONSIVE ================= */
         @media (max-width: 900px) {
             .menu-toggle { display: block; }
             .nav-container { position: absolute; top: calc(100% + 15px); left: 0; width: 100%; background: var(--nav-mobile-light); flex-direction: column; align-items: stretch; padding: 15px 0 25px 0; gap: 0; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); border: 1px solid var(--border-light); border-radius: 24px; opacity: 0; visibility: hidden; transform: translateY(-10px); transition: all 0.3s ease; z-index: 999; }
@@ -134,22 +254,29 @@
             html.dark .controls { border-top-color: var(--border-dark); }
             .controls-top { justify-content: center; width: 100%; }
             .cv-btn { width: 100%; max-width: none; padding: 12px; }
-            .skill-tab { padding: 12px 5px; font-size: 13px; }
+            
+            .experience-container::before { left: 20px; }
+            .experience-card { padding: 25px 20px; gap: 20px; flex-direction: column; border-radius: 20px;}
+            .exp-logo { margin-bottom: -10px; }
+            .skills-tabs { max-width: 100%; border-radius: 16px; flex-wrap: wrap; justify-content: center; background: transparent; border: none; box-shadow: none;}
+            .skill-tab { flex: 1 1 45%; padding: 10px; font-size: 13.5px; background: rgba(0,0,0,0.04); border-radius: 12px; margin: 4px; border: 1px solid var(--border-light);}
+            html.dark .skill-tab { background: rgba(255,255,255,0.03); border-color: var(--border-dark);}
         }
         @media (max-width: 768px) {
-            section { padding: 60px 5%; }
-            .experience-card { flex-direction: column; text-align: left; padding: 25px 20px;}
-            .exp-footer { flex-direction: column; gap: 5px;}
-            .skills-tabs { flex-direction: column; }
+            section { padding: 50px 5% 70px; }
+            .section-title { font-size: 28px; }
+            .exp-header h3 { font-size: 20px; }
+            .exp-footer { flex-direction: column; gap: 8px;}
+            .exp-location, .exp-date { width: fit-content; }
         }
     </style>
 </head>
 
 <body>
     <!-- Navbar -->
-    <nav>
+    <nav class="reveal-up active">
         <a href="/" class="logo">
-            <img src="img/fontyasin.png" alt="Yasinisme Logo" />
+            <img src="img/fontyasin.png" alt="Yasinisme Logo" onerror="this.onerror=null; this.src='https://placehold.co/120x30/22c55e/ffffff?text=Yaasin';" />
         </a>
         <div class="menu-toggle" id="menu-toggle"><i class="fa-solid fa-bars"></i></div>
         <div class="nav-container" id="nav-container">
@@ -178,15 +305,15 @@
     <main>
         <!-- EXPERIENCE SECTION -->
         <section class="experience">
-            <div class="section-header">
+            <div class="section-header reveal-up">
                 <span class="section-tag" data-key="experienceTag">Experience</span>
                 <h2 class="section-title" data-key="experienceTitle">Here is a quick summary of my most recent experiences:</h2>
             </div>
 
             <div class="experience-container">
                 <!-- BBPVP Semarang -->
-                <div class="experience-card">
-                    <div class="exp-logo"><img src="img/Pengalaman/bbpvp.png" alt="BBPVP Semarang Logo" loading="lazy"></div>
+                <div class="experience-card reveal-up" style="transition-delay: 0.1s;">
+                    <div class="exp-logo"><img src="img/Pengalaman/bbpvp.png" alt="BBPVP Semarang Logo" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/70x70/2563eb/ffffff?text=BBPVP';"></div>
                     <div class="exp-content">
                         <div class="exp-header">
                             <h3 data-key="roleBbpvp">Computer Administrator, Intern</h3>
@@ -206,8 +333,8 @@
                 </div>
 
                 <!-- CV Garuda Karya Solution -->
-                <div class="experience-card">
-                    <div class="exp-logo"><img src="img/Pengalaman/gks.png" alt="Company Logo" loading="lazy"></div>
+                <div class="experience-card reveal-up" style="transition-delay: 0.2s;">
+                    <div class="exp-logo"><img src="img/Pengalaman/gks.png" alt="Company Logo" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/70x70/e11d48/ffffff?text=GKS';"></div>
                     <div class="exp-content">
                         <div class="exp-header">
                             <h3 data-key="roleGks">IT Team (IT Division Staff), Contract Employee</h3>
@@ -226,8 +353,8 @@
                 </div>
 
                 <!-- Koperasi Karyawan PLN Lumintu -->
-                <div class="experience-card">
-                    <div class="exp-logo"><img src="img/Pengalaman/KopkarPLNLumintu.png" alt="Company Logo" loading="lazy"></div>
+                <div class="experience-card reveal-up" style="transition-delay: 0.3s;">
+                    <div class="exp-logo"><img src="img/Pengalaman/KopkarPLNLumintu.png" alt="Company Logo" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/70x70/22c55e/ffffff?text=PLN';"></div>
                     <div class="exp-content">
                         <div class="exp-header">
                             <h3 data-key="roleKopkar">Web Developer, Intern</h3>
@@ -246,8 +373,8 @@
                 </div>
 
                 <!-- SEO Freelance -->
-                <div class="experience-card">
-                    <div class="exp-logo"><img src="img/yasin.png" alt="Freelance" loading="lazy" style="border-radius: 50%;"></div>
+                <div class="experience-card reveal-up" style="transition-delay: 0.4s;">
+                    <div class="exp-logo"><img src="img/yasin.png" alt="Freelance" loading="lazy" style="border-radius: 50%;" onerror="this.onerror=null; this.src='https://placehold.co/70x70/8ab4ff/ffffff?text=LO';"></div>
                     <div class="exp-content">
                         <div class="exp-header">
                             <h3 data-key="roleSeo">Freelance / Project-Based</h3>
@@ -272,13 +399,13 @@
         <!-- SKILLS SECTION -->
         <section class="skills">
             <div class="skills-container">
-                <div class="skills-header-text">
+                <div class="skills-header-text reveal-up">
                     <h2 class="section-title" data-key="skillsTitle">My Skills</h2>
                     <p data-key="skillsSubtitle">Technical expertise and proficiency across different domains of software development</p>
                 </div>
 
                 <!-- Tabs Navigation -->
-                <div class="skills-tabs">
+                <div class="skills-tabs reveal-up" style="transition-delay: 0.1s;">
                     <button class="skill-tab active" onclick="openSkillTab(event, 'frontend')">
                         <i class="fa-solid fa-palette"></i> <span data-key="tabFrontend">Frontend</span>
                     </button>
@@ -295,43 +422,43 @@
 
                 <!-- Frontend Tab -->
                 <div id="skill-frontend" class="skill-pane active">
-                    <div class="skill-card"><img src="img/Skill/javascript.svg" alt="JavaScript" class="skill-card-icon" loading="lazy" /><div class="skill-card-header"><span class="skill-card-title">JavaScript</span></div><span class="skill-tag">Language</span></div>
-                    <div class="skill-card"><img src="img/Skill/html.svg" alt="HTML5" class="skill-card-icon" loading="lazy" /><div class="skill-card-header"><span class="skill-card-title">HTML5</span></div><span class="skill-tag">Markup</span></div>
-                    <div class="skill-card"><img src="img/Skill/css.svg" alt="CSS3" class="skill-card-icon" loading="lazy" /><div class="skill-card-header"><span class="skill-card-title">CSS3</span></div><span class="skill-tag">Styling</span></div>
-                    <div class="skill-card"><img src="img/Skill/react-native.svg" alt="React Native" class="skill-card-icon" loading="lazy" /><div class="skill-card-header"><span class="skill-card-title">React Native</span></div><span class="skill-tag">Framework</span></div>
-                    <div class="skill-card"><img src="img/Skill/bootstrap.png" alt="Bootstrap" class="skill-card-icon" loading="lazy" /><div class="skill-card-header"><span class="skill-card-title">Bootstrap</span></div><span class="skill-tag">Framework</span></div>
-                    <div class="skill-card"><img src="img/Skill/tailwindcss.png" alt="Tailwind CSS" class="skill-card-icon" loading="lazy" /><div class="skill-card-header"><span class="skill-card-title">Tailwind CSS</span></div><span class="skill-tag">Framework</span></div>
+                    <div class="skill-card reveal-up" style="transition-delay: 0.2s;"><img src="img/Skill/javascript.svg" alt="JavaScript" class="skill-card-icon" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/38x38/f7df1e/000000?text=JS';" /><div class="skill-card-header"><span class="skill-card-title">JavaScript</span><span class="skill-tag">Language</span></div></div>
+                    <div class="skill-card reveal-up" style="transition-delay: 0.3s;"><img src="img/Skill/html.svg" alt="HTML5" class="skill-card-icon" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/38x38/e34f26/ffffff?text=HTML';" /><div class="skill-card-header"><span class="skill-card-title">HTML5</span><span class="skill-tag">Markup</span></div></div>
+                    <div class="skill-card reveal-up" style="transition-delay: 0.4s;"><img src="img/Skill/css.svg" alt="CSS3" class="skill-card-icon" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/38x38/1572b6/ffffff?text=CSS';" /><div class="skill-card-header"><span class="skill-card-title">CSS3</span><span class="skill-tag">Styling</span></div></div>
+                    <div class="skill-card reveal-up" style="transition-delay: 0.5s;"><img src="img/Skill/react-native.svg" alt="React Native" class="skill-card-icon" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/38x38/61dafb/000000?text=React';" /><div class="skill-card-header"><span class="skill-card-title">React Native</span><span class="skill-tag">Framework</span></div></div>
+                    <div class="skill-card reveal-up" style="transition-delay: 0.6s;"><img src="img/Skill/bootstrap.png" alt="Bootstrap" class="skill-card-icon" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/38x38/7952b3/ffffff?text=BS';" /><div class="skill-card-header"><span class="skill-card-title">Bootstrap</span><span class="skill-tag">Framework</span></div></div>
+                    <div class="skill-card reveal-up" style="transition-delay: 0.7s;"><img src="img/Skill/tailwindcss.png" alt="Tailwind CSS" class="skill-card-icon" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/38x38/06b6d4/ffffff?text=TW';" /><div class="skill-card-header"><span class="skill-card-title">Tailwind CSS</span><span class="skill-tag">Framework</span></div></div>
                 </div>
 
                 <!-- Backend Tab -->
                 <div id="skill-backend" class="skill-pane">
-                    <div class="skill-card"><img src="img/Skill/php.svg" alt="PHP" class="skill-card-icon" loading="lazy" /><div class="skill-card-header"><span class="skill-card-title">PHP</span></div><span class="skill-tag">Language</span></div>
-                    <div class="skill-card"><img src="img/Skill/java.svg" alt="Java" class="skill-card-icon" loading="lazy" /><div class="skill-card-header"><span class="skill-card-title">Java</span></div><span class="skill-tag">Language</span></div>
-                    <div class="skill-card"><img src="img/Skill/c.svg" alt="C++" class="skill-card-icon" loading="lazy" /><div class="skill-card-header"><span class="skill-card-title">C++</span></div><span class="skill-tag">Language</span></div>
-                    <div class="skill-card"><img src="img/Skill/laravel.svg" alt="Laravel" class="skill-card-icon" loading="lazy" /><div class="skill-card-header"><span class="skill-card-title">Laravel</span></div><span class="skill-tag">Framework</span></div>
-                    <div class="skill-card"><img src="img/Skill/mysql.svg" alt="MySQL" class="skill-card-icon" loading="lazy" /><div class="skill-card-header"><span class="skill-card-title">MySQL</span></div><span class="skill-tag">Database</span></div>
+                    <div class="skill-card"><img src="img/Skill/php.svg" alt="PHP" class="skill-card-icon" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/38x38/777bb4/ffffff?text=PHP';" /><div class="skill-card-header"><span class="skill-card-title">PHP</span><span class="skill-tag">Language</span></div></div>
+                    <div class="skill-card"><img src="img/Skill/java.svg" alt="Java" class="skill-card-icon" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/38x38/007396/ffffff?text=Java';" /><div class="skill-card-header"><span class="skill-card-title">Java</span><span class="skill-tag">Language</span></div></div>
+                    <div class="skill-card"><img src="img/Skill/c.svg" alt="C++" class="skill-card-icon" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/38x38/00599c/ffffff?text=C++';" /><div class="skill-card-header"><span class="skill-card-title">C++</span><span class="skill-tag">Language</span></div></div>
+                    <div class="skill-card"><img src="img/Skill/laravel.svg" alt="Laravel" class="skill-card-icon" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/38x38/ff2d20/ffffff?text=LV';" /><div class="skill-card-header"><span class="skill-card-title">Laravel</span><span class="skill-tag">Framework</span></div></div>
+                    <div class="skill-card"><img src="img/Skill/mysql.svg" alt="MySQL" class="skill-card-icon" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/38x38/4479a1/ffffff?text=SQL';" /><div class="skill-card-header"><span class="skill-card-title">MySQL</span><span class="skill-tag">Database</span></div></div>
                 </div>
 
                 <!-- Design Tab -->
                 <div id="skill-design" class="skill-pane">
-                    <div class="skill-card"><img src="img/Skill/figma.svg" alt="Figma" class="skill-card-icon" loading="lazy" /><div class="skill-card-header"><span class="skill-card-title">Figma</span></div><span class="skill-tag">Design</span></div>
-                    <div class="skill-card"><img src="img/Skill/canva.svg" alt="Canva" class="skill-card-icon" loading="lazy" /><div class="skill-card-header"><span class="skill-card-title">Canva</span></div><span class="skill-tag">Design</span></div>
-                    <div class="skill-card"><img src="img/Skill/coreldraw.svg" alt="CorelDRAW" class="skill-card-icon" loading="lazy" /><div class="skill-card-header"><span class="skill-card-title">CorelDRAW</span></div><span class="skill-tag">Design</span></div>
-                    <div class="skill-card"><img src="img/Skill/capcut.jpg" alt="CapCut" class="skill-card-icon" loading="lazy" style="border-radius: 8px;" /><div class="skill-card-header"><span class="skill-card-title">CapCut</span></div><span class="skill-tag">Video Editing</span></div>
+                    <div class="skill-card"><img src="img/Skill/figma.svg" alt="Figma" class="skill-card-icon" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/38x38/f24e1e/ffffff?text=Fig';" /><div class="skill-card-header"><span class="skill-card-title">Figma</span><span class="skill-tag">Design</span></div></div>
+                    <div class="skill-card"><img src="img/Skill/canva.svg" alt="Canva" class="skill-card-icon" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/38x38/00c4cc/ffffff?text=Cnv';" /><div class="skill-card-header"><span class="skill-card-title">Canva</span><span class="skill-tag">Design</span></div></div>
+                    <div class="skill-card"><img src="img/Skill/coreldraw.svg" alt="CorelDRAW" class="skill-card-icon" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/38x38/2a9d8f/ffffff?text=CD';" /><div class="skill-card-header"><span class="skill-card-title">CorelDRAW</span><span class="skill-tag">Design</span></div></div>
+                    <div class="skill-card"><img src="img/Skill/capcut.jpg" alt="CapCut" class="skill-card-icon" loading="lazy" style="border-radius: 8px;" onerror="this.onerror=null; this.src='https://placehold.co/38x38/000000/ffffff?text=CC';" /><div class="skill-card-header"><span class="skill-card-title">CapCut</span><span class="skill-tag">Video Editing</span></div></div>
                 </div>
 
                 <!-- Tools Tab -->
                 <div id="skill-tools" class="skill-pane">
-                    <div class="skill-card"><img src="img/Skill/github.svg" alt="GitHub" class="skill-card-icon" loading="lazy" /><div class="skill-card-header"><span class="skill-card-title">GitHub</span></div><span class="skill-tag">Version Control</span></div>
-                    <div class="skill-card"><img src="img/Skill/laragon.svg" alt="Laragon" class="skill-card-icon" loading="lazy" /><div class="skill-card-header"><span class="skill-card-title">Laragon</span></div><span class="skill-tag">Environment</span></div>
-                    <div class="skill-card"><img src="img/Skill/google-workspace.svg" alt="Google Workspace" class="skill-card-icon" loading="lazy" /><div class="skill-card-header"><span class="skill-card-title">Google Workspace</span></div><span class="skill-tag">Productivity</span></div>
+                    <div class="skill-card"><img src="img/Skill/github.svg" alt="GitHub" class="skill-card-icon" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/38x38/181717/ffffff?text=Git';" /><div class="skill-card-header"><span class="skill-card-title">GitHub</span><span class="skill-tag">Version Control</span></div></div>
+                    <div class="skill-card"><img src="img/Skill/laragon.svg" alt="Laragon" class="skill-card-icon" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/38x38/0091d3/ffffff?text=Lrg';" /><div class="skill-card-header"><span class="skill-card-title">Laragon</span><span class="skill-tag">Environment</span></div></div>
+                    <div class="skill-card"><img src="img/Skill/google-workspace.svg" alt="Google Workspace" class="skill-card-icon" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/38x38/4285f4/ffffff?text=GW';" /><div class="skill-card-header"><span class="skill-card-title">Google Workspace</span><span class="skill-tag">Productivity</span></div></div>
                 </div>
             </div>
         </section>
     </main>
 
     <!-- Footer -->
-    <footer><p data-key="footer">© 2025 | Designed and coded by Ahmad Yasin Fadhilah</p></footer>
+    <footer class="reveal-up"><p data-key="footer">© 2025 | Designed and coded by Ahmad Yasin Fadhilah</p></footer>
 
     <script>
         // === NAVBAR MOBILE TOGGLE ===
@@ -346,8 +473,17 @@
         // === THEME TOGGLE ===
         const themeToggle = document.getElementById('theme-toggle');
         function updateThemeIcon() { if(!themeToggle) return; const isDark = document.documentElement.classList.contains('dark'); themeToggle.textContent = isDark ? '☀️' : '🌙'; }
-        if (!document.documentElement.style.background && localStorage.getItem('theme') !== 'dark') { updateThemeIcon(); } else { document.documentElement.style.background = ''; updateThemeIcon(); }
-        if (themeToggle) { themeToggle.addEventListener('click', () => { document.documentElement.classList.toggle('dark'); localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light'); updateThemeIcon(); }); }
+        
+        document.documentElement.style.background = '';
+        updateThemeIcon();
+        
+        if (themeToggle) { 
+            themeToggle.addEventListener('click', () => { 
+                document.documentElement.classList.toggle('dark'); 
+                localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light'); 
+                updateThemeIcon(); 
+            }); 
+        }
 
         // === SKILLS TABS LOGIC ===
         function openSkillTab(event, tabName) {
@@ -358,7 +494,28 @@
             if (event && event.currentTarget) event.currentTarget.classList.add('active');
         }
 
-        // === LANGUAGE SWITCH (Simplified for specific page strings) ===
+        // === SCROLL REVEAL ANIMATION (React/Framer Motion style fade-up) ===
+        document.addEventListener("DOMContentLoaded", function() {
+            const reveals = document.querySelectorAll(".reveal-up");
+            const revealOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
+
+            const revealOnScroll = new IntersectionObserver(function(entries, observer) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("active");
+                        observer.unobserve(entry.target); 
+                    }
+                });
+            }, revealOptions);
+
+            reveals.forEach(reveal => {
+                if(!reveal.classList.contains('active')) {
+                    revealOnScroll.observe(reveal);
+                }
+            });
+        });
+
+        // === LANGUAGE SWITCH ===
         const langSwitch = document.getElementById('lang-switch');
         const langData = {
             en: {
@@ -388,8 +545,20 @@
                 tabFrontend: "Frontend", tabBackend: "Backend", tabDesign: "Desain & Editing", tabTools: "Alat (Tools)"
             }
         };
-        function applyLanguage(lang) { document.querySelectorAll("[data-key]").forEach(el => { const key = el.getAttribute("data-key"); if (langData[lang] && langData[lang][key]) { el.innerHTML = langData[lang][key]; } }); if (langSwitch) langSwitch.setAttribute('data-current-lang', lang); localStorage.setItem('lang', lang); }
-        if (langSwitch) { langSwitch.addEventListener('click', () => { const currentLang = localStorage.getItem('lang') || 'en'; applyLanguage(currentLang === 'en' ? 'id' : 'en'); }); }
+        function applyLanguage(lang) { 
+            document.querySelectorAll("[data-key]").forEach(el => { 
+                const key = el.getAttribute("data-key"); 
+                if (langData[lang] && langData[lang][key]) { el.innerHTML = langData[lang][key]; } 
+            }); 
+            if (langSwitch) langSwitch.setAttribute('data-current-lang', lang); 
+            localStorage.setItem('lang', lang); 
+        }
+        if (langSwitch) { 
+            langSwitch.addEventListener('click', () => { 
+                const currentLang = localStorage.getItem('lang') || 'en'; 
+                applyLanguage(currentLang === 'en' ? 'id' : 'en'); 
+            }); 
+        }
         applyLanguage(localStorage.getItem('lang') || 'en');
     </script>
 </body>
