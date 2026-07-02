@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -12,7 +12,11 @@
     <script>
       (function () {
         try {
-          if (localStorage.getItem("theme") === "dark") {
+          // Check if user explicitly set light mode, otherwise default to dark
+          if (localStorage.getItem("theme") === "light") {
+            document.documentElement.classList.remove("dark");
+            document.documentElement.style.background = "#f8fafc";
+          } else {
             document.documentElement.classList.add("dark");
             document.documentElement.style.background = "#090c1b";
           }
@@ -72,7 +76,6 @@
         width: 100%;
       }
 
-      /* NAVBAR */
       nav {
         display: flex;
         justify-content: space-between;
@@ -535,7 +538,7 @@
               id="theme-toggle"
               aria-label="Toggle Theme"
             >
-              🌙
+              ☀️
             </button>
             <button class="modern-lang-toggle" id="lang-switch" aria-label="Toggle Language" data-current-lang="en">
                 <div class="lang-slider"></div>
@@ -773,31 +776,23 @@
         });
       }
 
-      // === THEME TOGGLE ===
+      // === THEME TOGGLE (Updated for Dark Mode Default) ===
       const themeToggle = document.getElementById("theme-toggle");
       function updateThemeIcon() {
         if (!themeToggle) return;
         const isDark = document.documentElement.classList.contains("dark");
         themeToggle.textContent = isDark ? "☀️" : "🌙";
       }
-      if (
-        !document.documentElement.style.background &&
-        localStorage.getItem("theme") !== "dark"
-      ) {
-        updateThemeIcon();
-      } else {
-        document.documentElement.style.background = "";
-        updateThemeIcon();
-      }
+      
+      // Clear inline script background modifications so CSS logic takes fully over
+      document.documentElement.style.background = "";
+      updateThemeIcon();
+      
       if (themeToggle) {
         themeToggle.addEventListener("click", () => {
           document.documentElement.classList.toggle("dark");
-          localStorage.setItem(
-            "theme",
-            document.documentElement.classList.contains("dark")
-              ? "dark"
-              : "light",
-          );
+          const isDark = document.documentElement.classList.contains("dark");
+          localStorage.setItem("theme", isDark ? "dark" : "light");
           updateThemeIcon();
         });
       }
