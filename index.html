@@ -15,14 +15,16 @@
     <script>
         (function () {
             try {
-                // Tema default adalah dark (gelap). 
-                // Hanya gunakan terang jika user pernah menyimpannya sebagai 'light'.
-                if (localStorage.getItem("theme") === "light") {
+                const savedTheme = localStorage.getItem("theme");
+                // Hanya gunakan terang jika user pernah secara eksplisit menyimpannya sebagai 'light'.
+                if (savedTheme === "light") {
                     document.documentElement.classList.remove("dark");
                     document.documentElement.style.background = "#f8fafc";
                 } else {
+                    // Paksa dark mode sebagai default mutlak
                     document.documentElement.classList.add("dark");
                     document.documentElement.style.background = "#090c1b";
+                    if (!savedTheme) localStorage.setItem("theme", "dark");
                 }
             } catch (e) {}
         })();
@@ -34,7 +36,8 @@
             /* Light Mode */
             --bg-light: #f8fafc;
             --bg-light-sec: #f1f5f9;
-            --text-light: #0f172a; /* Dipergelap sedikit agar teks lebih tajam */
+            --text-light: #0f172a;
+            --text-muted-light: #475569;
             --nav-light: rgba(255, 255, 255, 0.85);
             --nav-mobile-light: #ffffff;
             --border-light: rgba(0, 0, 0, 0.08);
@@ -43,25 +46,25 @@
             --bg-dark: #090c1b;
             --bg-dark-sec: #111730;
             --text-dark: #f8fafc;
+            --text-muted-dark: #94a3b8;
             --nav-dark: rgba(11, 14, 26, 0.85);
             --nav-mobile-dark: #0b0e1a;
             --border-dark: rgba(255, 255, 255, 0.08);
 
-            /* Brand Colors (LIGHT MODE DEFAULT) */
-            /* Menggunakan warna yang lebih pekat dan berani untuk kontras tinggi di layar putih */
+            /* Brand Colors (Light) */
             --primary: #2563eb; 
             --accent: #e11d48;
             --gradient-text: linear-gradient(135deg, #2563eb, #e11d48);
             
             /* Shadows & Transitions */
             --shadow-sm: 0 4px 15px rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 10px 25px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.08);
             --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
-        /* Override Brand Colors KHUSUS UNTUK DARK MODE */
+        /* Override Brand Colors for Dark Mode */
         html.dark {
-            --primary: #8ab4ff; /* Kembali ke warna pastel bercahaya */
+            --primary: #8ab4ff;
             --accent: #ff4d6d;
             --gradient-text: linear-gradient(135deg, #8ab4ff, #ff4d6d);
         }
@@ -76,13 +79,15 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            transition: background 0.3s, color 0.3s;
+            transition: background 0.3s ease, color 0.3s ease;
             overflow-x: hidden;
+            line-height: 1.6;
         }
 
         html.dark body { background: var(--bg-dark); color: var(--text-dark); }
         a { text-decoration: none; color: inherit; }
         main { flex: 1; display: flex; flex-direction: column; width: 100%; }
+        section { padding: 100px 5%; width: 100%; } /* Increased padding for better whitespace */
 
         /* ================= NAVBAR ================= */
         nav {
@@ -91,46 +96,48 @@
             backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
             border: 1px solid var(--border-light); position: sticky;
             top: 20px; margin: 0 auto 30px auto; width: 92%; max-width: 1100px;
-            border-radius: 50px; z-index: 1000; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-            transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
+            border-radius: 50px; z-index: 1000; box-shadow: var(--shadow-md);
+            transition: var(--transition);
         }
 
-        html.dark nav { background: var(--nav-dark); border: 1px solid var(--border-dark); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); }
+        html.dark nav { background: var(--nav-dark); border: 1px solid var(--border-dark); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4); }
         .logo { display: flex; align-items: center; z-index: 1001; transition: var(--transition); }
-        .logo img { height: 22px; width: auto; filter: brightness(0); transition: filter 0.3s ease, opacity 0.3s ease; }
+        .logo img { height: 24px; width: auto; filter: brightness(0); transition: var(--transition); }
         html.dark .logo img { filter: brightness(0) invert(1); }
-        .logo:hover img { opacity: 0.7; }
+        .logo:hover img { opacity: 0.7; transform: scale(1.05); }
+        
         .nav-container { display: flex; align-items: center; gap: 25px; }
-        .nav-links { list-style: none; display: flex; align-items: center; gap: 10px; }
+        .nav-links { list-style: none; display: flex; align-items: center; gap: 8px; }
         .nav-links a {
-            color: #64748b; font-weight: 500; transition: var(--transition);
-            font-size: 14px; padding: 8px 16px; border-radius: 50px; cursor: pointer;
+            color: var(--text-muted-light); font-weight: 500; transition: var(--transition);
+            font-size: 14px; padding: 8px 18px; border-radius: 50px; cursor: pointer;
         }
-        html.dark .nav-links a { color: #94a3b8; }
+        html.dark .nav-links a { color: var(--text-muted-dark); }
         .nav-links a:hover, .nav-links a.active { color: var(--text-light); background: rgba(0, 0, 0, 0.05); font-weight: 600; }
         html.dark .nav-links a:hover, html.dark .nav-links a.active { color: var(--text-dark); background: rgba(255, 255, 255, 0.1); }
-        .divider { width: 1px; height: 20px; background: var(--border-light); }
+        
+        .divider { width: 1px; height: 24px; background: var(--border-light); }
         html.dark .divider { background: var(--border-dark); }
         .controls { display: flex; align-items: center; gap: 15px; }
-        .controls-top { display: flex; align-items: center; gap: 10px; }
+        .controls-top { display: flex; align-items: center; gap: 12px; }
 
         /* Modern Language Toggle Styles */
         .modern-lang-toggle { 
             position: relative; display: flex; align-items: center; justify-content: space-between; 
-            width: 60px; height: 32px; padding: 0 6px; border-radius: 50px; 
+            width: 64px; height: 34px; padding: 0 6px; border-radius: 50px; 
             background: rgba(0,0,0,0.05); border: 1px solid var(--border-light); 
             cursor: pointer; transition: var(--transition); outline: none; 
         }
         html.dark .modern-lang-toggle { background: rgba(255, 255, 255, 0.05); border-color: var(--border-dark); }
         .modern-lang-toggle span { 
             font-size: 11px; font-weight: 700; z-index: 2; transition: color 0.3s; 
-            width: 50%; text-align: center; color: #64748b; 
+            width: 50%; text-align: center; color: var(--text-muted-light); 
         }
-        html.dark .modern-lang-toggle span { color: #94a3b8; }
+        html.dark .modern-lang-toggle span { color: var(--text-muted-dark); }
         .modern-lang-toggle .lang-slider { 
             position: absolute; top: 2px; left: 2px; width: calc(50% - 2px); height: calc(100% - 4px); 
             background: #fff; border-radius: 50px; z-index: 1; box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
-            transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55); 
+            transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55); 
         }
         html.dark .modern-lang-toggle .lang-slider { background: var(--primary); }
         
@@ -144,228 +151,207 @@
 
         button.theme-toggle {
             background: transparent; border: none; color: var(--text-light); font-size: 18px;
-            cursor: pointer; transition: var(--transition); display: flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 50%;
+            cursor: pointer; transition: var(--transition); display: flex; align-items: center; 
+            justify-content: center; width: 36px; height: 36px; border-radius: 50%;
         }
         html.dark button.theme-toggle { color: var(--text-dark); }
-        button.theme-toggle:hover { background: var(--border-light); transform: translateY(-1px); }
-        html.dark button.theme-toggle:hover { background: var(--border-dark); }
+        button.theme-toggle:hover { background: rgba(0,0,0,0.05); transform: rotate(15deg); }
+        html.dark button.theme-toggle:hover { background: rgba(255,255,255,0.1); }
 
         .cv-btn {
-            background: var(--primary); color: #fff; padding: 8px 20px; border-radius: 50px;
-            font-weight: 600; font-size: 13px; transition: var(--transition); box-shadow: 0 4px 10px rgba(138, 180, 255, 0.3); text-align: center;
+            background: var(--primary); color: #fff; padding: 10px 22px; border-radius: 50px;
+            font-weight: 600; font-size: 13.5px; transition: var(--transition); 
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3); text-align: center;
         }
-        .cv-btn:hover { background: var(--accent); transform: translateY(-2px); box-shadow: 0 6px 15px rgba(255, 77, 109, 0.4); }
+        html.dark .cv-btn { box-shadow: 0 4px 15px rgba(138, 180, 255, 0.3); }
+        .cv-btn:hover { background: var(--accent); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(225, 29, 72, 0.4); }
 
         .menu-toggle { display: none; font-size: 22px; cursor: pointer; color: var(--text-light); z-index: 1001; transition: var(--transition); padding: 5px; }
         html.dark .menu-toggle { color: var(--text-dark); }
 
-        /* ================= GENERAL SECTION STYLES ================= */
-        section { padding: 80px 5%; width: 100%; }
-
-        /* ================= HOME PAGE STYLES ================= */
+        /* ================= HOME PAGE / HERO STYLES ================= */
         .hero {
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             text-align: center; max-width: 1400px; margin: 0 auto; min-height: 90vh;
-            padding-top: 80px; padding-bottom: 80px; position: relative;
+            padding-top: 60px; padding-bottom: 80px; position: relative;
             overflow: hidden;
         }
 
-        /* Modern Grid Background */
         .hero-bg-grid {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;
             background-size: 40px 40px; pointer-events: none;
-            /* Grid sedikit ditebalkan di Light Mode agar terlihat tegas (0.05 opacity) */
-            background-image: linear-gradient(to right, rgba(0,0,0,0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,0.05) 1px, transparent 1px);
+            background-image: linear-gradient(to right, rgba(0,0,0,0.04) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,0.04) 1px, transparent 1px);
             mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
             -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
         }
         html.dark .hero-bg-grid { background-image: linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px); }
 
-        /* Glowing Background Orb */
         .hero::before {
-            content: ''; position: absolute; width: 50vw; height: 50vw; background: var(--primary);
-            /* Orb dibuat lebih subtle (0.08) di Light Mode agar tidak mengganggu bacaan */
-            filter: blur(150px); opacity: 0.08; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: -1; border-radius: 50%;
-            animation: pulse-glow 8s ease-in-out infinite alternate;
+            content: ''; position: absolute; width: 45vw; height: 45vw; background: var(--primary);
+            filter: blur(140px); opacity: 0.08; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            z-index: -1; border-radius: 50%; animation: pulse-glow 8s ease-in-out infinite alternate;
         }
         html.dark .hero::before { opacity: 0.12; background: var(--accent); filter: blur(180px); }
-        
         @keyframes pulse-glow { 0% { transform: translate(-50%, -50%) scale(1); } 100% { transform: translate(-50%, -50%) scale(1.1); } }
 
         .hero-content { display: flex; flex-direction: column; align-items: center; width: 100%; z-index: 1; }
         
-        /* Status Badge */
         .status-badge {
-            display: inline-flex; align-items: center; gap: 8px; padding: 6px 16px; border-radius: 50px;
-            /* Latar belakang badge lebih putih di Light Mode untuk kesan Clean & Premium */
-            background: rgba(255, 255, 255, 0.85); border: 1px solid rgba(0, 0, 0, 0.1);
-            font-size: 13px; font-weight: 600; color: #334155; margin-bottom: 25px;
+            display: inline-flex; align-items: center; gap: 8px; padding: 8px 20px; border-radius: 50px;
+            background: rgba(255, 255, 255, 0.9); border: 1px solid var(--border-light);
+            font-size: 13.5px; font-weight: 600; color: var(--text-light); margin-bottom: 30px;
             backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            box-shadow: var(--shadow-sm);
         }
-        html.dark .status-badge { background: rgba(11, 14, 26, 0.5); border-color: var(--border-dark); color: var(--text-dark); font-weight: 500;}
-        .status-dot { width: 8px; height: 8px; background: #22c55e; border-radius: 50%; box-shadow: 0 0 10px rgba(34, 197, 94, 0.6); animation: pulse-dot 2s infinite; }
-        @keyframes pulse-dot { 0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(34, 197, 94, 0); } 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); } }
+        html.dark .status-badge { background: rgba(11, 14, 26, 0.6); border-color: var(--border-dark); color: var(--text-dark); }
+        .status-dot { width: 10px; height: 10px; background: #10b981; border-radius: 50%; box-shadow: 0 0 12px rgba(16, 185, 129, 0.6); animation: pulse-dot 2s infinite; }
+        @keyframes pulse-dot { 0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); } 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); } }
 
-        /* Typography Hero */
-        .hero-content h1 { font-size: clamp(40px, 7vw, 75px); margin-bottom: 15px; line-height: 1.1; font-weight: 700; letter-spacing: -1px; }
-        .hero-content h1 span.name { background: var(--gradient-text); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; color: transparent; display: inline-block; }
+        .hero-content h1 { font-size: clamp(42px, 8vw, 80px); margin-bottom: 15px; line-height: 1.1; font-weight: 700; letter-spacing: -1.5px; }
+        .hero-content h1 span.name { background: var(--gradient-text); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; color: transparent; display: inline-block; padding-bottom: 5px; }
         
-        /* Waving Hand Animation */
         .wave { display: inline-block; animation: waving-hand 2.5s infinite; transform-origin: 70% 70%; }
-        @keyframes waving-hand { 0% { transform: rotate( 0.0deg) } 10% { transform: rotate(14.0deg) } 20% { transform: rotate(-8.0deg) } 30% { transform: rotate(14.0deg) } 40% { transform: rotate(-4.0deg) } 50% { transform: rotate(10.0deg) } 60% { transform: rotate( 0.0deg) } 100% { transform: rotate( 0.0deg) } }
+        @keyframes waving-hand { 0% { transform: rotate(0.0deg) } 10% { transform: rotate(14.0deg) } 20% { transform: rotate(-8.0deg) } 30% { transform: rotate(14.0deg) } 40% { transform: rotate(-4.0deg) } 50% { transform: rotate(10.0deg) } 60% { transform: rotate(0.0deg) } 100% { transform: rotate(0.0deg) } }
 
-        .role-wrapper { display: flex; align-items: center; justify-content: center; gap: 15px; font-size: clamp(16px, 2.5vw, 22px); margin: 5px 0 20px; }
-        .role-static { color: #64748b; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; font-size: 13px; }
-        .role-divider { width: 1px; height: 20px; background: var(--border-light); }
+        .role-wrapper { display: flex; align-items: center; justify-content: center; gap: 15px; font-size: clamp(18px, 2.5vw, 24px); margin: 10px 0 25px; }
+        .role-static { color: var(--text-muted-light); font-weight: 700; letter-spacing: 3px; text-transform: uppercase; font-size: 14px; }
+        html.dark .role-static { color: var(--text-muted-dark); }
+        .role-divider { width: 2px; height: 24px; background: var(--border-light); }
         html.dark .role-divider { background: rgba(255,255,255,0.2); }
-        .typing-text { color: var(--text-light); font-weight: 600; border-right: 3px solid #22c55e; white-space: nowrap; overflow: hidden; padding-right: 5px; animation: blink 0.8s infinite; }
+        .typing-text { color: var(--text-light); font-weight: 600; border-right: 3px solid #10b981; white-space: nowrap; overflow: hidden; padding-right: 5px; animation: blink 0.8s infinite; }
         html.dark .typing-text { color: var(--text-dark); }
         @keyframes blink { 50% { border-color: transparent; } }
 
-        /* Subtitle & Buttons */
-        .hero-subtitle { max-width: 580px; color: #64748b; font-size: clamp(15px, 2vw, 17px); line-height: 1.6; margin-bottom: 35px; }
-        html.dark .hero-subtitle { color: #94a3b8; }
+        .hero-subtitle { max-width: 600px; color: var(--text-muted-light); font-size: clamp(16px, 2vw, 18px); line-height: 1.7; margin-bottom: 40px; }
+        html.dark .hero-subtitle { color: var(--text-muted-dark); }
 
-        .hero-cta { display: flex; align-items: center; gap: 15px; flex-wrap: wrap; justify-content: center; }
-        .btn-primary { background: var(--primary); color: #fff; padding: 12px 28px; border-radius: 50px; font-weight: 600; font-size: 15px; transition: var(--transition); box-shadow: 0 10px 20px rgba(138, 180, 255, 0.3); }
-        .btn-primary:hover { background: var(--accent); transform: translateY(-3px); box-shadow: 0 15px 25px rgba(255, 77, 109, 0.4); color: #fff; }
-        .btn-secondary { background: transparent; color: var(--text-light); padding: 11px 28px; border-radius: 50px; font-weight: 600; font-size: 15px; transition: var(--transition); border: 2px solid var(--border-light); }
-        html.dark .btn-secondary { color: var(--text-dark); border-color: rgba(255,255,255,0.1); }
-        .btn-secondary:hover { background: rgba(0,0,0,0.05); transform: translateY(-3px); }
-        html.dark .btn-secondary:hover { background: rgba(255,255,255,0.05); }
+        .hero-cta { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; justify-content: center; }
+        .btn-primary { background: var(--primary); color: #fff; padding: 14px 32px; border-radius: 50px; font-weight: 600; font-size: 15px; transition: var(--transition); box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2); }
+        html.dark .btn-primary { box-shadow: 0 10px 20px rgba(138, 180, 255, 0.2); }
+        .btn-primary:hover { background: var(--accent); transform: translateY(-3px) scale(1.02); box-shadow: 0 15px 25px rgba(225, 29, 72, 0.3); color: #fff; }
+        .btn-secondary { background: transparent; color: var(--text-light); padding: 12px 32px; border-radius: 50px; font-weight: 600; font-size: 15px; transition: var(--transition); border: 2px solid var(--border-light); }
+        html.dark .btn-secondary { color: var(--text-dark); border-color: rgba(255,255,255,0.15); }
+        .btn-secondary:hover { background: rgba(0,0,0,0.03); transform: translateY(-3px); border-color: var(--text-muted-light); }
+        html.dark .btn-secondary:hover { background: rgba(255,255,255,0.05); border-color: var(--text-muted-dark); }
 
-        .hero-social-sidebar { position: absolute; left: 5%; bottom: 50px; display: flex; flex-direction: column; align-items: center; gap: 12px; z-index: 10; }
-        .hero-social-sidebar a { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background: #111; color: #fff; font-size: 17px; transition: var(--transition); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        html.dark .hero-social-sidebar a { background: rgba(255, 255, 255, 0.08); }
-        .hero-social-sidebar a:hover { background: #22c55e; transform: scale(1.1); }
-        .find-me-text { writing-mode: vertical-rl; transform: rotate(180deg); font-size: 10px; letter-spacing: 4px; font-weight: 600; color: #64748b; margin-top: 15px; }
-        html.dark .find-me-text { color: #94a3b8; }
+        .hero-social-sidebar { position: absolute; left: 5%; bottom: 80px; display: flex; flex-direction: column; align-items: center; gap: 15px; z-index: 10; }
+        .hero-social-sidebar a { display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 50%; background: #0f172a; color: #fff; font-size: 18px; transition: var(--transition); box-shadow: var(--shadow-sm); }
+        html.dark .hero-social-sidebar a { background: rgba(255, 255, 255, 0.08); color: var(--text-dark); }
+        .hero-social-sidebar a:hover { background: #10b981; transform: scale(1.15) translateY(-3px); color: #fff; box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3); }
+        .find-me-text { writing-mode: vertical-rl; transform: rotate(180deg); font-size: 11px; letter-spacing: 5px; font-weight: 600; color: var(--text-muted-light); margin-top: 20px; }
+        html.dark .find-me-text { color: var(--text-muted-dark); }
 
-        .scroll-down { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; cursor: pointer; opacity: 0.8; transition: var(--transition); color: #22c55e; }
-        .scroll-down:hover { opacity: 1; transform: translate(-50%, 5px); }
-        .scroll-down i { font-size: 22px; line-height: 0.5; animation: arrow-bounce 2s infinite; }
+        .scroll-down { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; cursor: pointer; opacity: 0.7; transition: var(--transition); color: #10b981; }
+        .scroll-down:hover { opacity: 1; transform: translate(-50%, 8px); }
+        .scroll-down i { font-size: 24px; line-height: 0.5; animation: arrow-bounce 2s infinite; }
         .scroll-down i:nth-child(2) { animation-delay: 0.2s;}
         @keyframes arrow-bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); opacity: 0.5; } 40% { transform: translateY(-8px); opacity: 1; } 60% { transform: translateY(-4px); opacity: 0.8; } }
 
-        .about { background: var(--bg-light-sec); overflow: hidden;}
+        /* ================= ABOUT SECTION ================= */
+        .about { background: var(--bg-light-sec); overflow: hidden; position: relative; }
         html.dark .about { background: var(--bg-dark-sec); }
-        .about-container { max-width: 1100px; margin: 0 auto; }
-        .about-content { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 50px; }
+        .about-container { max-width: 1150px; margin: 0 auto; position: relative; z-index: 2; }
+        .about-content { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 60px; }
         
-        /* REACT-LIKE ANIMATIONS CSS */
-        @keyframes floating {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
-            100% { transform: translateY(0px); }
-        }
+        @keyframes floating { 0% { transform: translateY(0px); } 50% { transform: translateY(-15px); } 100% { transform: translateY(0px); } }
         
         .about-image { 
-            flex: 1 1 350px; 
-            display: flex; 
-            justify-content: center; 
-            /* Memberikan efek melayang (floating) persisten */
-            animation: floating 6s ease-in-out infinite;
-            perspective: 1000px;
+            flex: 1 1 380px; display: flex; justify-content: center; 
+            animation: floating 6s ease-in-out infinite; perspective: 1000px;
         }
         .about-image img { 
-            width: 100%; 
-            max-width: 400px; 
-            border-radius: 16px; 
-            object-fit: cover; 
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-            /* Transform preserve 3d penting untuk efek tilt */
-            transform-style: preserve-3d;
-            border: 2px solid transparent;
-            /* Animasi Hitam Putih (Grayscale) ke Berwarna */
-            filter: grayscale(100%) brightness(0.9);
-            transition: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+            width: 100%; max-width: 420px; border-radius: 24px; object-fit: cover; 
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1); transform-style: preserve-3d;
+            border: 2px solid transparent; filter: grayscale(100%) brightness(0.9);
+            transition: all 0.7s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
         .about-image:hover img {
-            filter: grayscale(0%) brightness(1);
-            transform: translateZ(40px) scale(1.02) !important;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+            filter: grayscale(0%) brightness(1.05); transform: translateZ(50px) scale(1.03) !important;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
         }
-        html.dark .about-image img { 
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); 
-            border-color: rgba(255,255,255,0.05);
-        }
-        html.dark .about-image:hover img {
-            border-color: var(--primary);
-            box-shadow: 0 25px 50px rgba(138, 180, 255, 0.2);
-        }
+        html.dark .about-image img { box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4); border-color: rgba(255,255,255,0.05); }
+        html.dark .about-image:hover img { border-color: var(--primary); box-shadow: 0 30px 60px rgba(138, 180, 255, 0.15); }
 
-        /* SCROLL REVEAL (Framer Motion style fade-up) */
-        .reveal-up {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
-        }
-        .reveal-up.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        /* Scroll Reveal Utility */
+        .reveal-up { opacity: 0; transform: translateY(50px); transition: all 0.9s cubic-bezier(0.25, 0.8, 0.25, 1); }
+        .reveal-up.active { opacity: 1; transform: translateY(0); }
 
         .about-text { flex: 1 1 550px; display: flex; flex-direction: column; }
-        .about-text h2 { font-size: clamp(26px, 3.5vw, 36px); margin-bottom: 25px; font-weight: 700; }
-        .about-text p { line-height: 1.8; margin-bottom: 20px; color: #64748b; font-size: 15px; }
-        html.dark .about-text p { color: #94a3b8; }
+        .about-text h2 { font-size: clamp(28px, 4vw, 40px); margin-bottom: 25px; font-weight: 700; letter-spacing: -0.5px; color: var(--text-light); }
+        html.dark .about-text h2 { color: var(--text-dark); }
+        .about-text p { line-height: 1.8; margin-bottom: 22px; color: var(--text-muted-light); font-size: 15.5px; }
+        html.dark .about-text p { color: var(--text-muted-dark); }
         .about-text strong { color: var(--text-light); font-weight: 600; }
         html.dark .about-text strong { color: var(--text-dark); }
-        .about-divider { width: 100%; height: 1px; background: var(--border-light); margin: 15px 0 25px; }
+        
+        .about-divider { width: 100%; height: 1px; background: var(--border-light); margin: 20px 0 30px; }
         html.dark .about-divider { background: rgba(255, 255, 255, 0.1); }
-        .about-details { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 35px; font-size: 14.5px; }
-        .detail-item { display: flex; align-items: center; gap: 8px; color: #64748b; }
-        html.dark .detail-item { color: #94a3b8; }
-        .detail-item strong { color: var(--text-light); min-width: 50px; font-weight: 600; }
+        
+        .about-details { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 40px; font-size: 15px; }
+        .detail-item { display: flex; align-items: center; gap: 10px; color: var(--text-muted-light); }
+        html.dark .detail-item { color: var(--text-muted-dark); }
+        .detail-item strong { color: var(--text-light); min-width: 55px; font-weight: 600; }
         html.dark .detail-item strong { color: var(--text-dark); }
-        .detail-item a { color: #22c55e; transition: opacity 0.3s;}
-        .detail-item a:hover { opacity: 0.8; }
-        .about-action-row { display: flex; align-items: center; gap: 25px; }
-        .btn-download-green { background: #22c55e; color: #fff; padding: 10px 24px; border-radius: 50px; font-size: 14px; font-weight: 600; transition: var(--transition); box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3); }
-        .btn-download-green:hover { background: #16a34a; transform: translateY(-2px); color: #fff; }
-        .action-line { width: 40px; height: 1px; background: var(--border-light); }
+        .detail-item a { color: #10b981; font-weight: 500; transition: var(--transition); }
+        .detail-item a:hover { color: #059669; text-decoration: underline; }
+        
+        .about-action-row { display: flex; align-items: center; gap: 30px; flex-wrap: wrap;}
+        .btn-download-green { 
+            background: #10b981; color: #fff; padding: 12px 28px; border-radius: 50px; 
+            font-size: 15px; font-weight: 600; transition: var(--transition); 
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3); 
+        }
+        .btn-download-green:hover { background: #059669; transform: translateY(-3px) scale(1.02); box-shadow: 0 12px 25px rgba(16, 185, 129, 0.4); color: #fff; }
+        .action-line { width: 50px; height: 1px; background: var(--border-light); }
         html.dark .action-line { background: rgba(255, 255, 255, 0.2); }
-        .about-socials { display: flex; gap: 15px; }
-        .about-socials a { color: var(--text-light); font-size: 18px; transition: var(--transition); }
-        html.dark .about-socials a { color: #94a3b8; }
-        .about-socials a:hover { color: #22c55e; transform: translateY(-2px); }
+        
+        .about-socials { display: flex; gap: 18px; }
+        .about-socials a { color: var(--text-light); font-size: 20px; transition: var(--transition); display: inline-flex; }
+        html.dark .about-socials a { color: var(--text-dark); }
+        .about-socials a:hover { color: #10b981; transform: translateY(-4px) scale(1.1); }
 
-        /* ================= FOOTER ================= */
-        footer { background: var(--nav-mobile-light); color: var(--text-light); text-align: center; padding: 25px 20px; font-size: 14px; margin-top: auto; border-top: 1px solid var(--border-light); transition: var(--transition); }
-        html.dark footer { background: #050711; color: var(--text-dark); border-top-color: var(--border-dark); }
+        /* ================= FOOTER & RESPONSIVE ================= */
+        footer { background: var(--nav-mobile-light); color: var(--text-muted-light); text-align: center; padding: 30px 20px; font-size: 14px; margin-top: auto; border-top: 1px solid var(--border-light); transition: var(--transition); }
+        html.dark footer { background: #050711; color: var(--text-muted-dark); border-top-color: var(--border-dark); }
 
-        /* ================= RESPONSIVE ================= */
         @media (max-width: 900px) {
+            section { padding: 80px 5%; }
             .hero { padding-top: 40px; min-height: 85vh; }
             .hero-content h1 { font-size: 48px; }
             .role-wrapper { font-size: 20px; }
-            .hero-social-sidebar { position: relative; left: 0; bottom: 0; flex-direction: row; justify-content: center; margin-top: 60px; }
-            .find-me-text { writing-mode: horizontal-tb; transform: none; margin-top: 0; margin-right: 12px; align-self: center; }
-            .scroll-down { position: relative; bottom: 0; left: 0; transform: none; margin-top: 50px; }
+            .hero-social-sidebar { position: relative; left: 0; bottom: 0; flex-direction: row; justify-content: center; margin-top: 50px; }
+            .find-me-text { writing-mode: horizontal-tb; transform: none; margin-top: 0; margin-right: 12px; align-self: center; letter-spacing: 2px;}
+            .scroll-down { position: relative; bottom: 0; left: 0; transform: none; margin-top: 40px; }
             .scroll-down:hover { transform: translateY(5px); }
+            
             .menu-toggle { display: block; }
             .nav-container {
                 position: absolute; top: calc(100% + 15px); left: 0; width: 100%; background: var(--nav-mobile-light); 
-                flex-direction: column; align-items: stretch; padding: 15px 0 25px 0; gap: 0;
-                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); border: 1px solid var(--border-light); border-radius: 24px;
-                opacity: 0; visibility: hidden; transform: translateY(-10px); transition: all 0.3s ease; z-index: 999;
+                flex-direction: column; align-items: stretch; padding: 20px 0 25px 0; gap: 0;
+                box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1); border: 1px solid var(--border-light); border-radius: 24px;
+                opacity: 0; visibility: hidden; transform: translateY(-15px); transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); z-index: 999;
             }
-            html.dark .nav-container { background: var(--nav-mobile-dark); border: 1px solid var(--border-dark); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5); }
+            html.dark .nav-container { background: var(--nav-mobile-dark); border: 1px solid var(--border-dark); box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5); }
             .nav-container.active { opacity: 1; visibility: visible; transform: translateY(0); }
-            .nav-links { flex-direction: column; width: 100%; gap: 5px; padding: 0 15px; }
+            .nav-links { flex-direction: column; width: 100%; gap: 8px; padding: 0 20px; }
             .nav-links li { width: 100%; }
-            .nav-links a { display: block; padding: 12px 20px; text-align: center; border-radius: 12px; }
+            .nav-links a { display: block; padding: 12px 20px; text-align: center; border-radius: 12px; font-size: 16px; }
             .divider { display: none; }
-            .controls { flex-direction: column; padding: 20px 15px 0 15px; gap: 15px; border-top: 1px solid var(--border-light); margin-top: 10px; }
+            .controls { flex-direction: column; padding: 25px 20px 0 20px; gap: 20px; border-top: 1px solid var(--border-light); margin-top: 15px; }
             html.dark .controls { border-top-color: var(--border-dark); }
-            .controls-top { justify-content: center; width: 100%; }
-            .cv-btn { width: 100%; max-width: none; padding: 12px; }
+            .controls-top { justify-content: center; width: 100%; gap: 20px;}
+            .cv-btn { width: 100%; max-width: none; padding: 14px; font-size: 15px; }
+            
+            .about-content { gap: 40px; }
+            .about-action-row { justify-content: center; width: 100%; flex-direction: column; gap: 20px; }
+            .action-line { width: 100px; }
         }
         @media (max-width: 768px) {
             section { padding: 60px 5%; }
-            .hero-content h1 { font-size: 32px; }
+            .hero-content h1 { font-size: 36px; }
             .role-wrapper { font-size: 18px; margin: 10px 0 20px; }
+            .about-details { grid-template-columns: 1fr; gap: 15px; }
+            .detail-item[style*="grid-column"] { grid-column: auto !important; }
         }
     </style>
 </head>
@@ -374,8 +360,7 @@
     <!-- Navbar -->
     <nav class="reveal-up active">
         <a href="/" class="logo">
-            <!-- Fallback added if image doesn't exist -->
-            <img src="img/fontyasin.png" alt="Yasinisme Logo" onerror="this.onerror=null; this.src='https://placehold.co/120x30/22c55e/ffffff?text=Yaasin';" />
+            <img src="img/fontyasin.png" alt="Yaasin Logo" onerror="this.onerror=null; this.src='https://placehold.co/120x30/2563eb/ffffff?text=Yaasin';" />
         </a>
         
         <div class="menu-toggle" id="menu-toggle">
@@ -431,6 +416,7 @@
                 <div class="role-wrapper reveal-up" style="transition-delay: 0.3s;">
                     <span class="role-static">ROLE</span>
                     <div class="role-divider"></div>
+                    <!-- Typing Effect Span -->
                     <span class="typing-text"><span id="typed"></span></span>
                 </div>
 
@@ -455,20 +441,21 @@
             <div class="about-container">
                 <div class="about-content">
                     
-                    <!-- FOTO DENGAN EFEK 3D TILT SEPERTI REACT TILT -->
-                    <!-- Ditambahkan data-tilt untuk interaksi mouse dari vanilla-tilt.js -->
-                    <div class="about-image reveal-up" data-tilt data-tilt-max="12" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.3">
-                        <!-- Menambahkan onerror untuk demo jika gambar lokal tidak ada -->
-                        <img src="img/SamYasin.png" alt="Ahmad Yasin Fadhilah" loading="lazy" style="transform: translateZ(30px);" onerror="this.onerror=null; this.src='https://placehold.co/400x500/8ab4ff/ffffff?text=Foto+Yaasin';" />
+                    <!-- FOTO DENGAN EFEK 3D TILT -->
+                    <div class="about-image reveal-up" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.2">
+                        <img src="img/SamYasin.png" alt="Ahmad Yasin Fadhilah" loading="lazy" style="transform: translateZ(30px);" onerror="this.onerror=null; this.src='https://placehold.co/400x500/8ab4ff/ffffff?text=Yaasin+Profile';" />
                     </div>
                     
                     <div class="about-text reveal-up" style="transition-delay: 0.2s;">
                         <h2 data-key="aboutTitle">Ahmad Yasin Fadhilah</h2>
+                        
+                        <!-- P1: Diperbarui untuk mencerminkan keseimbangan UI/UX Designer dan Developer -->
                         <p data-key="aboutP1">
-                            I’m a graduate of <strong>Informatics Engineering at Dian Nuswantoro University</strong>, with a strong passion for <strong>web development</strong> and <strong>information systems</strong>. I have hands-on experience developing web-based applications using <strong>Laravel</strong>, <strong>HTML</strong>, <strong>CSS</strong>, and <strong>MySQL</strong>.
+                            I specialize in bridging the gap between design and technology. As a graduate of <strong>Informatics Engineering at Dian Nuswantoro University</strong>, I have hands-on experience designing intuitive interfaces using <strong>Figma</strong> and bringing them to life through web development with <strong>HTML, CSS, Laravel, and MySQL</strong>.
                         </p>
+                        <!-- P2: Organisasi dan Visi -->
                         <p data-key="aboutP2">
-                            Beyond the tech world, I’ve been actively involved in various organizations such as the <strong>Student Representative Council</strong>, <strong>FL2MI Semarang Raya</strong>, and the <strong>Dian Nuswantoro Computer Club</strong>. These experiences shaped me into a communicative, adaptive, and collaborative person with strong leadership skills. For me, technology is more than just code — it’s a way to create real, meaningful impact.
+                            Beyond the tech world, I’ve been actively involved in organizations like the <strong>Student Representative Council</strong> and <strong>Dian Nuswantoro Computer Club</strong>. These experiences shaped me into a communicative and collaborative leader. For me, technology and design are more than just visuals and code — they are the mediums to create real, meaningful impact.
                         </p>
                         
                         <div class="about-divider"></div>
@@ -509,7 +496,7 @@
         <p data-key="footer">© 2025 | Designed and coded by Ahmad Yasin Fadhilah</p>
     </footer>
 
-    <!-- Tambahan Library Vanilla Tilt untuk 3D Hover mirip react-tilt -->
+    <!-- Vanilla Tilt Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
     
     <!-- Scripts -->
@@ -548,7 +535,7 @@
             themeToggle.textContent = isDark ? '☀️' : '🌙';
         }
         
-        // Bersihkan background inline dari script anti-flicker dan perbarui ikon
+        // Bersihkan inline style dari anti-flicker script
         document.documentElement.style.background = '';
         updateThemeIcon();
 
@@ -561,7 +548,7 @@
             });
         }
 
-        // === LANGUAGE SWITCH ===
+        // === LANGUAGE SWITCH & COPYWRITING (UPDATED) ===
         const langSwitch = document.getElementById('lang-switch');
         const langData = {
             en: {
@@ -573,8 +560,9 @@
                 btnProjects: "View Projects",
                 btnContact: "Contact Me",
                 aboutTitle: "Ahmad Yasin Fadhilah",
-                aboutP1: "I’m a graduate of <strong>Informatics Engineering at Dian Nuswantoro University</strong>, with a strong passion for <strong>web development</strong> and <strong>information systems</strong>. I have hands-on experience developing web-based applications using <strong>Laravel</strong>, <strong>HTML</strong>, <strong>CSS</strong>, and <strong>MySQL</strong>.",
-                aboutP2: "Beyond the tech world, I’ve been actively involved in various organizations such as the <strong>Student Representative Council</strong>, <strong>FL2MI Semarang Raya</strong>, and the <strong>Dian Nuswantoro Computer Club</strong>. These experiences shaped me into a communicative, adaptive, and collaborative person with strong leadership skills. For me, technology is more than just code — it’s a way to create real, meaningful impact.",
+                // Ditambahkan Google Workspace Specialist ke dalam deskripsi
+                aboutP1: "I’m a graduate of <strong>Informatics Engineering at Dian Nuswantoro University</strong>, specializing in <strong>web development</strong> and <strong>information systems</strong>. I have hands-on experience building robust applications using <strong>Laravel, HTML, CSS, and MySQL</strong>, and I also serve as a <strong>Google Workspace Specialist</strong>, helping teams optimize their cloud-based collaboration and productivity workflows.",
+                aboutP2: "Beyond the tech world, I’m deeply passionate about event management. My active involvement in organizations like the <strong>Student Representative Council</strong>, <strong>FL2MI Semarang Raya</strong>, and the <strong>Dian Nuswantoro Computer Club</strong> has shaped me into a communicative and collaborative leader. Whether I am writing code, deploying workspace solutions, or organizing a major event, my goal is always to create real, meaningful impact.",
                 lbl_name: "Name:", lbl_email: "Email:", lbl_from: "From:", txt_from: "Indonesia, Central Java"
             },
             id: {
@@ -586,8 +574,9 @@
                 btnProjects: "Lihat Proyek",
                 btnContact: "Hubungi Saya",
                 aboutTitle: "Ahmad Yasin Fadhilah",
-                aboutP1: "Saya adalah lulusan <strong>Teknik Informatika Universitas Dian Nuswantoro</strong> yang memiliki ketertarikan besar di bidang <strong>pengembangan web</strong> dan <strong>sistem informasi</strong>. Saya berpengalaman mengembangkan aplikasi berbasis web menggunakan <strong>Laravel</strong>, <strong>HTML</strong>, <strong>CSS</strong>, dan <strong>MySQL</strong>.",
-                aboutP2: "Selain fokus di dunia teknologi, saya juga aktif di berbagai organisasi seperti <strong>Dewan Perwakilan Mahasiswa</strong>, <strong>FL2MI Semarang Raya</strong>, dan <strong>Dian Nuswantoro Computer Club</strong>. Pengalaman tersebut membentuk saya menjadi pribadi yang adaptif, komunikatif, serta mampu memimpin dan bekerja sama dalam tim. Bagi saya, teknologi bukan sekadar kode — tapi cara untuk menciptakan solusi nyata yang berdampak positif.",
+                // Ditambahkan Google Workspace Specialist ke dalam deskripsi
+                aboutP1: "Saya adalah lulusan <strong>Teknik Informatika Universitas Dian Nuswantoro</strong> yang berfokus pada <strong>pengembangan web</strong> dan <strong>sistem informasi</strong>. Saya memiliki pengalaman langsung dalam membangun aplikasi menggunakan <strong>Laravel, HTML, CSS, dan MySQL</strong>, serta berperan sebagai <strong>Google Workspace Specialist</strong> yang membantu tim mengoptimalkan kolaborasi dan produktivitas berbasis cloud.",
+                aboutP2: "Di luar dunia teknologi, saya memiliki minat besar dalam manajemen acara (event). Keterlibatan aktif saya di organisasi seperti <strong>Dewan Perwakilan Mahasiswa</strong>, <strong>FL2MI Semarang Raya</strong>, dan <strong>Dian Nuswantoro Computer Club</strong> telah membentuk saya menjadi pemimpin yang komunikatif. Baik saat menulis kode, mengelola sistem workspace, maupun mengoordinasikan acara besar, tujuan saya adalah menciptakan dampak nyata yang positif.",
                 lbl_name: "Nama:", lbl_email: "Email:", lbl_from: "Dari:", txt_from: "Indonesia, Jawa Tengah"
             }
         };
@@ -603,6 +592,11 @@
             localStorage.setItem('lang', lang);
         }
 
+        // Kunci default bahasa ke Inggris (en) saat pertama kali website dimuat
+        if (!localStorage.getItem('lang')) {
+            localStorage.setItem('lang', 'en');
+        }
+
         if (langSwitch) {
             langSwitch.addEventListener('click', () => {
                 const currentLang = localStorage.getItem('lang') || 'en';
@@ -611,8 +605,9 @@
         }
         applyLanguage(localStorage.getItem('lang') || 'en');
 
-        // === TYPING EFFECT ===
-        const roles = ["Web Developer", "UI/UX Designer", "Event Enthusiast"];
+        // === TYPING EFFECT (UPDATED ROLES) ===
+        // Menambahkan Google Workspace Specialist ke efek pengetikan
+        const roles = ["Web Developer", "Google Workspace Specialist", "Event Enthusiast"];
         const typedElement = document.getElementById("typed");
         let roleIndex = 0; let charIndex = 0; let isDeleting = false;
 
@@ -622,24 +617,23 @@
             typedElement.textContent = current.substring(0, charIndex);
 
             if (!isDeleting && charIndex < current.length) {
-                charIndex++; setTimeout(typeEffect, 120);
+                charIndex++; setTimeout(typeEffect, 100);
             } else if (isDeleting && charIndex > 0) {
-                charIndex--; setTimeout(typeEffect, 60);
+                charIndex--; setTimeout(typeEffect, 50);
             } else {
                 isDeleting = !isDeleting;
                 if (!isDeleting) roleIndex = (roleIndex + 1) % roles.length;
-                setTimeout(typeEffect, isDeleting ? 1000 : 300);
+                setTimeout(typeEffect, isDeleting ? 1200 : 400);
             }
         }
         if (typedElement) typeEffect();
 
-        // === SCROLL REVEAL ANIMATION (Framer Motion feel) ===
-        // Efek ini membuat elemen muncul perlahan (fade up) saat di-scroll layaknya aplikasi React modern
+        // === SCROLL REVEAL ANIMATION ===
         document.addEventListener("DOMContentLoaded", function() {
             const reveals = document.querySelectorAll(".reveal-up");
             
             const revealOptions = {
-                threshold: 0.15,
+                threshold: 0.1, // Disesuaikan sedikit agar animasi lebih cepat tertrigger
                 rootMargin: "0px 0px -50px 0px"
             };
 
@@ -647,13 +641,12 @@
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add("active");
-                        observer.unobserve(entry.target); // Hanya animasi sekali
+                        observer.unobserve(entry.target);
                     }
                 });
             }, revealOptions);
 
             reveals.forEach(reveal => {
-                // Jangan observer elemen yang sudah aktif di awal (seperti hero section)
                 if(!reveal.classList.contains('active')) {
                     revealOnScroll.observe(reveal);
                 }

@@ -11,7 +11,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
-    <!-- Script Cegah Kedip Tema (Dark Mode Default) -->
     <script>
         (function () {
             try {
@@ -29,7 +28,6 @@
     <style>
         /* ================= VARIABLES ================= */
         :root {
-            /* Light Mode */
             --bg-light: #f8fafc;
             --bg-light-sec: #f1f5f9;
             --text-light: #0f172a; 
@@ -37,7 +35,6 @@
             --nav-mobile-light: #ffffff;
             --border-light: rgba(0, 0, 0, 0.08);
 
-            /* Dark Mode */
             --bg-dark: #090c1b;
             --bg-dark-sec: #111730;
             --text-dark: #f8fafc;
@@ -45,19 +42,16 @@
             --nav-mobile-dark: #0b0e1a;
             --border-dark: rgba(255, 255, 255, 0.08);
 
-            /* Brand Colors (Light Mode Default) */
             --primary: #2563eb; 
             --accent: #e11d48;
             --gradient-text: linear-gradient(135deg, #2563eb, #e11d48);
             
-            /* Shadows & Transitions */
             --shadow-sm: 0 4px 15px rgba(0, 0, 0, 0.05);
             --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.1);
             --shadow-glow: 0 10px 30px rgba(37, 99, 235, 0.15);
             --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
-        /* Override Brand Colors KHUSUS UNTUK DARK MODE */
         html.dark {
             --primary: #8ab4ff; 
             --accent: #ff4d6d;
@@ -65,7 +59,6 @@
             --shadow-glow: 0 10px 30px rgba(138, 180, 255, 0.15);
         }
 
-        /* ================= RESET & BASE ================= */
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             font-family: "Poppins", sans-serif;
@@ -77,7 +70,6 @@
         a { text-decoration: none; color: inherit; }
         main { flex: 1; display: flex; flex-direction: column; width: 100%; position: relative;}
 
-        /* Background Grid subtle (opsional untuk kesan modern) */
         main::before {
             content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;
             background-size: 40px 40px; pointer-events: none; opacity: 0.5;
@@ -87,7 +79,6 @@
         }
         html.dark main::before { background-image: linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px); }
 
-        /* ================= NAVBAR ================= */
         nav {
             display: flex; justify-content: space-between; align-items: center; padding: 12px 25px;
             background: var(--nav-light); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
@@ -99,16 +90,19 @@
         .logo { display: flex; align-items: center; z-index: 1001; transition: var(--transition); }
         .logo img { height: 22px; filter: brightness(0); transition: filter 0.3s ease, opacity 0.3s ease; }
         html.dark .logo img { filter: brightness(0) invert(1); }
+        
         .nav-container { display: flex; align-items: center; gap: 25px; }
         .nav-links { list-style: none; display: flex; align-items: center; gap: 10px; }
         .nav-links a { color: #64748b; font-weight: 500; transition: var(--transition); font-size: 14px; padding: 8px 16px; border-radius: 50px; cursor: pointer; }
         html.dark .nav-links a { color: #94a3b8; }
         .nav-links a:hover, .nav-links a.active { color: var(--text-light); background: rgba(0, 0, 0, 0.05); font-weight: 600; }
         html.dark .nav-links a:hover, html.dark .nav-links a.active { color: var(--text-dark); background: rgba(255, 255, 255, 0.1); }
+        
         .divider { width: 1px; height: 20px; background: var(--border-light); }
         html.dark .divider { background: var(--border-dark); }
         .controls { display: flex; align-items: center; gap: 15px; }
         .controls-top { display: flex; align-items: center; gap: 10px; }
+        
         .modern-lang-toggle { position: relative; display: flex; align-items: center; justify-content: space-between; width: 60px; height: 32px; padding: 0 6px; border-radius: 50px; background: rgba(0,0,0,0.05); border: 1px solid var(--border-light); cursor: pointer; transition: var(--transition); outline: none; }
         html.dark .modern-lang-toggle { background: rgba(255, 255, 255, 0.05); border-color: var(--border-dark); }
         .modern-lang-toggle span { font-size: 11px; font-weight: 700; z-index: 2; transition: color 0.3s; width: 50%; text-align: center; color: #64748b; }
@@ -121,6 +115,7 @@
         .modern-lang-toggle[data-current-lang="id"] .lang-slider { transform: translateX(100%); }
         .modern-lang-toggle[data-current-lang="id"] .lang-id { color: var(--text-light); }
         html.dark .modern-lang-toggle[data-current-lang="id"] .lang-id { color: #090c1b; }
+        
         button.theme-toggle { background: transparent; border: none; color: var(--text-light); font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 50%; transition: var(--transition); }
         html.dark button.theme-toggle { color: var(--text-dark); }
         button.theme-toggle:hover { background: var(--border-light); transform: translateY(-1px); }
@@ -134,28 +129,21 @@
         .menu-toggle { display: none; font-size: 22px; cursor: pointer; color: var(--text-light); z-index: 1001; padding: 5px; transition: var(--transition);}
         html.dark .menu-toggle { color: var(--text-dark); }
 
-        /* ================= ANIMATIONS ================= */
         .reveal-up { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1); }
         .reveal-up.active { opacity: 1; transform: translateY(0); }
 
-        /* ================= GENERAL SECTION STYLES ================= */
         section { padding: 60px 5% 80px; width: 100%; position: relative; z-index: 1;}
         .section-header { text-align: center; margin-bottom: 50px; }
         .section-tag { display: inline-flex; align-items: center; justify-content: center; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); border: 1px solid rgba(0, 0, 0, 0.1); color: #334155; padding: 6px 20px; border-radius: 50px; font-size: 13px; font-weight: 600; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
         html.dark .section-tag { background: rgba(11, 14, 26, 0.5); border-color: var(--border-dark); color: var(--text-dark); font-weight: 500;}
         .section-title { font-size: clamp(28px, 4vw, 42px); font-weight: 700; letter-spacing: -0.5px; }
 
-        /* ================= EXPERIENCE STYLES ================= */
         .experience-container { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 30px; position: relative;}
-        
-        /* Garis timeline vertical (opsional, memberikan kesan journey) */
         .experience-container::before { content: ''; position: absolute; left: 45px; top: 0; bottom: 0; width: 2px; background: var(--border-light); z-index: -1; border-radius: 2px;}
         html.dark .experience-container::before { background: var(--border-dark); }
 
         .experience-card { background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(20px); border-radius: 24px; padding: 35px; display: flex; align-items: flex-start; gap: 30px; box-shadow: var(--shadow-sm); border: 1px solid rgba(255,255,255,0.8); transition: var(--transition); position: relative;}
         html.dark .experience-card { background: rgba(17, 23, 48, 0.6); border: 1px solid rgba(255, 255, 255, 0.05); }
-        
-        /* Efek Glow & Pop-out saat Hover */
         .experience-card:hover { transform: translateY(-8px) scale(1.01); box-shadow: var(--shadow-glow); border-color: var(--primary); }
         
         .exp-logo { flex-shrink: 0; position: relative; z-index: 2; background: var(--bg-light); border-radius: 16px; padding: 5px; }
@@ -180,67 +168,82 @@
         .exp-date { display: flex; align-items: center; gap: 6px; background: rgba(0,0,0,0.03); padding: 5px 12px; border-radius: 50px; }
         html.dark .exp-date { background: rgba(255,255,255,0.05); }
 
-        /* ================= SKILLS STYLES ================= */
-        .skills { background: var(--bg-light-sec); position: relative;}
-        html.dark .skills { background: var(--bg-dark-sec); }
-        .skills-container { max-width: 1000px; margin: 0 auto; position: relative; z-index: 2;}
-        .skills-header-text { text-align: center; margin-bottom: 40px; }
-        .skills-header-text p { color: #64748b; font-size: 16px; margin-top: 15px; max-width: 600px; margin-left: auto; margin-right: auto;}
-        html.dark .skills-header-text p { color: #94a3b8; }
+        /* ================= TIMELINE / ORGANIZATION STYLES ================= */
+        .organization-section { background: var(--bg-light-sec); }
+        html.dark .organization-section { background: var(--bg-dark-sec); }
+        .timeline { position: relative; max-width: 1000px; margin: 0 auto; padding: 20px 0; }
+        .timeline::after { content: ''; position: absolute; width: 2px; background: var(--border-light); top: 0; bottom: 0; left: 50%; margin-left: -1px; }
+        html.dark .timeline::after { background: var(--border-dark); }
         
-        /* Modern Segmented Control (Tabs) */
-        .skills-tabs { 
-            display: flex; background: rgba(0,0,0,0.04); border-radius: 50px; padding: 6px; margin: 0 auto 40px auto; 
-            max-width: fit-content; box-shadow: inset 0 2px 5px rgba(0,0,0,0.02); overflow-x: auto; 
-            -ms-overflow-style: none; scrollbar-width: none; border: 1px solid var(--border-light);
-        }
-        .skills-tabs::-webkit-scrollbar { display: none; }
-        html.dark .skills-tabs { background: rgba(255,255,255,0.03); box-shadow: inset 0 2px 5px rgba(0,0,0,0.2); border-color: var(--border-dark); }
+        .timeline-item { padding: 10px 40px 40px 40px; position: relative; width: 50%; opacity: 0; transform: translateY(30px); transition: all 0.6s ease; }
+        .timeline-item.active { opacity: 1; transform: translateY(0); }
+        .timeline-item.left { left: 0; }
+        .timeline-item.right { left: 50%; }
         
-        .skill-tab { 
-            flex: 1; padding: 10px 24px; border: none; background: transparent; border-radius: 50px; 
-            font-weight: 600; color: #64748b; cursor: pointer; transition: var(--transition); 
-            font-size: 14.5px; display: flex; align-items: center; justify-content: center; gap: 8px; white-space: nowrap; 
-        }
-        html.dark .skill-tab { color: #94a3b8; }
-        .skill-tab:hover { color: var(--text-light); background: rgba(0,0,0,0.02); }
-        html.dark .skill-tab:hover { color: var(--text-dark); background: rgba(255,255,255,0.02); }
+        .timeline-dot { position: absolute; width: 16px; height: 16px; background: var(--bg-light-sec); border: 3px solid var(--primary); border-radius: 50%; top: 25px; z-index: 1; }
+        html.dark .timeline-dot { background: var(--bg-dark-sec); }
+        .timeline-item.left .timeline-dot { right: -9px; }
+        .timeline-item.right .timeline-dot { left: -9px; }
         
-        .skill-tab.active { background: #fff; color: var(--primary); box-shadow: 0 4px 15px rgba(0,0,0,0.08); }
-        html.dark .skill-tab.active { background: rgba(255,255,255,0.1); color: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.05); }
+        .timeline-content { position: relative; width: 100%; display: flex; flex-direction: column; align-items: center;}
+        
+        .timeline-stats { display: inline-flex; background: rgba(255,255,255,0.4); border: 1px solid var(--border-light); border-radius: 12px 12px 0 0; border-bottom: none; overflow: hidden; position: relative; z-index: 2; padding: 8px 0; backdrop-filter: blur(10px); margin-bottom: -1px;}
+        html.dark .timeline-stats { background: rgba(17,23,48,0.4); border-color: var(--border-dark); }
+        .stat-item { padding: 0 15px; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; }
+        .stat-item:not(:last-child)::after { content: ''; position: absolute; right: 0; top: 15%; height: 70%; width: 1px; background: var(--border-light); }
+        html.dark .stat-item:not(:last-child)::after { background: var(--border-dark); }
+        .stat-val { font-size: 11.5px; font-weight: 700; color: var(--text-light); }
+        html.dark .stat-val { color: var(--text-dark); }
+        .stat-lbl { font-size: 9.5px; color: #64748b; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px;}
+        html.dark .stat-lbl { color: #94a3b8; }
+        
+        .timeline-card { background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(20px); border: 1px solid var(--border-light); border-radius: 16px; padding: 25px; box-shadow: var(--shadow-sm); transition: var(--transition); width: 100%; text-align: left; position: relative; z-index: 1;}
+        html.dark .timeline-card { background: rgba(17, 23, 48, 0.6); border-color: var(--border-dark); }
+        .timeline-card:hover { border-color: var(--primary); box-shadow: var(--shadow-glow); transform: translateY(-3px);}
+        
+        .tl-header { display: flex; align-items: center; gap: 20px; margin-bottom: 20px;}
+        .tl-logo { width: 80px; height: 80px; flex-shrink: 0; display: flex; justify-content: center; align-items: center; }
+        .tl-logo img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.08)); transition: var(--transition); }
+        .timeline-card:hover .tl-logo img { transform: scale(1.1) rotate(3deg); filter: drop-shadow(0 8px 15px rgba(0,0,0,0.15)); }
+        
+        .tl-title { flex: 1; }
+        .tl-title h3 { font-size: 16.5px; font-weight: 700; margin-bottom: 5px; color: var(--text-light); line-height: 1.3;}
+        html.dark .tl-title h3 { color: var(--text-dark); }
+        
+        /* New Role Card Styles */
+        .tl-roles { display: flex; flex-direction: column; gap: 8px; }
+        .role-card { background: rgba(0, 0, 0, 0.03); border: 1px solid var(--border-light); padding: 8px 12px; border-radius: 8px; font-size: 13px; display: flex; justify-content: space-between; align-items: center; transition: var(--transition); }
+        html.dark .role-card { background: rgba(255, 255, 255, 0.03); border-color: var(--border-dark); }
+        .role-card:hover { background: rgba(37, 99, 235, 0.05); border-color: rgba(37, 99, 235, 0.3); transform: translateX(2px); }
+        html.dark .role-card:hover { background: rgba(138, 180, 255, 0.05); border-color: rgba(138, 180, 255, 0.3); }
+        .role-title { font-weight: 600; color: var(--primary); }
+        .role-year { font-size: 11.5px; font-weight: 500; color: #64748b; background: rgba(0,0,0,0.05); padding: 2px 8px; border-radius: 12px; }
+        html.dark .role-year { color: #94a3b8; background: rgba(255,255,255,0.1); }
+        
+        /* Gold Highlight Card */
+        .role-card.gold { background: linear-gradient(135deg, rgba(251, 191, 36, 0.12), rgba(245, 158, 11, 0.05)); border-color: rgba(245, 158, 11, 0.4); box-shadow: 0 2px 10px rgba(245, 158, 11, 0.1); }
+        html.dark .role-card.gold { background: linear-gradient(135deg, rgba(251, 191, 36, 0.15), rgba(245, 158, 11, 0.02)); border-color: rgba(251, 191, 36, 0.5); box-shadow: 0 2px 10px rgba(251, 191, 36, 0.15); }
+        .role-card.gold:hover { background: linear-gradient(135deg, rgba(251, 191, 36, 0.25), rgba(245, 158, 11, 0.1)); border-color: rgba(245, 158, 11, 0.6); transform: translateX(4px) scale(1.02); box-shadow: 0 4px 15px rgba(245, 158, 11, 0.2); }
+        html.dark .role-card.gold:hover { border-color: #fbbf24; box-shadow: 0 4px 15px rgba(251, 191, 36, 0.3); }
+        .role-card.gold .role-title { color: #d97706; }
+        html.dark .role-card.gold .role-title { color: #fbbf24; text-shadow: 0 0 8px rgba(251, 191, 36, 0.4); }
+        .role-card.gold .role-year { background: rgba(245, 158, 11, 0.15); color: #b45309; border: 1px solid rgba(245, 158, 11, 0.2); }
+        html.dark .role-card.gold .role-year { background: rgba(251, 191, 36, 0.15); color: #fcd34d; border: 1px solid rgba(251, 191, 36, 0.3); }
 
-        .skill-pane { display: none; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; animation: fadeInPage 0.5s cubic-bezier(0.25, 0.8, 0.25, 1) forwards; }
-        .skill-pane.active { display: grid; }
-        @keyframes fadeInPage { from { opacity: 0; transform: translateY(15px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        /* Fallback for single role backward compatibility */
+        .tl-title > p { font-size: 13.5px; color: var(--primary); font-weight: 600; line-height: 1.5; margin-top: 5px;}
         
-        .skill-card { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); border-radius: 20px; padding: 25px; box-shadow: var(--shadow-sm); border: 1px solid rgba(255,255,255,0.9); transition: var(--transition); position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: center;}
-        html.dark .skill-card { background: rgba(17, 23, 48, 0.5); border-color: rgba(255, 255, 255, 0.05); }
-        
-        /* Glowing Skill Cards on Hover */
-        .skill-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-glow); border-color: var(--primary); }
-        .skill-card::after { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(to right, transparent, rgba(255,255,255,0.2), transparent); transform: skewX(-20deg); transition: 0.5s; }
-        .skill-card:hover::after { left: 150%; }
-        html.dark .skill-card::after { background: linear-gradient(to right, transparent, rgba(255,255,255,0.05), transparent); }
+        @media (max-width: 768px) {
+            .timeline::after { left: 20px; }
+            .timeline-item { width: 100%; padding-left: 50px; padding-right: 0; padding-bottom: 30px;}
+            .timeline-item.left, .timeline-item.right { left: 0; }
+            .timeline-item.left .timeline-dot, .timeline-item.right .timeline-dot { left: 11px; right: auto; top: 25px; }
+            .timeline-stats { align-self: flex-start; margin-left: 15px; }
+        }
 
-        .skill-card-icon { position: absolute; top: 20px; right: 24px; width: 38px; height: 38px; object-fit: contain; opacity: 0.7; transition: var(--transition); filter: grayscale(20%); }
-        .skill-card:hover .skill-card-icon { opacity: 1; transform: scale(1.15) rotate(-5deg); filter: grayscale(0%); }
-        
-        /* Mengubah Logo GitHub menjadi putih di Dark Mode */
-        html.dark .skill-card-icon[alt="GitHub"] { filter: brightness(0) invert(1); }
-        html.dark .skill-card:hover .skill-card-icon[alt="GitHub"] { filter: brightness(0) invert(1); }
-        
-        .skill-card-header { display: flex; flex-direction: column; gap: 8px; margin-bottom: 0; padding-right: 45px; }
-        .skill-card-title { font-weight: 700; font-size: 17px; color: var(--text-light); }
-        html.dark .skill-card-title { color: var(--text-dark); }
-        
-        .skill-tag { background: rgba(37, 99, 235, 0.1); padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; color: var(--primary); display: inline-block; width: fit-content; border: 1px solid rgba(37, 99, 235, 0.1);}
-        html.dark .skill-tag { background: rgba(138, 180, 255, 0.1); border-color: rgba(138, 180, 255, 0.1); }
-        
-        /* ================= FOOTER ================= */
         footer { background: var(--nav-mobile-light); color: var(--text-light); text-align: center; padding: 25px 20px; font-size: 14px; margin-top: auto; border-top: 1px solid var(--border-light); transition: var(--transition); }
         html.dark footer { background: #050711; color: var(--text-dark); border-top-color: var(--border-dark); }
-        
-        /* ================= RESPONSIVE ================= */
+
         @media (max-width: 900px) {
             .menu-toggle { display: block; }
             .nav-container { position: absolute; top: calc(100% + 15px); left: 0; width: 100%; background: var(--nav-mobile-light); flex-direction: column; align-items: stretch; padding: 15px 0 25px 0; gap: 0; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); border: 1px solid var(--border-light); border-radius: 24px; opacity: 0; visibility: hidden; transform: translateY(-10px); transition: all 0.3s ease; z-index: 999; }
@@ -258,9 +261,6 @@
             .experience-container::before { left: 20px; }
             .experience-card { padding: 25px 20px; gap: 20px; flex-direction: column; border-radius: 20px;}
             .exp-logo { margin-bottom: -10px; }
-            .skills-tabs { max-width: 100%; border-radius: 16px; flex-wrap: wrap; justify-content: center; background: transparent; border: none; box-shadow: none;}
-            .skill-tab { flex: 1 1 45%; padding: 10px; font-size: 13.5px; background: rgba(0,0,0,0.04); border-radius: 12px; margin: 4px; border: 1px solid var(--border-light);}
-            html.dark .skill-tab { background: rgba(255,255,255,0.03); border-color: var(--border-dark);}
         }
         @media (max-width: 768px) {
             section { padding: 50px 5% 70px; }
@@ -273,7 +273,6 @@
 </head>
 
 <body>
-    <!-- Navbar -->
     <nav class="reveal-up active">
         <a href="/" class="logo">
             <img src="img/fontyasin.png" alt="Yasinisme Logo" onerror="this.onerror=null; this.src='https://placehold.co/120x30/22c55e/ffffff?text=Yaasin';" />
@@ -282,9 +281,9 @@
         <div class="nav-container" id="nav-container">
             <ul class="nav-links">
                 <li><a href="/" class="nav-btn" data-key="home">Home</a></li>
-                <li><a href="/experience" class="nav-btn active" data-key="experience">Experience</a></li>
-                <li><a href="/projects" class="nav-btn" data-key="projects">Projects</a></li>
-                <li><a href="/contact" class="nav-btn" data-key="contact">Contact</a></li>
+                <li><a href="experience" class="nav-btn active" data-key="experience">Experience</a></li>
+                <li><a href="projects" class="nav-btn" data-key="projects">Projects</a></li>
+                <li><a href="contact" class="nav-btn" data-key="contact">Contact</a></li>
             </ul>
             <div class="divider"></div>
             <div class="controls">
@@ -301,9 +300,7 @@
         </div>
     </nav>
 
-    <!-- Main Content -->
     <main>
-        <!-- EXPERIENCE SECTION -->
         <section class="experience">
             <div class="section-header reveal-up">
                 <span class="section-tag" data-key="experienceTag">Experience</span>
@@ -346,7 +343,7 @@
                             <li data-key="gksexperience3">Assisted in the installation and configuration of commercial and industrial-scale surveillance systems (CCTV) at various locations, including Madukoro Square, Kendal Industrial Park (KIK), and Wijayakusuma Industrial Park (KIW).</li>
                         </ul>
                         <div class="exp-footer">
-                            <span class="exp-date" data-key="gksdate"><i class="fa-regular fa-calendar"></i> January 2026 – November 2025</span>
+                            <span class="exp-date" data-key="gksdate"><i class="fa-regular fa-calendar"></i> January 2023 – November 2025</span>
                             <span class="exp-location"><i class="fa-solid fa-location-dot"></i> Semarang, Indonesia</span>
                         </div>
                     </div>
@@ -363,7 +360,8 @@
                         <ul class="exp-details">
                             <li data-key="kopkar1">Completed the development project of the Employee Cooperative System end-to-end (from planning stage to release) during a full 1-year contract period.</li>
                             <li data-key="kopkar2">Built a web-based financial application using the Laravel framework to digitalize operations and improve the efficiency of cooperative administration.</li>
-                            <li data-key="kopkar3">Designed and managed databases and conducted system testing on transaction verification to ensure the accuracy, security, and transparency of cooperative financial data.</li>
+                            <li data-key="kopkar3">Optimized team collaboration, document management, and data reporting by leveraging and integrating the Google Workspace ecosystem.</li>
+                            <li data-key="kopkar4">Designed and managed databases and conducted system testing on transaction verification to ensure the accuracy, security, and transparency of cooperative financial data.</li>
                         </ul>
                         <div class="exp-footer">
                             <span class="exp-date" data-key="datekopkar"><i class="fa-regular fa-calendar"></i> August 2024 – September 2024</span>
@@ -381,9 +379,9 @@
                             <p class="exp-company" data-key="companySeo">Liaison Officer (LO), Event Consultant & Tour Guide</p>
                         </div>
                         <ul class="exp-details">
-                            <li data-key="seo1">Acted as an event consultant and personal Liaison Officer with full responsibility for assistance, accommodation, and ensuring smooth performances of national-level artists at various mass music concerts.</li>
-                            <li data-key="seo2">Demonstrated a track record of managing the needs of large-scale guest stars such as Souljah in 2018, Ndarboy Genk in 2019, Damara De in 2023, and Massdhoo in 2024 at the annual SMA N 2 Rembang anniversary event.</li>
-                            <li data-key="seo3">Contributed to the early-stage operational team to ensure the smooth execution and success of the Rembang Color Fun event.</li>
+                            <li data-key="seo1">Acted as an event consultant and personal Liaison Officer, demonstrating strong problem-solving skills under pressure to ensure smooth artist performances.</li>
+                            <li data-key="seo2">Demonstrated a track record of managing the needs of large-scale guest stars such as Souljah in 2018, Ndarboy Genk in 2019, Damara De in 2023, and Massdhoo in 2024.</li>
+                            <li data-key="seo3">Contributed to the early-stage operational team, focusing on logistics management and real-time data coordination to ensure the Rembang Color Fun event's success.</li>
                             <li data-key="seo4">Served as a tour guide and field coordinator to facilitate various working visit programs for government agencies from outside the region.</li>
                             <li data-key="seo5">Ensured smooth mobility, schedule management, and participant comfort during trips, with specific experience handling groups from the Katingan Regency Health Office and the Kotawaringin Barat Tourism Office.</li>
                         </ul>
@@ -396,68 +394,181 @@
             </div>
         </section>
 
-        <!-- SKILLS SECTION -->
-        <section class="skills">
-            <div class="skills-container">
-                <div class="skills-header-text reveal-up">
-                    <h2 class="section-title" data-key="skillsTitle">My Skills</h2>
-                    <p data-key="skillsSubtitle">Technical expertise and proficiency across different domains of software development</p>
+        <section class="organization-section">
+            <div class="section-header reveal-up">
+                <span class="section-tag" data-key="orgTag">Organization</span>
+                <h2 class="section-title" data-key="orgTitle">My Leadership & Organizational Experience</h2>
+            </div>
+
+            <div class="timeline">
+                <!-- Org 1 : MPM -->
+                <div class="timeline-item left reveal-up">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-stats">
+                            <div class="stat-item"><span class="stat-val">2023</span><span class="stat-lbl" data-key="lblStart">Mulai</span></div>
+                            <div class="stat-item"><span class="stat-val">2025</span><span class="stat-lbl" data-key="lblEnd">Selesai</span></div>
+                            <div class="stat-item"><span class="stat-val" data-key="locSmg">Semarang, Indonesia</span><span class="stat-lbl" data-key="lblLoc">Lokasi</span></div>
+                        </div>
+                        <div class="timeline-card">
+                            <div class="tl-header">
+                                <div class="tl-logo"><img src="img/Logo/mpm.png" alt="MPM Logo" loading="lazy" onerror="this.src='https://placehold.co/55x55/2563eb/ffffff?text=MPM'"></div>
+                                <div class="tl-title">
+                                    <h3 data-key="org1">Majelis Permusyawaratan Mahasiswa Keluarga Mahasiswa Universitas Dian Nuswantoro</h3>
+                                </div>
+                            </div>
+                            <div class="tl-roles" data-key="roleContainer1">
+                                <div class="role-card">
+                                    <span class="role-title">Board of Authority</span>
+                                    <span class="role-year">2023 - 2025</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Tabs Navigation -->
-                <div class="skills-tabs reveal-up" style="transition-delay: 0.1s;">
-                    <button class="skill-tab active" onclick="openSkillTab(event, 'frontend')">
-                        <i class="fa-solid fa-palette"></i> <span data-key="tabFrontend">Frontend</span>
-                    </button>
-                    <button class="skill-tab" onclick="openSkillTab(event, 'backend')">
-                        <i class="fa-solid fa-server"></i> <span data-key="tabBackend">Backend</span>
-                    </button>
-                    <button class="skill-tab" onclick="openSkillTab(event, 'design')">
-                        <i class="fa-solid fa-pen-nib"></i> <span data-key="tabDesign">Design & Editing</span>
-                    </button>
-                    <button class="skill-tab" onclick="openSkillTab(event, 'tools')">
-                        <i class="fa-solid fa-wrench"></i> <span data-key="tabTools">Tools</span>
-                    </button>
+                <!-- Org 2 : DPM -->
+                <div class="timeline-item right reveal-up" style="transition-delay: 0.1s;">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-stats">
+                            <div class="stat-item"><span class="stat-val">2021</span><span class="stat-lbl" data-key="lblStart">Mulai</span></div>
+                            <div class="stat-item"><span class="stat-val">2024</span><span class="stat-lbl" data-key="lblEnd">Selesai</span></div>
+                            <div class="stat-item"><span class="stat-val" data-key="locSmg">Semarang, Indonesia</span><span class="stat-lbl" data-key="lblLoc">Lokasi</span></div>
+                        </div>
+                        <div class="timeline-card">
+                            <div class="tl-header">
+                                <div class="tl-logo"><img src="img/Logo/dpm.png" alt="DPM Logo" loading="lazy" onerror="this.src='https://placehold.co/55x55/e11d48/ffffff?text=DPM'"></div>
+                                <div class="tl-title">
+                                    <h3 data-key="org2">Dewan Perwakilan Mahasiswa Keluarga Mahasiswa Universitas Dian Nuswantoro</h3>
+                                </div>
+                            </div>
+                            <div class="tl-roles" data-key="roleContainer2">
+                                <div class="role-card gold">
+                                    <span class="role-title"><i class="fa-solid fa-crown" style="margin-right: 6px;"></i>General Chairman</span>
+                                    <span class="role-year">2023 - 2024</span>
+                                </div>
+                                <div class="role-card">
+                                    <span class="role-title">Head of Legislation Board</span>
+                                    <span class="role-year">2022 - 2023</span>
+                                </div>
+                                <div class="role-card">
+                                    <span class="role-title">Expert Staff of Legislation Board</span>
+                                    <span class="role-year">2021 - 2022</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Frontend Tab -->
-                <div id="skill-frontend" class="skill-pane active">
-                    <div class="skill-card reveal-up" style="transition-delay: 0.2s;"><img src="img/Skill/javascript.svg" alt="JavaScript" class="skill-card-icon" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/38x38/f7df1e/000000?text=JS';" /><div class="skill-card-header"><span class="skill-card-title">JavaScript</span><span class="skill-tag">Language</span></div></div>
-                    <div class="skill-card reveal-up" style="transition-delay: 0.3s;"><img src="img/Skill/html.svg" alt="HTML5" class="skill-card-icon" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/38x38/e34f26/ffffff?text=HTML';" /><div class="skill-card-header"><span class="skill-card-title">HTML5</span><span class="skill-tag">Markup</span></div></div>
-                    <div class="skill-card reveal-up" style="transition-delay: 0.4s;"><img src="img/Skill/css.svg" alt="CSS3" class="skill-card-icon" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/38x38/1572b6/ffffff?text=CSS';" /><div class="skill-card-header"><span class="skill-card-title">CSS3</span><span class="skill-tag">Styling</span></div></div>
-                    <div class="skill-card reveal-up" style="transition-delay: 0.5s;"><img src="img/Skill/react-native.svg" alt="React Native" class="skill-card-icon" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/38x38/61dafb/000000?text=React';" /><div class="skill-card-header"><span class="skill-card-title">React Native</span><span class="skill-tag">Framework</span></div></div>
-                    <div class="skill-card reveal-up" style="transition-delay: 0.6s;"><img src="img/Skill/bootstrap.png" alt="Bootstrap" class="skill-card-icon" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/38x38/7952b3/ffffff?text=BS';" /><div class="skill-card-header"><span class="skill-card-title">Bootstrap</span><span class="skill-tag">Framework</span></div></div>
-                    <div class="skill-card reveal-up" style="transition-delay: 0.7s;"><img src="img/Skill/tailwindcss.png" alt="Tailwind CSS" class="skill-card-icon" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/38x38/06b6d4/ffffff?text=TW';" /><div class="skill-card-header"><span class="skill-card-title">Tailwind CSS</span><span class="skill-tag">Framework</span></div></div>
+                <!-- Org 3 : DNCC -->
+                <div class="timeline-item left reveal-up" style="transition-delay: 0.2s;">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-stats">
+                            <div class="stat-item"><span class="stat-val">2021</span><span class="stat-lbl" data-key="lblStart">Mulai</span></div>
+                            <div class="stat-item"><span class="stat-val">2025</span><span class="stat-lbl" data-key="lblEnd">Selesai</span></div>
+                            <div class="stat-item"><span class="stat-val" data-key="locSmg">Semarang, Indonesia</span><span class="stat-lbl" data-key="lblLoc">Lokasi</span></div>
+                        </div>
+                        <div class="timeline-card">
+                            <div class="tl-header">
+                                <div class="tl-logo"><img src="img/Logo/dncc.png" alt="DNCC Logo" loading="lazy" onerror="this.src='https://placehold.co/55x55/22c55e/ffffff?text=DNCC'"></div>
+                                <div class="tl-title">
+                                    <h3 data-key="org3">Dian Nuswantoro Computer Club (DNCC)</h3>
+                                </div>
+                            </div>
+                            <div class="tl-roles" data-key="roleContainer3">
+                                <div class="role-card">
+                                    <span class="role-title">Board Member</span>
+                                    <span class="role-year">2021 - 2025</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Backend Tab -->
-                <div id="skill-backend" class="skill-pane">
-                    <div class="skill-card"><img src="img/Skill/php.svg" alt="PHP" class="skill-card-icon" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/38x38/777bb4/ffffff?text=PHP';" /><div class="skill-card-header"><span class="skill-card-title">PHP</span><span class="skill-tag">Language</span></div></div>
-                    <div class="skill-card"><img src="img/Skill/java.svg" alt="Java" class="skill-card-icon" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/38x38/007396/ffffff?text=Java';" /><div class="skill-card-header"><span class="skill-card-title">Java</span><span class="skill-tag">Language</span></div></div>
-                    <div class="skill-card"><img src="img/Skill/c.svg" alt="C++" class="skill-card-icon" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/38x38/00599c/ffffff?text=C++';" /><div class="skill-card-header"><span class="skill-card-title">C++</span><span class="skill-tag">Language</span></div></div>
-                    <div class="skill-card"><img src="img/Skill/laravel.svg" alt="Laravel" class="skill-card-icon" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/38x38/ff2d20/ffffff?text=LV';" /><div class="skill-card-header"><span class="skill-card-title">Laravel</span><span class="skill-tag">Framework</span></div></div>
-                    <div class="skill-card"><img src="img/Skill/mysql.svg" alt="MySQL" class="skill-card-icon" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/38x38/4479a1/ffffff?text=SQL';" /><div class="skill-card-header"><span class="skill-card-title">MySQL</span><span class="skill-tag">Database</span></div></div>
+                <!-- Org 4 : FL2MI -->
+                <div class="timeline-item right reveal-up" style="transition-delay: 0.3s;">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-stats">
+                            <div class="stat-item"><span class="stat-val">2022</span><span class="stat-lbl" data-key="lblStart">Mulai</span></div>
+                            <div class="stat-item"><span class="stat-val">2023</span><span class="stat-lbl" data-key="lblEnd">Selesai</span></div>
+                            <div class="stat-item"><span class="stat-val" data-key="locSmg">Semarang, Indonesia</span><span class="stat-lbl" data-key="lblLoc">Lokasi</span></div>
+                        </div>
+                        <div class="timeline-card">
+                            <div class="tl-header">
+                                <div class="tl-logo"><img src="img/Logo/fl2mi.png" alt="FL2MI Logo" loading="lazy" onerror="this.src='https://placehold.co/55x55/f59e0b/ffffff?text=FL2MI'"></div>
+                                <div class="tl-title">
+                                    <h3 data-key="org4">FL2MI Semarang Raya</h3>
+                                </div>
+                            </div>
+                            <div class="tl-roles" data-key="roleContainer4">
+                                <div class="role-card">
+                                    <span class="role-title">Member of Commission 4</span>
+                                    <span class="role-year">2022 - 2023</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Design Tab -->
-                <div id="skill-design" class="skill-pane">
-                    <div class="skill-card"><img src="img/Skill/figma.svg" alt="Figma" class="skill-card-icon" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/38x38/f24e1e/ffffff?text=Fig';" /><div class="skill-card-header"><span class="skill-card-title">Figma</span><span class="skill-tag">Design</span></div></div>
-                    <div class="skill-card"><img src="img/Skill/canva.svg" alt="Canva" class="skill-card-icon" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/38x38/00c4cc/ffffff?text=Cnv';" /><div class="skill-card-header"><span class="skill-card-title">Canva</span><span class="skill-tag">Design</span></div></div>
-                    <div class="skill-card"><img src="img/Skill/coreldraw.svg" alt="CorelDRAW" class="skill-card-icon" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/38x38/2a9d8f/ffffff?text=CD';" /><div class="skill-card-header"><span class="skill-card-title">CorelDRAW</span><span class="skill-tag">Design</span></div></div>
-                    <div class="skill-card"><img src="img/Skill/capcut.jpg" alt="CapCut" class="skill-card-icon" loading="lazy" style="border-radius: 8px;" onerror="this.onerror=null; this.src='https://placehold.co/38x38/000000/ffffff?text=CC';" /><div class="skill-card-header"><span class="skill-card-title">CapCut</span><span class="skill-tag">Video Editing</span></div></div>
+                <!-- Org 5 : GenRe -->
+                <div class="timeline-item left reveal-up" style="transition-delay: 0.4s;">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-stats">
+                            <div class="stat-item"><span class="stat-val">2017</span><span class="stat-lbl" data-key="lblStart">Mulai</span></div>
+                            <div class="stat-item"><span class="stat-val">2023</span><span class="stat-lbl" data-key="lblEnd">Selesai</span></div>
+                            <div class="stat-item"><span class="stat-val" data-key="locRbg">Rembang, Indonesia</span><span class="stat-lbl" data-key="lblLoc">Lokasi</span></div>
+                        </div>
+                        <div class="timeline-card">
+                            <div class="tl-header">
+                                <div class="tl-logo"><img src="img/Logo/genre.png" alt="Genre Logo" loading="lazy" onerror="this.src='https://placehold.co/55x55/8b5cf6/ffffff?text=GenRe'"></div>
+                                <div class="tl-title">
+                                    <h3 data-key="org5">Forum Genre Kabupaten Rembang</h3>
+                                </div>
+                            </div>
+                            <div class="tl-roles" data-key="roleContainer5">
+                                <div class="role-card">
+                                    <span class="role-title">Board Member</span>
+                                    <span class="role-year">2017 - 2023</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Tools Tab -->
-                <div id="skill-tools" class="skill-pane">
-                    <div class="skill-card"><img src="img/Skill/github.svg" alt="GitHub" class="skill-card-icon" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/38x38/181717/ffffff?text=Git';" /><div class="skill-card-header"><span class="skill-card-title">GitHub</span><span class="skill-tag">Version Control</span></div></div>
-                    <div class="skill-card"><img src="img/Skill/laragon.svg" alt="Laragon" class="skill-card-icon" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/38x38/0091d3/ffffff?text=Lrg';" /><div class="skill-card-header"><span class="skill-card-title">Laragon</span><span class="skill-tag">Environment</span></div></div>
-                    <div class="skill-card"><img src="img/Skill/google-workspace.svg" alt="Google Workspace" class="skill-card-icon" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/38x38/4285f4/ffffff?text=GW';" /><div class="skill-card-header"><span class="skill-card-title">Google Workspace</span><span class="skill-tag">Productivity</span></div></div>
+                <!-- Org 6 : Forum Anak Rembang -->
+                <div class="timeline-item right reveal-up" style="transition-delay: 0.5s;">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-stats">
+                            <div class="stat-item"><span class="stat-val">2017</span><span class="stat-lbl" data-key="lblStart">Mulai</span></div>
+                            <div class="stat-item"><span class="stat-val">2021</span><span class="stat-lbl" data-key="lblEnd">Selesai</span></div>
+                            <div class="stat-item"><span class="stat-val" data-key="locRbg">Rembang, Indonesia</span><span class="stat-lbl" data-key="lblLoc">Lokasi</span></div>
+                        </div>
+                        <div class="timeline-card">
+                            <div class="tl-header">
+                                <div class="tl-logo"><img src="img/Logo/far.png" alt="FAR Logo" loading="lazy" onerror="this.src='https://placehold.co/55x55/ef4444/ffffff?text=FAR'"></div>
+                                <div class="tl-title">
+                                    <h3 data-key="org6">Forum Anak Rembang</h3>
+                                </div>
+                            </div>
+                            <div class="tl-roles" data-key="roleContainer6">
+                                <div class="role-card">
+                                    <span class="role-title">Board Member</span>
+                                    <span class="role-year">2017 - 2021</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
             </div>
         </section>
     </main>
 
-    <!-- Footer -->
     <footer class="reveal-up"><p data-key="footer">© 2025 | Designed and coded by Ahmad Yasin Fadhilah</p></footer>
 
     <script>
@@ -485,18 +596,9 @@
             }); 
         }
 
-        // === SKILLS TABS LOGIC ===
-        function openSkillTab(event, tabName) {
-            document.querySelectorAll('.skill-pane').forEach(pane => pane.classList.remove('active'));
-            document.querySelectorAll('.skill-tab').forEach(tab => tab.classList.remove('active'));
-            const targetPane = document.getElementById('skill-' + tabName);
-            if (targetPane) targetPane.classList.add('active');
-            if (event && event.currentTarget) event.currentTarget.classList.add('active');
-        }
-
-        // === SCROLL REVEAL ANIMATION (React/Framer Motion style fade-up) ===
+        // === SCROLL REVEAL ANIMATION ===
         document.addEventListener("DOMContentLoaded", function() {
-            const reveals = document.querySelectorAll(".reveal-up");
+            const reveals = document.querySelectorAll(".reveal-up, .timeline-item");
             const revealOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
 
             const revealOnScroll = new IntersectionObserver(function(entries, observer) {
@@ -522,29 +624,88 @@
                 home: "Home", experience: "Experience", projects: "Projects", contact: "Contact", downloadCV: "Download CV", footer: "© 2025 | Designed and coded by Ahmad Yasin Fadhilah",
                 experienceTag: "Experience", experienceTitle: "Here is a quick summary of my most recent experiences:", roleBbpvp: "Computer Administrator, Intern", companyBbpvp: "BBPVP Semarang (Balai Besar Pelatihan Vokasi dan Produktivitas)", dateBbpvp: "<i class='fa-regular fa-calendar'></i> November 2025 - May 2026",
                 bbpvp1: "Co-developed and managed the Activity Report Management System project for Short Course Vocational Training to digitalize and streamline reporting.", bbpvp2: "Performed routine maintenance, installation, and configuration of hardware and software to ensure smooth IT operations.", bbpvp3: "Assisted in periodic internal data management and digital inventory systems to maintain the accuracy of the institution's information technology assets.", bbpvp4: "Served as a multimedia equipment operator responsible for audio-visual support in the implementation of various training activities.",
-                roleGks: "IT Team (IT Division Staff), Contract Employee", gksdate: "<i class='fa-regular fa-calendar'></i> January 2026 – November 2025",
+                roleGks: "IT Team (IT Division Staff), Contract Employee", gksdate: "<i class='fa-regular fa-calendar'></i> January 2023 – November 2025",
                 gksexperience1: "Managed administration and inventory, responsible for recording, monitoring, and reporting the circulation of incoming and outgoing data and goods.", gksexperience2: "Involved in network infrastructure projects and automated parking barrier systems at various strategic institutions, including the Regional Police (Polda), Police Academy (Akpol), and Bhayangkara Akpol Hospital.", gksexperience3: "Assisted in the installation and configuration of commercial and industrial-scale surveillance systems (CCTV) at various locations, including Madukoro Square, Kendal Industrial Park (KIK), and Wijayakusuma Industrial Park (KIW).",
                 roleKopkar: "Web Developer, Intern", datekopkar: "<i class='fa-regular fa-calendar'></i> August 2024 – September 2024",
-                kopkar1: "Completed the development project of the Employee Cooperative System end-to-end (from planning stage to release) during a full 1-year contract period.", kopkar2: "Built a web-based financial application using the Laravel framework to digitalize operations and improve the efficiency of cooperative administration.", kopkar3: "Designed and managed databases and conducted system testing on transaction verification to ensure the accuracy, security, and transparency of cooperative financial data.",
+                kopkar1: "Completed the development project of the Employee Cooperative System end-to-end (from planning stage to release) during a full 1-year contract period.", 
+                kopkar2: "Built a web-based financial application using the Laravel framework to digitalize operations and improve the efficiency of cooperative administration.", 
+                kopkar3: "Optimized team collaboration, document management, and data reporting by leveraging and integrating the Google Workspace ecosystem.",
+                kopkar4: "Designed and managed databases and conducted system testing on transaction verification to ensure the accuracy, security, and transparency of cooperative financial data.",
                 roleSeo: "Freelance / Project-Based", companySeo: "Liaison Officer (LO), Event Consultant & Tour Guide", dateseo: "<i class='fa-regular fa-calendar'></i> December 2018 - Present",
-                seo1: "Acted as an event consultant and personal Liaison Officer with full responsibility for assistance, accommodation, and ensuring smooth performances of national-level artists at various mass music concerts.", seo2: "Demonstrated a track record of managing the needs of large-scale guest stars such as Souljah in 2018, Ndarboy Genk in 2019, Damara De in 2023, and Massdhoo in 2024 at the annual SMA N 2 Rembang anniversary event.", seo3: "Contributed to the early-stage operational team to ensure the smooth execution and success of the Rembang Color Fun event.", seo4: "Served as a tour guide and field coordinator to facilitate various working visit programs for government agencies from outside the region.", seo5: "Ensured smooth mobility, schedule management, and participant comfort during trips, with specific experience handling groups from the Katingan Regency Health Office and the Kotawaringin Barat Tourism Office.",
-                skillsTitle: "My Skills", skillsSubtitle: "Technical expertise and proficiency across different domains of software development",
-                tabFrontend: "Frontend", tabBackend: "Backend", tabDesign: "Design & Editing", tabTools: "Tools"
+                seo1: "Acted as an event consultant and personal Liaison Officer, demonstrating strong problem-solving skills under pressure to ensure smooth artist performances.", 
+                seo2: "Demonstrated a track record of managing the needs of large-scale guest stars such as Souljah in 2018, Ndarboy Genk in 2019, Damara De in 2023, and Massdhoo in 2024.", 
+                seo3: "Contributed to the early-stage operational team, focusing on logistics management and real-time data coordination to ensure the Rembang Color Fun event's success.", 
+                seo4: "Served as a tour guide and field coordinator to facilitate various working visit programs for government agencies from outside the region.", 
+                seo5: "Ensured smooth mobility, schedule management, and participant comfort during trips, with specific experience handling groups from the Katingan Regency Health Office and the Kotawaringin Barat Tourism Office.",
+                orgTag: "Organization", orgTitle: "My Leadership & Organizational Experience",
+                lblStart: "Start", lblEnd: "End", lblLoc: "Location", locSmg: "Semarang, Indonesia", locRbg: "Rembang, Indonesia",
+                
+                org1: "Majelis Permusyawaratan Mahasiswa Keluarga Mahasiswa Universitas Dian Nuswantoro", 
+                roleContainer1: `<div class="role-card"><span class="role-title">Board of Authority</span><span class="role-year">2023 - 2025</span></div>`,
+                
+                org2: "Dewan Perwakilan Mahasiswa Keluarga Mahasiswa Universitas Dian Nuswantoro", 
+                roleContainer2: `
+                    <div class="role-card gold"><span class="role-title"><i class="fa-solid fa-crown" style="margin-right: 6px;"></i>General Chairman</span><span class="role-year">2023 - 2024</span></div>
+                    <div class="role-card"><span class="role-title">Head of Legislation Board</span><span class="role-year">2022 - 2023</span></div>
+                    <div class="role-card"><span class="role-title">Expert Staff of Legislation Board</span><span class="role-year">2021 - 2022</span></div>
+                `,
+                
+                org3: "Dian Nuswantoro Computer Club (DNCC)", 
+                roleContainer3: `<div class="role-card"><span class="role-title">Board Member</span><span class="role-year">2021 - 2025</span></div>`,
+                
+                org4: "FL2MI Semarang Raya", 
+                roleContainer4: `<div class="role-card"><span class="role-title">Member of Commission 4</span><span class="role-year">2022 - 2023</span></div>`,
+                
+                org5: "Forum Genre Kabupaten Rembang", 
+                roleContainer5: `<div class="role-card"><span class="role-title">Board Member</span><span class="role-year">2017 - 2023</span></div>`,
+                
+                org6: "Forum Anak Rembang", 
+                roleContainer6: `<div class="role-card"><span class="role-title">Board Member</span><span class="role-year">2017 - 2021</span></div>`
             },
             id: {
                 home: "Beranda", experience: "Pengalaman", projects: "Proyek", contact: "Kontak", downloadCV: "Unduh CV", footer: "© 2025 | Dirancang dan dikode oleh Ahmad Yasin Fadhilah",
                 experienceTag: "Pengalaman", experienceTitle: "Berikut ringkasan singkat dari pengalaman terbaru saya:", roleBbpvp: "Pranata Komputer, Magang", companyBbpvp: "Balai Besar Pelatihan Vokasi dan Produktivitas (BBPVP) Semarang", dateBbpvp: "<i class='fa-regular fa-calendar'></i> November 2025 - Mei 2026",
                 bbpvp1: "Turut mengembangkan dan mengelola proyek Sistem Manajemen Laporan Kegiatan untuk Pelatihan Vokasi Short Course guna mendigitalisasi dan mengefisiensikan pelaporan.", bbpvp2: "Melakukan pemeliharaan (maintenance) rutin, instalasi, serta konfigurasi pada perangkat keras (hardware) dan perangkat lunak (software) untuk memastikan kelancaran operasional IT.", bbpvp3: "Membantu pengelolaan data internal dan sistem inventori digital secara berkala untuk menjaga akurasi aset teknologi informasi lembaga.", bbpvp4: "Bertugas sebagai operator perangkat multimedia yang bertanggung jawab atas dukungan audio-visual dalam pelaksanaan berbagai kegiatan pelatihan.",
-                roleGks: "Tim IT (Staff Divisi IT), Pegawai Kontrak", gksdate: "<i class='fa-regular fa-calendar'></i> Januari 2026 – November 2025",
+                roleGks: "Tim IT (Staff Divisi IT), Pegawai Kontrak", gksdate: "<i class='fa-regular fa-calendar'></i> Januari 2023 – November 2025",
                 gksexperience1: "Mengelola administrasi dan inventarisasi, bertanggung jawab atas pencatatan, pemantauan, serta pelaporan sirkulasi data dan barang yang masuk maupun keluar.", gksexperience2: "Terlibat dalam proyek infrastruktur jaringan dan sistem palang parkir otomatis di berbagai instansi strategis, meliputi kawasan Polda, Akademi Kepolisian (Akpol), dan RS Bhayangkara Akpol.", gksexperience3: "Membantu instalasi dan konfigurasi sistem pengawasan (CCTV) skala komersial dan industri di berbagai titik lokasi, termasuk Madukoro Square, Kawasan Industri Kendal (KIK), dan Kawasan Industri Wijayakusuma (KIW).",
                 roleKopkar: "Web Developer, Magang", datekopkar: "<i class='fa-regular fa-calendar'></i> Agustus 2024 – September 2024",
-                kopkar1: "Menyelesaikan proyek pengembangan Sistem Koperasi Karyawan secara end-to-end (dari tahap perencanaan hingga rilis) selama masa kontrak 1 tahun penuh.", kopkar2: "Membangun aplikasi keuangan berbasis web menggunakan framework Laravel untuk mendigitalisasi operasional dan meningkatkan efisiensi administrasi koperasi.", kopkar3: "Merancang dan mengelola basis data (database) serta melakukan pengujian sistem terhadap verifikasi transaksi guna memastikan akurasi, keamanan, dan transparansi data keuangan koperasi.",
+                kopkar1: "Menyelesaikan proyek pengembangan Sistem Koperasi Karyawan secara end-to-end (dari tahap perencanaan hingga rilis) selama masa kontrak 1 tahun penuh.", 
+                kopkar2: "Membangun aplikasi keuangan berbasis web menggunakan framework Laravel untuk mendigitalisasi operasional dan meningkatkan efisiensi administrasi koperasi.", 
+                kopkar3: "Mengoptimalkan kolaborasi tim, pengelolaan dokumen, dan pelaporan data dengan memanfaatkan serta mengintegrasikan ekosistem Google Workspace.",
+                kopkar4: "Merancang dan mengelola basis data (database) serta melakukan pengujian sistem terhadap verifikasi transaksi guna memastikan akurasi, keamanan, dan transparansi data keuangan koperasi.",
                 roleSeo: "Freelance / Project-Based", companySeo: "Liaison Officer (LO), Event Consultant & Tour Guide", dateseo: "<i class='fa-regular fa-calendar'></i> Desember 2018 - Sekarang",
-                seo1: "Menjalankan peran sebagai konsultan acara dan Liaison Officer personal dengan tanggung jawab penuh atas pendampingan, akomodasi, hingga kelancaran penampilan artis tingkat nasional pada berbagai konser musik massal.", seo2: "Memiliki rekam jejak dalam mengelola kebutuhan bintang tamu berskala besar seperti Souljah pada 2018, Ndarboy Genk pada 2019, Damara De pada 2023, serta Massdhoo pada 2024 di acara rutin HUT SMA N 2 Rembang.", seo3: "Berkontribusi dalam tim operasional tahap awal guna memastikan kelancaran dan kesuksesan penyelenggaraan acara Rembang Color Fun.", seo4: "Bertugas sebagai pemandu wisata sekaligus koordinator lapangan untuk memfasilitasi berbagai program kunjungan kerja instansi kepemerintahan dari luar daerah.", seo5: "Memastikan kelancaran mobilitas, manajemen jadwal, dan kenyamanan peserta selama perjalanan, dengan pengalaman khusus menangani rombongan dari Dinas Kesehatan Kabupaten Katingan dan Dinas Pariwisata Kotawaringin Barat.",
-                skillsTitle: "Keahlian Saya", skillsSubtitle: "Keahlian teknis dan kemahiran di berbagai bidang pengembangan perangkat lunak",
-                tabFrontend: "Frontend", tabBackend: "Backend", tabDesign: "Desain & Editing", tabTools: "Alat (Tools)"
+                seo1: "Menjalankan peran sebagai konsultan acara dan Liaison Officer personal, menunjukkan kemampuan problem-solving yang kuat di bawah tekanan untuk memastikan kelancaran penampilan artis.", 
+                seo2: "Memiliki rekam jejak dalam mengelola kebutuhan bintang tamu berskala besar seperti Souljah pada 2018, Ndarboy Genk pada 2019, Damara De pada 2023, serta Massdhoo pada 2024.", 
+                seo3: "Berkontribusi dalam tim operasional tahap awal, berfokus pada manajemen logistik dan koordinasi data lapangan secara real-time guna memastikan kesuksesan acara Rembang Color Fun.", 
+                seo4: "Bertugas sebagai pemandu wisata sekaligus koordinator lapangan untuk memfasilitasi berbagai program kunjungan kerja instansi kepemerintahan dari luar daerah.", 
+                seo5: "Memastikan kelancaran mobilitas, manajemen jadwal, dan kenyamanan peserta selama perjalanan, dengan pengalaman khusus menangani rombongan dari Dinas Kesehatan Kabupaten Katingan dan Dinas Pariwisata Kotawaringin Barat.",
+                orgTag: "Organisasi", orgTitle: "Pengalaman Organisasi & Kepemimpinan Saya",
+                lblStart: "Mulai", lblEnd: "Selesai", lblLoc: "Lokasi", locSmg: "Semarang, Indonesia", locRbg: "Rembang, Indonesia",
+                
+                org1: "Majelis Permusyawaratan Mahasiswa Keluarga Mahasiswa Universitas Dian Nuswantoro", 
+                roleContainer1: `<div class="role-card"><span class="role-title">Badan Otoritas</span><span class="role-year">2023 - 2025</span></div>`,
+                
+                org2: "Dewan Perwakilan Mahasiswa Keluarga Mahasiswa Universitas Dian Nuswantoro", 
+                roleContainer2: `
+                    <div class="role-card gold"><span class="role-title"><i class="fa-solid fa-crown" style="margin-right: 6px;"></i>Ketua Umum</span><span class="role-year">2023 - 2024</span></div>
+                    <div class="role-card"><span class="role-title">Ketua Badan Legislasi</span><span class="role-year">2022 - 2023</span></div>
+                    <div class="role-card"><span class="role-title">Staff Ahli Badan Legislasi</span><span class="role-year">2021 - 2022</span></div>
+                `,
+                
+                org3: "Dian Nuswantoro Computer Club (DNCC)", 
+                roleContainer3: `<div class="role-card"><span class="role-title">Pengurus</span><span class="role-year">2021 - 2025</span></div>`,
+                
+                org4: "FL2MI Semarang Raya", 
+                roleContainer4: `<div class="role-card"><span class="role-title">Anggota Komisi 4</span><span class="role-year">2022 - 2023</span></div>`,
+                
+                org5: "Forum Genre Kabupaten Rembang", 
+                roleContainer5: `<div class="role-card"><span class="role-title">Pengurus</span><span class="role-year">2017 - 2023</span></div>`,
+                
+                org6: "Forum Anak Rembang", 
+                roleContainer6: `<div class="role-card"><span class="role-title">Pengurus</span><span class="role-year">2017 - 2021</span></div>`
             }
         };
+        
         function applyLanguage(lang) { 
             document.querySelectorAll("[data-key]").forEach(el => { 
                 const key = el.getAttribute("data-key"); 
@@ -553,6 +714,7 @@
             if (langSwitch) langSwitch.setAttribute('data-current-lang', lang); 
             localStorage.setItem('lang', lang); 
         }
+        
         if (langSwitch) { 
             langSwitch.addEventListener('click', () => { 
                 const currentLang = localStorage.getItem('lang') || 'en'; 
