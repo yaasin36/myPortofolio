@@ -310,6 +310,27 @@
             .project-img-wrapper { height: 200px; }
             .cert-img-container { height: 180px; }
             .cert-grid-container { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+            
+            /* --- TAMBAHAN UNTUK SERTIFIKAT FULLSCREEN DI HP --- */
+            .img-modal-content {
+                max-width: 100vw !important;
+                max-height: 100vh !important;
+                width: 100vw !important;
+                height: 100vh !important;
+                border-radius: 0 !important;
+            }
+            
+            /* Sesuaikan tombol close (X) agar mudah ditekan & terlihat jelas di HP */
+            .img-modal-close {
+                top: 15px;
+                right: 15px;
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+                background: rgba(225, 29, 72, 0.9); /* Warna tombol merah elegan */
+                box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+                z-index: 10001;
+            }
         }
     </style>
 </head>
@@ -747,32 +768,31 @@
 
             <div class="cert-grid-container">
                 
-                <!-- 1. Kemenkop -->
-                <div class="cert-grid-card" onclick="openCertModal('img/Sertifikat/Kemenkop.pdf')">
+                <!-- 1. Sertifikat Kelulusan Pelatihan (BBPVP) -->
+                <div class="cert-grid-card" onclick="openCertModal('img/Sertifikat/SERTIFIKAT KELULUSAN PELATIHAN - 1808332201-502CB725.pdf')">
                     <div class="cert-img-container">
-                        <img src="img/Sertifikat/Kemenkop.png" class="cert-thumb" alt="Sertifikasi Kemenkop" loading="lazy" onerror="this.src='https://placehold.co/600x400/2563eb/ffffff?text=Sertifikat+Kemenkop'" />
-                        <!-- Logo Instansi Tanpa Background -->
+                        <img src="img/Sertifikat/SERTIFIKAT KELULUSAN PELATIHAN - 1808332201-502CB725.png" class="cert-thumb" alt="Kelulusan Pelatihan" loading="lazy" onerror="this.src='https://placehold.co/600x400/1d4ed8/ffffff?text=Sertifikat+Kelulusan'" />
                         <div class="cert-agency-logo">
-                            <img src="img/Logo/kemenkop.png" alt="Logo Kemenkop" loading="lazy" onerror="this.src='https://placehold.co/100x100/transparent/0f172a?text=KM'" />
+                            <img src="img/Logo/kemenaker.png" alt="Logo Kemenaker" loading="lazy" onerror="this.src='https://placehold.co/100x100/transparent/0f172a?text=KM'" />
                         </div>
                     </div>
                     <div class="cert-info">
-                        <h3 data-key="card1">Ministry of Cooperatives and SMEs Certification</h3>
-                        <p class="cert-issuer" data-key="issuer1">Kemenkop UKM RI</p>
+                        <h3 data-key="card7">Modern Office Administration Training Based on Google Workspace</h3>
+                        <p class="cert-issuer" data-key="issuer7">BBPVP Semarang | Ministry of Manpower</p>
                     </div>
                 </div>
 
-                <!-- 2. Ethical Hacker -->
-                <div class="cert-grid-card" onclick="openCertModal('img/Sertifikat/Ethical Hacker For Dummies.pdf')">
+                <!-- 2. Google Workspace BBPVP (BNSP) -->
+                <div class="cert-grid-card" onclick="openCertModal('img/Sertifikat/Pengelolaan Administrasi Kantor Digital Berbasis Google Workspace BBPVP Semarang.pdf')">
                     <div class="cert-img-container">
-                        <img src="img/Sertifikat/Ethical Hacker For Dummies.png" class="cert-thumb" alt="Ethical Hacker" loading="lazy" onerror="this.src='https://placehold.co/600x400/1e293b/ffffff?text=Ethical+Hacker'" />
+                        <img src="img/Sertifikat/Pengelolaan Administrasi Kantor Digital Berbasis Google Workspace BBPVP Semarang.png" class="cert-thumb" alt="Google Workspace BBPVP" loading="lazy" onerror="this.src='https://placehold.co/600x400/2563eb/ffffff?text=Google+Workspace+BBPVP'" />
                         <div class="cert-agency-logo">
-                            <img src="img/Logo/digitalent.png" alt="Logo Digitalent" loading="lazy" onerror="this.src='https://placehold.co/100x100/transparent/0f172a?text=DT'" />
+                            <img src="img/Logo/bnsp.png" alt="Logo BNSP" loading="lazy" onerror="this.src='https://placehold.co/100x100/transparent/0f172a?text=BN'" />
                         </div>
                     </div>
                     <div class="cert-info">
-                        <h3 data-key="card2">Ethical Hacker For Dummies</h3>
-                        <p class="cert-issuer" data-key="issuer2">Digitalent Kominfo</p>
+                        <h3 data-key="card6">Digital Office Administration using Google Workspace</h3>
+                        <p class="cert-issuer" data-key="issuer6">BNSP BBPVP Semarang</p>
                     </div>
                 </div>
 
@@ -790,7 +810,21 @@
                     </div>
                 </div>
 
-                <!-- 4. TOEFL -->
+                <!-- 4. DPM KM -->
+                <div class="cert-grid-card" onclick="openCertModal('img/Sertifikat/SERTIFIKAT PENGURUS DPM KM.png')">
+                    <div class="cert-img-container">
+                        <img src="img/Sertifikat/SERTIFIKAT PENGURUS DPM KM.png" class="cert-thumb" alt="General Chairman DPM" loading="lazy" onerror="this.src='https://placehold.co/600x400/1e293b/ffffff?text=Sertifikat+DPM'" />
+                        <div class="cert-agency-logo">
+                            <img src="img/Logo/udinus.png" alt="Logo Udinus" loading="lazy" onerror="this.src='https://placehold.co/100x100/transparent/0f172a?text=DP'" />
+                        </div>
+                    </div>
+                    <div class="cert-info">
+                        <h3 data-key="card9">General Chairman of Student Representative Council</h3>
+                        <p class="cert-issuer" data-key="issuer9">Student Representative Council Universitas Dian Nuswantoro</p>
+                    </div>
+                </div>
+
+                <!-- 5. TOEFL -->
                 <div class="cert-grid-card" onclick="openCertModal('img/Sertifikat/TOEFL_AHMAD YASIN FADHILAH.pdf')">
                     <div class="cert-img-container">
                         <img src="img/Sertifikat/TOEFL_AHMAD YASIN FADHILAH.png" class="cert-thumb" alt="Sertifikat TOEFL" loading="lazy" onerror="this.src='https://placehold.co/600x400/1d4ed8/ffffff?text=Sertifikat+TOEFL'" />
@@ -804,7 +838,21 @@
                     </div>
                 </div>
 
-                <!-- 5. Video Content Creator -->
+                <!-- 6. Kemenkop -->
+                <div class="cert-grid-card" onclick="openCertModal('img/Sertifikat/Kemenkop.pdf')">
+                    <div class="cert-img-container">
+                        <img src="img/Sertifikat/Kemenkop.png" class="cert-thumb" alt="Sertifikasi Kemenkop" loading="lazy" onerror="this.src='https://placehold.co/600x400/2563eb/ffffff?text=Sertifikat+Kemenkop'" />
+                        <div class="cert-agency-logo">
+                            <img src="img/Logo/kemenkop.png" alt="Logo Kemenkop" loading="lazy" onerror="this.src='https://placehold.co/100x100/transparent/0f172a?text=KM'" />
+                        </div>
+                    </div>
+                    <div class="cert-info">
+                        <h3 data-key="card1">Ministry of Cooperatives and SMEs Certification</h3>
+                        <p class="cert-issuer" data-key="issuer1">Kemenkop UKM RI</p>
+                    </div>
+                </div>
+
+                <!-- 7. Video Content Creator -->
                 <div class="cert-grid-card" onclick="openCertModal('img/Sertifikat/Sertifikat_AHMAD YASIN FADHILAH_Video Content Creator Pada Sektor Pendidikan Tinggi.pdf')">
                     <div class="cert-img-container">
                         <img src="img/Sertifikat/Sertifikat_AHMAD YASIN FADHILAH_Video Content Creator Pada Sektor Pendidikan Tinggi.png" class="cert-thumb" alt="Video Content Creator" loading="lazy" onerror="this.src='https://placehold.co/600x400/1e293b/ffffff?text=Video+Content+Creator'" />
@@ -818,35 +866,21 @@
                     </div>
                 </div>
 
-                <!-- 6. Google Workspace BBPVP -->
-                <div class="cert-grid-card" onclick="openCertModal('img/Sertifikat/Pengelolaan Administrasi Kantor Digital Berbasis Google Workspace BBPVP Semarang.pdf')">
+                <!-- 8. Ethical Hacker -->
+                <div class="cert-grid-card" onclick="openCertModal('img/Sertifikat/Ethical Hacker For Dummies.pdf')">
                     <div class="cert-img-container">
-                        <img src="img/Sertifikat/Pengelolaan Administrasi Kantor Digital Berbasis Google Workspace BBPVP Semarang.png" class="cert-thumb" alt="Google Workspace BBPVP" loading="lazy" onerror="this.src='https://placehold.co/600x400/2563eb/ffffff?text=Google+Workspace+BBPVP'" />
+                        <img src="img/Sertifikat/Ethical Hacker For Dummies.png" class="cert-thumb" alt="Ethical Hacker" loading="lazy" onerror="this.src='https://placehold.co/600x400/1e293b/ffffff?text=Ethical+Hacker'" />
                         <div class="cert-agency-logo">
-                            <img src="img/Logo/bnsp.png" alt="Logo BNSP" loading="lazy" onerror="this.src='https://placehold.co/100x100/transparent/0f172a?text=BN'" />
+                            <img src="img/Logo/digitalent.png" alt="Logo Digitalent" loading="lazy" onerror="this.src='https://placehold.co/100x100/transparent/0f172a?text=DT'" />
                         </div>
                     </div>
                     <div class="cert-info">
-                        <h3 data-key="card6">Digital Office Administration using Google Workspace</h3>
-                        <p class="cert-issuer" data-key="issuer6">BNSP BBPVP Semarang</p>
+                        <h3 data-key="card2">Ethical Hacker For Dummies</h3>
+                        <p class="cert-issuer" data-key="issuer2">Digitalent Kominfo</p>
                     </div>
                 </div>
 
-                <!-- 7. Sertifikat Kelulusan Pelatihan -->
-                <div class="cert-grid-card" onclick="openCertModal('img/Sertifikat/SERTIFIKAT KELULUSAN PELATIHAN - 1808332201-502CB725.pdf')">
-                    <div class="cert-img-container">
-                        <img src="img/Sertifikat/SERTIFIKAT KELULUSAN PELATIHAN - 1808332201-502CB725.png" class="cert-thumb" alt="Kelulusan Pelatihan" loading="lazy" onerror="this.src='https://placehold.co/600x400/1d4ed8/ffffff?text=Sertifikat+Kelulusan'" />
-                        <div class="cert-agency-logo">
-                            <img src="img/Logo/kemenaker.png" alt="Logo Kemenaker" loading="lazy" onerror="this.src='https://placehold.co/100x100/transparent/0f172a?text=KM'" />
-                        </div>
-                    </div>
-                    <div class="cert-info">
-                        <h3 data-key="card7">Modern Office Administration Training Based on Google Workspace</h3>
-                        <p class="cert-issuer" data-key="issuer7">BBPVP Semarang | Ministry of Manpower</p>
-                    </div>
-                </div>
-
-                <!-- 8. LKMM TM -->
+                <!-- 9. LKMM TM -->
                 <div class="cert-grid-card" onclick="openCertModal('img/Sertifikat/LKMM TM.pdf')">
                     <div class="cert-img-container">
                         <img src="img/Sertifikat/LKMM TM.png" class="cert-thumb" alt="LKMM TM" loading="lazy" onerror="this.src='https://placehold.co/600x400/1d4ed8/ffffff?text=LKMM+TM'" />
@@ -857,20 +891,6 @@
                     <div class="cert-info">
                         <h3 data-key="card8">Mid-Level Student Management Skills Training (LKMM-TM)</h3>
                         <p class="cert-issuer" data-key="issuer8">Universitas Dian Nuswantoro</p>
-                    </div>
-                </div>
-
-                <!-- 9. DPM KM -->
-                <div class="cert-grid-card" onclick="openCertModal('img/Sertifikat/SERTIFIKAT PENGURUS DPM KM.png')">
-                    <div class="cert-img-container">
-                        <img src="img/Sertifikat/SERTIFIKAT PENGURUS DPM KM.png" class="cert-thumb" alt="General Chairman DPM" loading="lazy" onerror="this.src='https://placehold.co/600x400/1e293b/ffffff?text=Sertifikat+DPM'" />
-                        <div class="cert-agency-logo">
-                            <img src="img/Logo/udinus.png" alt="Logo Udinus" loading="lazy" onerror="this.src='https://placehold.co/100x100/transparent/0f172a?text=DP'" />
-                        </div>
-                    </div>
-                    <div class="cert-info">
-                        <h3 data-key="card9">General Chairman of Student Representative Council</h3>
-                        <p class="cert-issuer" data-key="issuer9">Student Representative Council Universitas Dian Nuswantoro</p>
                     </div>
                 </div>
 

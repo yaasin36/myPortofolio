@@ -853,16 +853,16 @@
         background: rgba(255, 255, 255, 0.1);
       }
       .about-details {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
         margin-bottom: 35px;
         font-size: 14.5px;
       }
       .detail-item {
         display: flex;
-        align-items: center;
-        gap: 8px;
+        align-items: flex-start; /* Berjaga-jaga jika layar sangat sempit agar teks tetap di atas */
+        gap: 15px;
         color: #64748b;
       }
       html.dark .detail-item {
@@ -870,7 +870,7 @@
       }
       .detail-item strong {
         color: var(--text-light);
-        min-width: 50px;
+        min-width: 75px; /* Diperlebar agar jarak Name, Email, dan From sejajar sempurna rata kiri */
         font-weight: 600;
       }
       html.dark .detail-item strong {
@@ -1264,11 +1264,9 @@
                 </div>
                 <div class="detail-item">
                   <strong data-key="lbl_email">Email:</strong>
-                  <a href="mailto:ahmadyasin1601@gmail.com"
-                    >ahmadyasin1601@gmail.com</a
-                  >
+                  <a href="mailto:ahmadyasin1601@gmail.com">ahmadyasin1601@gmail.com</a>
                 </div>
-                <div class="detail-item" style="grid-column: span 2">
+                <div class="detail-item">
                   <strong data-key="lbl_from">From:</strong>
                   <span data-key="txt_from">Indonesia, Central Java</span>
                 </div>
